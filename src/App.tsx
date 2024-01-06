@@ -2,13 +2,19 @@ import { Button } from '@/components/ui/button'
 
 export function App() {
   return (
-    <div>
-      <Button as={'a'} href={'/link'} variant={'primary'}>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+        margin: '0 auto',
+        width: '40%',
+      }}
+    >
+      <Button as={'a'} href={'https://google.com'}>
         Hello
       </Button>
-      <Button as={'button'} variant={'primary'}>
-        Hello
-      </Button>
+      <Button as={'button'}>Hello</Button>
     </div>
   )
 }
