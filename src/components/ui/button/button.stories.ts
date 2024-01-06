@@ -61,6 +61,7 @@ export const AsLink: Story = {
     as: 'a',
     children: 'Link that looks like a button',
     href: 'https://google.com',
+    rel: 'noopener noreferrer',
     variant: 'primary',
   },
 }
