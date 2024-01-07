@@ -9,6 +9,7 @@
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-m);
 
+  background-color: var(--color-accent-500);
   border: none;
   border-radius: 4px;
 
@@ -53,8 +54,6 @@
 }
 
 .primary {
-  background-color: var(--color-accent-500);
-
   &:hover {
     background-color: var(--color-accent-300);
   }
@@ -92,6 +91,7 @@
   font-size: var(--font-size-m);
   color: var(--color-accent-500);
 
+  background-color: transparent;
   border: 1px solid var(--color-accent-500);
 
   &:hover {
@@ -106,7 +106,22 @@
 }
 
 .link {
-  background-color: yellow;
+  padding: 6px 12px;
+  font-size: var(--font-size-m);
+  color: var(--color-accent-500);
+  background-color: transparent;
+
+  &:hover {
+    color: var(--color-accent-300);
+  }
+
+  &:active {
+    color: var(--color-accent-700);
+  }
+
+  &:focus-visible {
+    border-radius: 130px;
+  }
 }
 
 .fullWidth {
