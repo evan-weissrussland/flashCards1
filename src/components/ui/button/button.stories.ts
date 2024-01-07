@@ -19,7 +19,8 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    children: 'Primary Button',
+    children: 'Button primary',
+    className: 'icon',
     disabled: false,
     variant: 'primary',
   },
