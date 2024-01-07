@@ -5,7 +5,8 @@
 
   padding: 6px 28px;
 
-  font-size: 14px;
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
   line-height: var(--line-height-m);
 
   border: none;
@@ -84,7 +85,24 @@
 }
 
 .tertiary {
-  background-color: blue;
+  box-sizing: border-box;
+  height: 36px;
+  padding: 0 28px;
+
+  font-size: var(--font-size-m);
+  color: var(--color-accent-500);
+
+  border: 1px solid var(--color-accent-500);
+
+  &:hover {
+    background-color: var(--color-dark-500);
+    border: 1px solid var(--color-accent-700);
+  }
+
+  &:active {
+    background-color: var(--color-accent-900);
+    border: 1px solid var(--color-accent-700);
+  }
 }
 
 .link {
