@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, ElementType } from 'react'
 
 import s from './input.module.scss'
 
-export type ButtonProps<T extends ElementType = 'input'> = {
+export type InputProps<T extends ElementType = 'input'> = {
   as?: T
   className?: string
   error?: string
@@ -10,7 +10,7 @@ export type ButtonProps<T extends ElementType = 'input'> = {
 } & ComponentPropsWithoutRef<T>
 
 export const Input = <T extends ElementType = 'input'>(
-  props: ButtonProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>
+  props: InputProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof InputProps<T>>
 ) => {
   const { as: Component = 'input', className = '', error = '', type = 'text', ...rest } = props
 
