@@ -21,17 +21,18 @@
   border: none;
   border-radius: 4px;
 
-  &.icon::before {
-    content: '';
+  &.icon {
+    &::before {
+      content: '';
 
-    display: inline-block;
+      display: inline-block;
 
-    width: 16px;
-    height: 16px;
-    margin-right: 10px;
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
 
-    background: url('../../../../public/image/log-out.svg');
-
+      background: url('../../../../public/image/log-out.svg') no-repeat;
+    }
   }
 
   &:hover {
@@ -45,6 +46,18 @@
   &:disabled {
     color: var(--color-light-900);
     background-color: var(--color-accent-900);
+
+    &.icon::before {
+      content: '';
+
+      display: inline-block;
+
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
+
+      background: url('../../../../public/image/log-out dis.png') no-repeat;
+    }
   }
 }
 
