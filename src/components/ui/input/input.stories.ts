@@ -3,12 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react'
 import { Input } from './'
 
 const meta = {
-  argTypes: {
-    variant: {
-      control: { type: 'radio' },
-      options: ['text', 'password', 'search'],
-    },
-  },
+  argTypes: {},
   component: Input,
   tags: ['autodocs'],
   title: 'Components/Input',
@@ -22,17 +17,15 @@ export const Text: Story = {
     disabled: false,
     error: '',
     placeholder: 'Input',
-    variant: 'text',
   },
 }
 
 export const Password: Story = {
   args: {
     disabled: false,
-    error: 'Error!',
+    error: '',
     placeholder: 'Input',
     type: 'password',
-    variant: 'password',
   },
 }
 export const Search: Story = {
@@ -41,6 +34,5 @@ export const Search: Story = {
     error: 'Error!',
     placeholder: 'Input',
     type: 'search',
-    variant: 'search',
   },
 }
