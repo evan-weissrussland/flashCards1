@@ -32,7 +32,7 @@ export const Search: Story = {
   args: {
     disabled: false,
     error: '',
-    placeholder: 'Input search',
+    placeholder: 'Card search',
     type: 'search',
   },
 }
