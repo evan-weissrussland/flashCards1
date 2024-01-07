@@ -17,13 +17,11 @@ export const Input = <T extends ElementType = 'input'>(
   return (
     <div className={s.inputWrapper}>
       <span className={`${s.label} ${rest.disabled && s.disabledLabel}`}>input</span>
-      <div className={`${s[`type-${type}`]} ${rest.disabled && s.disabled}`}>
-        <Component
-          className={`${s[type]} ${s.input} ${s[className]} ${error && s.error}`}
-          type={type === 'search' ? 'text' : type}
-          {...rest}
-        />
-      </div>
+      <Component
+        className={`${s[type]} ${s.input} ${s[className]} ${error && s.error}`}
+        type={type === 'search' ? 'text' : type}
+        {...rest}
+      />
       <span className={s.errorText}>{error && `${error}!`}</span>
     </div>
   )

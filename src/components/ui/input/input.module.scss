@@ -62,6 +62,7 @@
 
     &.password {
       padding-right: 42px;
+      background: url('../../../../public/image/eye-outline.svg') no-repeat right 11px center / 20px;
       border: 1px solid var(--color-dark-300);
 
       &::placeholder {
@@ -90,6 +91,9 @@
       }
 
       &:disabled {
+        background: url('../../../../public/image/eye-outline-disabled.svg') no-repeat right 11px
+          center / 20px;
+
         &::placeholder {
           color: var(--color-dark-300);
         }
@@ -101,7 +105,8 @@
     }
 
     &.search {
-      padding-left: 41px;
+      padding-right: 34px;
+      padding-left: 40px;
       background: url('../../../../public/image/search-outline-default.svg') no-repeat 12px center /
         20px;
       border: 1px solid var(--color-dark-300);
@@ -117,8 +122,7 @@
       &:active {
         background:
           url('../../../../public/image/search-outline-active.svg') no-repeat 12px center / 20px,
-          url('../../../../public/image/search-close-outline.svg') no-repeat right 13px center /
-            16px;
+          url('../../../../public/image/search-close-outline.svg') no-repeat right 9px center / 16px;
         border: 1px solid var(--color-light-100);
 
         &::placeholder {
@@ -164,30 +168,5 @@
   .errorText {
     font-size: var(--font-size-xs);
     color: var(--color-danger-300);
-  }
-}
-
-.type-password {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-
-  &::after {
-    content: '';
-
-    position: absolute;
-
-    display: inline-block;
-
-    width: 20px;
-    height: 20px;
-    margin-right: 11px;
-
-    background: url('../../../../public/image/eye-outline.svg') no-repeat;
-  }
-
-  &.disabled::after {
-    background: url('../../../../public/image/eye-outline-disabled.svg') no-repeat;
   }
 }
