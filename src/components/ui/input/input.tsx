@@ -25,8 +25,11 @@ export const Input = <T extends ElementType = 'button'>(
   return (
     <div className={s.inputWrapper}>
       <span className={s.label}>input</span>
-      <Component className={`${s[variant]} ${s.input} ${s[className]}`} {...rest} />
-      <span className={s.errorText}>{error && error}</span>
+      <Component
+        className={`${s[variant]} ${s.input} ${s[className]} ${error && s.error}`}
+        {...rest}
+      />
+      <span className={s.errorText}>{error && `${error}!`}</span>
     </div>
   )
 }
