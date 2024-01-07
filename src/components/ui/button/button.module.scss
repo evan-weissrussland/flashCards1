@@ -1,27 +1,25 @@
 .button {
   all: unset;
+
   cursor: pointer;
-
-  &:focus-visible {
-    outline: 2px solid var(--color-info-500);
-  }
-}
-
-.primary {
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   padding: 6px 28px;
 
   font-size: 14px;
   line-height: var(--line-height-m);
 
-  background-color: var(--color-accent-500);
   border: none;
   border-radius: 4px;
 
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
+  }
+
   &.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     &::before {
       content: '';
 
@@ -35,17 +33,9 @@
     }
   }
 
-  &:hover {
-    background-color: var(--color-accent-300);
-  }
-
-  &:active {
-    background-color: var(--color-accent-700);
-  }
-
   &:disabled {
+    cursor: default;
     color: var(--color-light-900);
-    background-color: var(--color-accent-900);
 
     &.icon::before {
       content: '';
@@ -61,8 +51,36 @@
   }
 }
 
+.primary {
+  background-color: var(--color-accent-500);
+
+  &:hover {
+    background-color: var(--color-accent-300);
+  }
+
+  &:active {
+    background-color: var(--color-accent-700);
+  }
+
+  &:disabled {
+    background-color: var(--color-accent-900);
+  }
+}
+
 .secondary {
-  background-color: green;
+  background-color: var(--color-dark-300);
+
+  &:hover {
+    background-color: var(--color-dark-100);
+  }
+
+  &:active {
+    background-color: var(--color-dark-500);
+  }
+
+  &:disabled {
+    background-color: inherit;
+  }
 }
 
 .tertiary {
