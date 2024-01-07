@@ -31,8 +31,8 @@ export const Password: Story = {
 export const Search: Story = {
   args: {
     disabled: false,
-    error: 'Error!',
-    placeholder: 'Input',
+    error: '',
+    placeholder: 'Input search',
     type: 'search',
   },
 }
