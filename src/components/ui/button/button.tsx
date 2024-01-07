@@ -27,3 +27,4 @@ export const Button = <T extends ElementType = 'button'>(
     />
   )
 }
+//TODO  у меня не получились кнопки в размер по дизайну (длина отличается на 1px). Также я не нашёл шрифт Helvetica
