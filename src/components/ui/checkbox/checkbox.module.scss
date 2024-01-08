@@ -13,16 +13,37 @@
     width: 36px;
     height: 36px;
 
-    background: url('../../../../public/image/Ckeckbox-Default Unselected.svg') no-repeat center;
     border-radius: 50%;
 
-    &:active,
-    &:focus-visible {
+    &[data-state='checked'] {
+      background: url('../../../../public/image/Ckeckbox-Default Selected.svg') no-repeat center;
+    }
+
+    &[data-state='checked']:focus-visible {
+      background: url('../../../../public/image/Ckeckbox-Default Selected.svg') no-repeat center
+        var(--color-dark-100);
+    }
+
+    &[data-state='checked']:active {
+      background: url('../../../../public/image/Ckeckbox-Default Selected.svg') no-repeat center
+        var(--color-dark-100);
+    }
+
+    &[data-state='unchecked'] {
+      background: url('../../../../public/image/Ckeckbox-Default Unselected.svg') no-repeat center;
+    }
+
+    &[data-state='unchecked']:focus-visible {
       background: url('../../../../public/image/Ckeckbox-Default Unselected.svg') no-repeat center
         var(--color-dark-100);
     }
 
-    &.disabled {
+    &[data-state='unchecked']:active {
+      background: url('../../../../public/image/Ckeckbox-Default Unselected.svg') no-repeat center
+        var(--color-dark-100);
+    }
+
+    &[data-state='unchecked']:disabled {
       background: url('../../../../public/image/checkbox-Disabled Unselected.svg') no-repeat center;
 
       &:active {
@@ -30,13 +51,11 @@
       }
     }
 
-    .checked {
-      width: 24px;
-      height: 24px;
-      background: url('../../../../public/image/Ckeckbox-Default Selected.svg') no-repeat center;
+    &[data-state='checked']:disabled {
+      background: url('../../../../public/image/checkbox-Disabled Selected.svg') no-repeat center;
 
-      &.disabled {
-        background: url('../../../../public/image/checkbox-Disabled Selected.svg') no-repeat center;
+      &:active {
+        background-color: transparent;
       }
     }
   }

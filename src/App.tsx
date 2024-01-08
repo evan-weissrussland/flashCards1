@@ -10,7 +10,7 @@ export function App() {
       </Button>
       <Button>Button primary</Button>
       <Input type={'search'} />
-      <CheckboxComponent variant={'Body 2'}> asdvdhhsd</CheckboxComponent>
+      <CheckboxComponent variant={'Body 2'}>asdvdhhsd</CheckboxComponent>
     </div>
   )
 }

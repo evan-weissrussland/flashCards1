@@ -15,24 +15,36 @@ export type CheckboxProps = {
 }
 
 export const CheckboxComponent: FC<CheckboxProps> = props => {
-  const { checked, children = '', className = '', disabled = false, variant = 'Body 2' } = props
+  const {
+    checked = false,
+    children = '',
+    className = '',
+    disabled = false,
+    variant = 'Body 2',
+  } = props
 
   return (
-    <div className={s.checkWrapper}>
-      <Checkbox.Root
-        checked={checked}
-        className={`${s.checkbox} ${disabled && s.disabled}`}
-        disabled={disabled}
-        id={'check1'}
-      >
-        <Checkbox.Indicator className={`${checked && s.checked} ${disabled && s.disabled}`} />
-      </Checkbox.Root>
-      <Typography variant={variant}>
-        <Label.Root className={`${s.label} ${disabled ? s.labelDisabled : ''}`} htmlFor={'check1'}>
-          {children}
-        </Label.Root>
-      </Typography>
-    </div>
+    <form action={'get'}>
+      <div className={s.checkWrapper}>
+        <Checkbox.Root
+          className={`${s.checkbox} ${disabled && s.disabled}`}
+          disabled={disabled}
+          id={'check1'}
+        >
+          <Checkbox.Indicator className={`${checked && s.checked} ${disabled && s.disabled}`} />
+        </Checkbox.Root>
+        <Typography variant={variant}>
+          <Label.Root
+            className={`${s.label} ${disabled ? s.labelDisabled : ''}`}
+            htmlFor={'check1'}
+          >
+            {children}
+          </Label.Root>
+        </Typography>
+      </div>
+    </form>
   )
 }
-//TODO стилистически получилось сделать, но не работает: не переключает, как нативный чекбокс. В докуменатции Radix там в примере появляется какой-то инпут. Откуда он взялся? При нажатии на чекбокс в примере меняются атрибуты aria-checked  и data-state. У меня они не меняются, а как их поменять, если в примере в документации они явно не заданы?
+//TODO почти заработало.
+// 1 Нужно было обернуть в тег form. Но теперь непонятно, как в сторибуке отразить все состояния, ведь для этого нужно будет задать атрибут checked. Но если мы его зададим, то чекбокс станет управляемым и переключаться в браузере не будет.
+// 2 Также не получилось сделать серый фон при нажатии на label, только при нажатии на сам чекбокс.
