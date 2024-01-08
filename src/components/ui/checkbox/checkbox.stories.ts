@@ -34,3 +34,32 @@ export const UncheckedDisabled: Story = {
     disabled: true,
   },
 }
+export const CheckedWithLabel: Story = {
+  args: {
+    checked: true,
+    children: 'Check-box',
+  },
+}
+
+export const UncheckedWithLabel: Story = {
+  args: {
+    checked: false,
+    children: 'Check-box',
+  },
+}
+
+export const DisabledUncheckedWithLabel: Story = {
+  args: {
+    checked: false,
+    children: 'Check-box',
+    disabled: true,
+  },
+}
+
+export const DisabledCheckedWithLabel: Story = {
+  args: {
+    checked: true,
+    children: 'Check-box',
+    disabled: true,
+  },
+}
