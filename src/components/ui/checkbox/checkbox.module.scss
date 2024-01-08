@@ -1,0 +1,37 @@
+.checkbox {
+  all: unset;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  background: url('../../../../public/image/Ckeckbox-Default Unselected.svg') no-repeat center;
+  border-radius: 50%;
+
+  &:active,
+  &:focus-visible {
+    background: url('../../../../public/image/Ckeckbox-Default Unselected.svg') no-repeat center
+      var(--color-dark-100);
+  }
+
+  &.disabled {
+    background: url('../../../../public/image/checkbox-Disabled Unselected.svg') no-repeat center;
+
+    &:active {
+      background-color: transparent;
+    }
+  }
+
+  .checked {
+    width: 24px;
+    height: 24px;
+    background: url('../../../../public/image/Ckeckbox-Default Selected.svg') no-repeat center;
+
+    &.disabled {
+      background: url('../../../../public/image/checkbox-Disabled Selected.svg') no-repeat center;
+    }
+  }
+}
