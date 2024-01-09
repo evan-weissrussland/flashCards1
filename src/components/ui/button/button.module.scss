@@ -1,0 +1,129 @@
+.button {
+  all: unset;
+
+  cursor: pointer;
+
+  padding: 6px 28px;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-m);
+
+  background-color: var(--color-accent-500);
+  border: none;
+  border-radius: 4px;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-info-500);
+  }
+
+  &.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::before {
+      content: '';
+
+      display: inline-block;
+
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
+
+      background: url('../../../../public/image/log-out.svg') no-repeat;
+    }
+  }
+
+  &:disabled {
+    cursor: default;
+    color: var(--color-light-900);
+
+    &.icon::before {
+      content: '';
+
+      display: inline-block;
+
+      width: 16px;
+      height: 16px;
+      margin-right: 10px;
+
+      background: url('../../../../public/image/log-out dis.png') no-repeat;
+    }
+  }
+}
+
+.primary {
+  &:hover {
+    background-color: var(--color-accent-300);
+  }
+
+  &:active {
+    background-color: var(--color-accent-700);
+  }
+
+  &:disabled {
+    background-color: var(--color-accent-900);
+  }
+}
+
+.secondary {
+  background-color: var(--color-dark-300);
+
+  &:hover {
+    background-color: var(--color-dark-100);
+  }
+
+  &:active {
+    background-color: var(--color-dark-500);
+  }
+
+  &:disabled {
+    background-color: inherit;
+  }
+}
+
+.tertiary {
+  box-sizing: border-box;
+  height: 36px;
+  padding: 0 28px;
+
+  font-size: var(--font-size-m);
+  color: var(--color-accent-500);
+
+  background-color: transparent;
+  border: 1px solid var(--color-accent-500);
+
+  &:hover {
+    background-color: var(--color-dark-500);
+    border: 1px solid var(--color-accent-700);
+  }
+
+  &:active {
+    background-color: var(--color-accent-900);
+    border: 1px solid var(--color-accent-700);
+  }
+}
+
+.link {
+  padding: 6px 12px;
+  font-size: var(--font-size-m);
+  color: var(--color-accent-500);
+  background-color: transparent;
+
+  &:hover {
+    color: var(--color-accent-300);
+  }
+
+  &:active {
+    color: var(--color-accent-700);
+  }
+
+  &:focus-visible {
+    border-radius: 130px;
+  }
+}
+
+.fullWidth {
+  width: 100%;
+}
