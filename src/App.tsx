@@ -9,6 +9,8 @@ export function App() {
       </Button>
       <Button>Button primary</Button>
       <Input type={'search'} />
+      {/*h2 для проверки*/}
+      <h2>Test commit</h2>
     </div>
   )
 }
