@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: space-between;
 
-  box-sizing: inherit;
+  box-sizing: border-box;
   width: 210px;
   height: 36px;
   padding: 5px 11px;
@@ -19,16 +19,33 @@
     background: url('../../../../public/image/select/arrow-ios-Up.svg') no-repeat right 11px center /
       16px;
     border-color: var(--color-dark-100);
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  &:focus-visible {
+    border-color: transparent;
+    outline: 2px solid var(--color-info-500);
+  }
+
+  &.disabled {
+    color: var(--color-dark-300);
+    background: url('../../../../public/image/select/arrow-ios-Down-outline-disabled.svg') no-repeat
+      right 11px center / 16px;
+    border-color: var(--color-dark-300);
   }
 }
 
 .selectContent {
+  overflow: hidden;
+
   box-sizing: border-box;
   width: 210px;
-  height: 400px;
-  padding: 5px 11px;
 
   border: 1px solid var(--color-dark-100);
+  border-top: none;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
 
   .selectViewport {
     display: flex;
@@ -36,9 +53,13 @@
     box-sizing: border-box;
 
     .selectItem {
+      cursor: default;
+
       display: flex;
       align-items: center;
+
       height: 36px;
+      padding-left: 11px;
 
       &[data-highlighted] {
         background: var(--color-accent-900);
@@ -46,4 +67,16 @@
       }
     }
   }
+}
+
+.spanLabel {
+  color: var(--color-dark-100);
+
+  &.disabled {
+    color: var(--color-dark-300);
+  }
+}
+
+.disabled {
+  color: var(--color-dark-300);
 }
