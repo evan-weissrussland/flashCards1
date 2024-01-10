@@ -1,0 +1,65 @@
+.form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 251px;
+  height: 36px;
+  margin: 30px; // убрать
+}
+
+.minMax {
+  display: block;
+
+  min-width: 36px;
+  height: 36px;
+  padding: 5px 2px;
+
+  text-align: center;
+
+  border: 2px solid #4c4c4c;
+}
+
+.SliderRoot {
+  touch-action: none;
+  user-select: none;
+
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 155px;
+  height: 20px;
+}
+
+.SliderTrack {
+  position: relative;
+
+  flex-grow: 1;
+
+  height: 5px;
+
+  background-color: #48356b;
+  border-radius: 9999px;
+}
+
+.SliderRange {
+  position: absolute;
+  height: 100%;
+  background-color: #8c61ff;
+  border-radius: 9999px;
+}
+
+.SliderThumb {
+  display: block;
+
+  width: 12px;
+  height: 12px;
+
+  background-color: #fff;
+  border-radius: 10px;
+  outline: none;
+  box-shadow: 0 0 0 4px #8c61ff;
+}

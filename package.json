@@ -14,8 +14,11 @@
   },
   "dependencies": {
     "@fontsource/roboto": "^5.0.8",
+    "@radix-ui/react-slider": "^1.1.2",
+    "@radix-ui/themes": "^2.0.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-slider": "^2.0.6"
   },
   "devDependencies": {
     "@it-incubator/eslint-config": "^1.0.2",
@@ -32,6 +35,7 @@
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
+    "@types/react-slider": "^1.3.6",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "eslint-plugin-storybook": "^0.6.15",
     "sass": "^1.69.6",
