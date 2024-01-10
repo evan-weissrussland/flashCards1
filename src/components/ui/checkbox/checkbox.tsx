@@ -30,9 +30,7 @@ export const CheckboxComponent: FC<CheckboxProps> = props => {
           className={`${s.checkbox} ${disabled && s.disabled}`}
           disabled={disabled}
           id={'check1'}
-        >
-          <Checkbox.Indicator className={`${checked && s.checked} ${disabled && s.disabled}`} />
-        </Checkbox.Root>
+        ></Checkbox.Root>
         <Typography variant={variant}>
           <Label.Root
             className={`${s.label} ${disabled ? s.labelDisabled : ''}`}
