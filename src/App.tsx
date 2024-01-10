@@ -140,5 +140,13 @@ export function App() {
       <br />
       <EditProfileSaveChange />
     </>
+    <div>
+      <Button as={'a'} href={'https://google.com'}>
+        Hello
+      </Button>
+      <Button>Button primary</Button>
+      <Input type={'search'} />
+      <RangeSlider defaultValue={[25, 75]} max={100} min={1} />
+    </div>
   )
 }
