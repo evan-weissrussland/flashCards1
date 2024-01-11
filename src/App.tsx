@@ -15,7 +15,7 @@ export function App() {
         <CheckboxComponent variant={'Body 2'}>asdvdhhsd</CheckboxComponent>
       </div>
       <div>
-        <SelectComponent />
+        <SelectComponent variant={'Large'} />
       </div>
     </>
   )

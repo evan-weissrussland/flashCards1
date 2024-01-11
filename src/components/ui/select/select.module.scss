@@ -7,7 +7,7 @@
 
   box-sizing: border-box;
   width: 210px;
-  height: 36px;
+  min-height: 36px;
   padding: 5px 11px;
 
   background: url('../../../../public/image/select/arrow-ios-Down-outline.svg') no-repeat right 11px
@@ -49,18 +49,21 @@
   border-bottom-left-radius: 2px;
 
   .selectItem {
-    cursor: default;
+    user-select: none;
 
     display: flex;
     align-items: center;
 
-    height: 36px;
+    min-height: 36px;
     padding-left: 11px;
 
     &[data-highlighted] {
-      color: var(--color-accent-300);
       background: var(--color-accent-900);
       outline: none;
+
+      & .itemText {
+        color: var(--color-accent-300);
+      }
     }
 
     &[data-disabled] {

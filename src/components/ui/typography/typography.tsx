@@ -19,6 +19,7 @@ export type VariantType =
 export type TypographyProps<T extends ElementType = 'div'> = {
   as?: T
   className?: string
+  dataColor?: boolean
   href?: string
   variant?: VariantType
 } & ComponentPropsWithoutRef<T>
@@ -26,11 +27,18 @@ export type TypographyProps<T extends ElementType = 'div'> = {
 export const Typography = <T extends ElementType = 'div'>(
   props: TypographyProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TypographyProps<T>>
 ) => {
-  const { as: Component = 'div', children, className = '', variant = 'Body 2', ...rest } = props
+  const {
+    as: Component = 'div',
+    children,
+    className = '',
+    dataColor = false,
+    variant = 'Body 2',
+    ...rest
+  } = props
   const typeFromVariant = variant.replace(/\s/, '').toLowerCase()
 
   return (
-    <Component className={`${s[className]} ${s[typeFromVariant]}`} {...rest}>
+    <Component className={`${s[className]} ${s[typeFromVariant]}`} data-color={dataColor} {...rest}>
       {children}
     </Component>
   )

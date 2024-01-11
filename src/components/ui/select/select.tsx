@@ -45,18 +45,18 @@ export const SelectComponent = <T extends ElementType = 'button'>(
 
         <Select.Portal>
           <Select.Content className={s.selectContent}>
-            <Select.Item
-              className={`${s.selectItem} ${disabled && s.disabled}`}
-              disabled
-              value={'dsv1'}
-            >
+            <Select.Item className={s.selectItem} disabled={disabled} value={'dsv1'}>
               <Select.ItemText>
-                <Typography variant={variant}>ssgsdg</Typography>
+                <Typography dataColor={disabled} variant={variant}>
+                  <span className={s.itemText}>s123sgsdg</span>
+                </Typography>
               </Select.ItemText>
             </Select.Item>
             <Select.Item className={s.selectItem} value={'dfssgbadb'}>
               <Select.ItemText>
-                <Typography variant={variant}>wef</Typography>
+                <Typography dataColor={disabled} variant={variant}>
+                  <span className={s.itemText}>5aS6789</span>
+                </Typography>
               </Select.ItemText>
             </Select.Item>
           </Select.Content>
@@ -66,4 +66,4 @@ export const SelectComponent = <T extends ElementType = 'button'>(
   )
 }
 
-//TODO 1. Нужно использовать Select.ItemText; 2. Чтобы при раскрытии item'ов выбранный item не перекрывал trigger, нужно удалить Select.Viewport
+//TODO 1. Нужно использовать Select.ItemText; 2. Чтобы при раскрытии item'ов выбранный item не перекрывал trigger, нужно удалить Select.Viewport. 3 Не получается изменить цвет item'а при hover
