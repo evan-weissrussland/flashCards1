@@ -38,8 +38,9 @@
 
 .selectContent {
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
-  box-sizing: border-box;
   width: 210px;
 
   border: 1px solid var(--color-dark-100);
@@ -47,24 +48,23 @@
   border-bottom-right-radius: 2px;
   border-bottom-left-radius: 2px;
 
-  .selectViewport {
+  .selectItem {
+    cursor: default;
+
     display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
+    align-items: center;
 
-    .selectItem {
-      cursor: default;
+    height: 36px;
+    padding-left: 11px;
 
-      display: flex;
-      align-items: center;
+    &[data-highlighted] {
+      color: var(--color-accent-300);
+      background: var(--color-accent-900);
+      outline: none;
+    }
 
-      height: 36px;
-      padding-left: 11px;
-
-      &[data-highlighted] {
-        background: var(--color-accent-900);
-        outline: none;
-      }
+    &[data-disabled] {
+      color: var(--color-dark-300);
     }
   }
 }
