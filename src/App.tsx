@@ -20,7 +20,14 @@ export function App() {
         <SelectComponent variant={'Large'} />
       </div>
       <div>
-        <RadioButton value={'qwerty'} />
+        <RadioButton defaultValue={'ReactNode1'}>
+          {{
+            child: [
+              { id: 'id1', label: 'RadioGroup', value: 'ReactNode1' },
+              { id: 'id2', label: 'RadioGroup', value: 'ReactNode2' },
+            ],
+          }}
+        </RadioButton>
       </div>
     </>
   )

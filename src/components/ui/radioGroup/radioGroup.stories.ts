@@ -16,9 +16,13 @@ type Story = StoryObj<typeof meta>
 
 export const Text: Story = {
   args: {
+    children: {
+      child: [
+        { id: 'id1', label: 'RadioGroup', value: 'ReactNode1' },
+        { id: 'id2', label: 'RadioGroup', value: 'ReactNode2' },
+      ],
+    },
     className: '',
     disabled: false,
-    id: '2w',
-    value: 'ReactNode',
   },
 }

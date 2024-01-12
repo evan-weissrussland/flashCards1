@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { Typography } from '@/components/ui/typography'
 import * as Label from '@radix-ui/react-label'
 import * as RadioGroup from '@radix-ui/react-radio-group'
@@ -6,42 +8,40 @@ import s from '@/components/ui/radioGroup/radioGroup.module.scss'
 
 export type RadioGroupProps = {
   callback?: (value: string) => void
+  children: ChildrenType
   className?: string
+  defaultValue?: string
   disabled?: boolean
-  value: string
+}
+type ChildrenType = {
+  child: { id: string; label: string; value: string }[]
 }
 
 export const RadioButton = (props: RadioGroupProps) => {
-  const { callback, className, disabled, value } = props
+  const { callback, children, className = '', defaultValue, disabled } = props
+
+  const arrayItems = children.child.map((e, i) => (
+    <div className={s.divItem} key={i}>
+      <RadioGroup.Item className={s.RadioGroupItem} id={e.id} value={e.value}>
+        <RadioGroup.Indicator className={s.RadioGroupIndicator} />
+      </RadioGroup.Item>
+      <Typography variant={'Body 2'}>
+        <Label.Root className={`${s.label} ${disabled ? s.labelDisabled : ''}`} htmlFor={e.id}>
+          {e.label}
+        </Label.Root>
+      </Typography>
+    </div>
+  ))
 
   return (
     <RadioGroup.Root
       aria-label={'radio1'}
-      className={s.RadioGroupRoot}
-      defaultValue={'value1'}
+      className={`${s[className]} ${s.RadioGroupRoot}`}
+      defaultValue={defaultValue}
       disabled={disabled}
       onValueChange={callback}
     >
-      <div className={s.divItem}>
-        <RadioGroup.Item className={s.RadioGroupItem} id={'1q'} value={'value1'}>
-          <RadioGroup.Indicator className={s.RadioGroupIndicator} />
-        </RadioGroup.Item>
-        <Typography variant={'Body 2'}>
-          <Label.Root className={`${s.label} ${disabled ? s.labelDisabled : ''}`} htmlFor={'1q'}>
-            {value}
-          </Label.Root>
-        </Typography>
-      </div>
-      <div className={s.divItem}>
-        <RadioGroup.Item className={s.RadioGroupItem} id={'2q'} value={'value2'}>
-          <RadioGroup.Indicator className={s.RadioGroupIndicator} />
-        </RadioGroup.Item>
-        <Typography variant={'Body 2'}>
-          <Label.Root className={`${s.label} ${disabled ? s.labelDisabled : ''}`} htmlFor={'2q'}>
-            {value}
-          </Label.Root>
-        </Typography>
-      </div>
+      {arrayItems}
     </RadioGroup.Root>
   )
 }
