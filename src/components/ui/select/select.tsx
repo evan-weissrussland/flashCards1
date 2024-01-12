@@ -7,6 +7,7 @@ import s from './select.module.scss'
 
 export type SelectProps<T extends ElementType = 'button'> = {
   as?: T
+  callback?: (value: string) => void
   children?: ReactNode
   className?: string
   disabled?: boolean
@@ -18,6 +19,7 @@ export const SelectComponent = <T extends ElementType = 'button'>(
 ) => {
   const {
     as: Component = 'button',
+    callback,
     children,
     className = '',
     disabled = false,
@@ -35,7 +37,7 @@ export const SelectComponent = <T extends ElementType = 'button'>(
       <Typography variant={'Body 2'}>
         <span className={`${disabled && s.disabled} ${s.spanLabel}`}>Select-box</span>
       </Typography>
-      <Select.Root disabled={disabled}>
+      <Select.Root disabled={disabled} onValueChange={callback}>
         <Select.Trigger
           className={`${disabled && s.disabled} ${s.selectTrigger}`}
           disabled={disabled}

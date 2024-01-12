@@ -7,6 +7,7 @@ import * as Label from '@radix-ui/react-label'
 import s from './checkbox.module.scss'
 
 export type CheckboxProps = {
+  callback?: (checked: 'indeterminate' | boolean) => void
   checked?: boolean
   children?: React.ReactNode
   className?: string
@@ -16,6 +17,7 @@ export type CheckboxProps = {
 
 export const CheckboxComponent: FC<CheckboxProps> = props => {
   const {
+    callback,
     checked = false,
     children = '',
     className = '',
@@ -30,6 +32,7 @@ export const CheckboxComponent: FC<CheckboxProps> = props => {
           className={`${s.checkbox} ${disabled && s.disabled}`}
           disabled={disabled}
           id={'check1'}
+          onCheckedChange={callback}
         ></Checkbox.Root>
         <Typography variant={variant}>
           <Label.Root
