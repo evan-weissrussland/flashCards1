@@ -32,40 +32,46 @@ export const SelectComponent = <T extends ElementType = 'button'>(
     </Typography>
   )
 
-  return (
-    <div style={{ display: 'inline-block' }}>
-      <Typography variant={'Body 2'}>
-        <span className={`${disabled && s.disabled} ${s.spanLabel}`}>Select-box</span>
-      </Typography>
-      <Select.Root disabled={disabled} onValueChange={callback}>
-        <Select.Trigger
-          className={`${disabled && s.disabled} ${s.selectTrigger}`}
-          disabled={disabled}
-        >
-          <Select.Value placeholder={placeholderValue} />
-        </Select.Trigger>
+  const containerWithAttribute = document.getElementById('div-select')
 
-        <Select.Portal>
-          <Select.Content className={s.selectContent}>
-            <Select.Item className={s.selectItem} disabled={disabled} value={'dsv1'}>
-              <Select.ItemText>
-                <Typography dataColor={disabled} variant={variant}>
-                  <span className={s.itemText}>s123sgsdg</span>
-                </Typography>
-              </Select.ItemText>
-            </Select.Item>
-            <Select.Item className={s.selectItem} value={'dfssgbadb'}>
-              <Select.ItemText>
-                <Typography dataColor={disabled} variant={variant}>
-                  <span className={s.itemText}>5aS6789</span>
-                </Typography>
-              </Select.ItemText>
-            </Select.Item>
-          </Select.Content>
-        </Select.Portal>
-      </Select.Root>
-    </div>
+  return (
+    <>
+      <div style={{ display: 'inline-block' }}>
+        <Typography variant={'Body 2'}>
+          <span className={`${disabled && s.disabled} ${s.spanLabel}`}>Select-box</span>
+        </Typography>
+
+        <Select.Root disabled={disabled} onValueChange={callback}>
+          <Select.Trigger
+            className={`${disabled && s.disabled} ${s.selectTrigger}`}
+            disabled={disabled}
+          >
+            <Select.Value placeholder={placeholderValue} />
+          </Select.Trigger>
+
+          <Select.Portal container={containerWithAttribute}>
+            <Select.Content className={s.selectContent}>
+              <Select.Item className={s.selectItem} disabled={disabled} value={'dsv1'}>
+                <Select.ItemText>
+                  <Typography dataColor={disabled} variant={variant}>
+                    <span className={s.itemText}>s123sgsdg</span>
+                  </Typography>
+                </Select.ItemText>
+              </Select.Item>
+              <Select.Item className={s.selectItem} value={'dfssgbadb'}>
+                <Select.ItemText>
+                  <Typography dataColor={disabled} variant={variant}>
+                    <span className={s.itemText}>5aS6789</span>
+                  </Typography>
+                </Select.ItemText>
+              </Select.Item>
+            </Select.Content>
+          </Select.Portal>
+        </Select.Root>
+      </div>
+      <div id={'div-select'}></div>
+    </>
   )
 }
 
-//TODO 1. Нужно использовать Select.ItemText; 2. Чтобы при раскрытии item'ов выбранный item не перекрывал trigger, нужно удалить Select.Viewport. 3 Не получается изменить цвет item'а при hover
+//TODO 1. Нужно использовать Select.ItemText; 2. Чтобы при раскрытии item'ов выбранный item не перекрывал trigger, нужно удалить Select.Viewport.
