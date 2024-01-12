@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 
 import { Typography, VariantType } from '@/components/ui/typography'
 import * as Checkbox from '@radix-ui/react-checkbox'

@@ -3,6 +3,8 @@ import { CheckboxComponent } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { SelectComponent } from '@/components/ui/select'
 
+import { RadioButton } from './components/ui/radioGroup'
+
 export function App() {
   return (
     <>
@@ -16,6 +18,9 @@ export function App() {
       </div>
       <div>
         <SelectComponent variant={'Large'} />
+      </div>
+      <div>
+        <RadioButton value={'qwerty'} />
       </div>
     </>
   )
