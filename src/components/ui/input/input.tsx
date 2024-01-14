@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementType } from 'react'
+import { ComponentPropsWithoutRef, ElementType, ForwardedRef, ReactNode, forwardRef } from 'react'
 
 import s from './input.module.scss'
 
@@ -8,30 +8,35 @@ export type InputProps<T extends ElementType = 'input'> = {
   className?: string
   error?: string
   type?: string
-} & ComponentPropsWithoutRef<T>
-
-export const Input = <T extends ElementType = 'input'>(
-  props: InputProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof InputProps<T>>
-) => {
-  const {
-    as: Component = 'input',
-    callback,
-    className = '',
-    error = '',
-    type = 'text',
-    ...rest
-  } = props
-
-  return (
-    <div className={s.inputWrapper}>
-      <span className={`${s.label} ${rest.disabled && s.disabledLabel}`}>input</span>
-      <Component
-        className={`${s[type]} ${s.input} ${s[className]} ${error && s.error}`}
-        onChange={e => e.currentTarget.value}
-        type={type === 'search' ? 'text' : type}
-        {...rest}
-      />
-      <span className={s.errorText}>{error && `${error}!`}</span>
-    </div>
-  )
 }
+/**
+ * обобщённая типизация с родительскими пропсами, а также с нативными пропсами, исключая из нативных пропсов те, которые есть в родительских
+ */
+type OwnerInputProps<T extends ElementType = 'input'> = InputProps<T> &
+  Omit<ComponentPropsWithoutRef<T>, keyof InputProps<T>>
+
+type InputWithRef = <T extends ElementType = 'input'>(
+  props: OwnerInputProps<T>,
+  ref: ForwardedRef<T>
+) => ReactNode
+
+export const Input: InputWithRef = forwardRef(
+  <T extends ElementType = 'input'>(props: OwnerInputProps<T>, ref: ForwardedRef<T>) => {
+    const { as = 'input', callback, className = '', error = '', type = 'text', ...rest } = props
+    const Component: ElementType = as || 'input'
+
+    return (
+      <div className={s.inputWrapper}>
+        <span className={`${s.label} ${rest.disabled && s.disabledLabel}`}>input</span>
+        <Component
+          className={`${s[type]} ${s.input} ${s[className]} ${error && s.error}`}
+          onChange={(e: { currentTarget: { value: any } }) => e.currentTarget.value}
+          ref={ref}
+          type={type === 'search' ? 'text' : type}
+          {...rest}
+        />
+        <span className={s.errorText}>{error && `${error}!`}</span>
+      </div>
+    )
+  }
+)
