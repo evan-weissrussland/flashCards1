@@ -4,6 +4,9 @@ import { Button } from './'
 
 const meta = {
   argTypes: {
+    onClick: {
+      action: 'Clicked',
+    },
     variant: {
       control: { type: 'radio' },
       options: ['primary', 'secondary', 'tertiary', 'link'],
@@ -19,39 +22,10 @@ type Story = StoryObj<typeof meta>
 
 export const Primary: Story = {
   args: {
-    children: 'Button primary',
+    children: 'Button Primary',
     disabled: false,
-    variant: 'primary',
-  },
-}
-
-export const Secondary: Story = {
-  args: {
-    children: 'Button Secondary',
-    disabled: false,
-    variant: 'secondary',
-  },
-}
-export const Tertiary: Story = {
-  args: {
-    children: 'Tertiary',
-    disabled: false,
-    variant: 'tertiary',
-  },
-}
-export const Link: Story = {
-  args: {
-    children: 'Link-button',
-    disabled: false,
-    variant: 'link',
-  },
-}
-
-export const FullWidth: Story = {
-  args: {
-    children: 'Full Width Button',
-    disabled: false,
-    fullWidth: true,
+    fullWidth: false,
+    icon: false,
     variant: 'primary',
   },
 }

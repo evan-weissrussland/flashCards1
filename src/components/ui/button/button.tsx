@@ -1,4 +1,6 @@
-import { ComponentPropsWithoutRef, ElementType, ForwardedRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementType, ForwardedRef, ReactNode, forwardRef } from 'react'
+
+import { LogOutIcon } from '@/components/icons/icons'
 
 import s from './button.module.scss'
 
@@ -9,6 +11,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
   className?: string
   fullWidth?: boolean
+  icon?: boolean
   onClick?: () => void
   variant?: 'link' | 'primary' | 'secondary' | 'tertiary'
 }
@@ -18,12 +21,19 @@ export type ButtonProps<T extends ElementType = 'button'> = {
 type OwnerButtonProps<T extends ElementType = 'button'> = ButtonProps<T> &
   Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>
 
-export const Button = forwardRef(
+type ButtonWithRef = <T extends ElementType = 'button'>(
+  props: OwnerButtonProps<T>,
+  ref: ForwardedRef<T>
+) => ReactNode
+
+export const Button: ButtonWithRef = forwardRef(
   <T extends ElementType>(props: OwnerButtonProps<T>, ref: ForwardedRef<T>) => {
     const {
       as = 'button',
+      children,
       className = '',
       fullWidth,
+      icon,
       onClick,
       variant = 'primary',
       ...rest
@@ -40,10 +50,10 @@ export const Button = forwardRef(
         onClick={onClick}
         ref={ref}
         {...rest}
-      />
+      >
+        {icon && <LogOutIcon disabled={rest.disabled} />}
+        {children}
+      </Component>
     )
   }
 )
-
-//это нужно для отображения в Devtools - Components
-Button.displayName = 'Button1'

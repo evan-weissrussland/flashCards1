@@ -8,11 +8,15 @@ import { RadioButton } from './components/ui/radioGroup'
 export function App() {
   return (
     <>
-      <div>
-        <Button as={'a'} href={'https://google.com'}>
+      <div style={{ padding: '20px' }}>
+        <Button as={'a'} href={'https://google.com'} icon>
           Hello
         </Button>
-        <Button>Button primary</Button>
+        <Button disabled icon>
+          Button primary
+        </Button>
+      </div>
+      <div>
         <Input type={'search'} />
         <CheckboxComponent variant={'Body 2'}>asdvdhhsd</CheckboxComponent>
       </div>

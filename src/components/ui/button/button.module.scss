@@ -3,7 +3,10 @@
 
   cursor: pointer;
 
-  display: inline-block;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 
   padding: 6px 28px;
 
@@ -19,39 +22,9 @@
     outline: 2px solid var(--color-info-500);
   }
 
-  &.icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &::before {
-      content: '';
-
-      display: inline-block;
-
-      width: 16px;
-      height: 16px;
-      margin-right: 10px;
-
-      background: url('../../../../public/image/button/log-out.svg') no-repeat;
-    }
-  }
-
   &:disabled {
     cursor: default;
     color: var(--color-light-900);
-
-    &.icon::before {
-      content: '';
-
-      display: inline-block;
-
-      width: 16px;
-      height: 16px;
-      margin-right: 10px;
-
-      background: url('../../../../public/image/button/log-out dis.png') no-repeat;
-    }
   }
 }
 
@@ -105,6 +78,10 @@
     background-color: var(--color-accent-900);
     border: 1px solid var(--color-accent-700);
   }
+
+  &:disabled {
+    border: 1px solid var(--color-accent-900);
+  }
 }
 
 .link {
@@ -123,6 +100,10 @@
 
   &:focus-visible {
     border-radius: 130px;
+  }
+
+  &:disabled {
+    color: var(--color-accent-900);
   }
 }
 
