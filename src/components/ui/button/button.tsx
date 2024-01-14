@@ -13,7 +13,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   variant?: 'link' | 'primary' | 'secondary' | 'tertiary'
 }
 /**
- * обощённая типизация с родительскими пропсами, а ткже с нативными пропсами, исключая из нативных пропсов те, которые есть в родительских
+ * обобщённая типизация с родительскими пропсами, а также с нативными пропсами, исключая из нативных пропсов те, которые есть в родительских
  */
 type OwnerButtonProps<T extends ElementType = 'button'> = ButtonProps<T> &
   Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>
@@ -37,5 +37,6 @@ export const Button = forwardRef(
     )
   }
 )
-//TODO у меня не получились кнопки в размер по дизайну (длина отличается на 1px). Также я не нашёл шрифт Helvetica
+
+//это нужно для отображения в Devtools - Components
 Button.displayName = 'Button1'
