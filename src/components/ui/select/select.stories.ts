@@ -4,6 +4,10 @@ import { SelectComponent } from './'
 
 const meta = {
   argTypes: {
+    callback: {
+      action: 'Clicked',
+      description: 'Clicked button inside form',
+    },
     variant: {
       control: { type: 'radio' },
       options: [
