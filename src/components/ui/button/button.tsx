@@ -20,7 +20,14 @@ type OwnerButtonProps<T extends ElementType = 'button'> = ButtonProps<T> &
 
 export const Button = forwardRef(
   <T extends ElementType>(props: OwnerButtonProps<T>, ref: ForwardedRef<T>) => {
-    const { as, className = '', fullWidth, onClick, variant = 'primary', ...rest } = props
+    const {
+      as = 'button',
+      className = '',
+      fullWidth,
+      onClick,
+      variant = 'primary',
+      ...rest
+    } = props
 
     /**
      * тэг HTML, передаваемый из родителя. По-умолчанию 'button'. Можем передать и ссылку 'a'
