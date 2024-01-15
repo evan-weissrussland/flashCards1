@@ -1,31 +1,20 @@
-import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 
 import { Typography, VariantType } from '@/components/ui/typography'
 import * as Select from '@radix-ui/react-select'
 
 import s from './select.module.scss'
 
-export type SelectProps<T extends ElementType = 'button'> = {
-  as?: T
+export type SelectProps = {
   callback?: (value: string) => void
   children?: ReactNode
   className?: string
   disabled?: boolean
   variant?: VariantType
-} & ComponentPropsWithoutRef<T>
+}
 
-export const SelectComponent = <T extends ElementType = 'button'>(
-  props: SelectProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof SelectProps<T>>
-) => {
-  const {
-    as: Component = 'button',
-    callback,
-    children,
-    className = '',
-    disabled = false,
-    variant = 'Body 2',
-    ...rest
-  } = props
+export const SelectComponent: FC<SelectProps> = props => {
+  const { callback, disabled = false, variant = 'Body 2' } = props
   const placeholderValue = (
     <Typography variant={variant}>
       <span className={disabled ? s.disabled : ''}>Select-box</span>

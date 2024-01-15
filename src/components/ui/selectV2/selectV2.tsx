@@ -1,0 +1,30 @@
+import { FC, ReactNode } from 'react'
+
+import { Typography, VariantType } from '@/components/ui/typography'
+import * as SelectPrimitive from '@radix-ui/react-select'
+
+import s from '@/components/ui/selectV2/selectV2.module.scss'
+
+type OwnerProps = {
+  children: ReactNode
+  disabled: boolean
+  label?: string
+  onValueChange: (v: string) => void
+  typography: VariantType
+}
+export const Select: FC<OwnerProps> = ({
+  disabled,
+  label,
+  onValueChange,
+  typography,
+  ...props
+}) => {
+  return (
+    <div className={s.div} style={{ display: 'inline-block' }}>
+      <Typography variant={typography}>
+        <span className={`${disabled && s.disabled} ${s.spanLabel}`}>{label}</span>
+      </Typography>
+      <SelectPrimitive.Root disabled={disabled} onValueChange={onValueChange} {...props} />
+    </div>
+  )
+}

@@ -4,6 +4,10 @@ import { Input } from '@/components/ui/input'
 import { RadioGroup } from '@/components/ui/radioGroupV2/radioGroup'
 import { RadioGroupItem } from '@/components/ui/radioGroupV2/radioGroupItem'
 import { SelectComponent } from '@/components/ui/select'
+import { SelectContent } from '@/components/ui/selectV2/selectContent'
+import { SelectItem } from '@/components/ui/selectV2/selectItem'
+import { SelectTrigger } from '@/components/ui/selectV2/selectTrigger'
+import { Select } from '@/components/ui/selectV2/selectV2'
 
 import { RadioButton } from './components/ui/radioGroupV1'
 
@@ -22,12 +26,38 @@ export function App() {
         <Input type={'search'} />
         <CheckboxComponent variant={'Body 2'}>asdvdhhsd</CheckboxComponent>
       </div>
-      <div>
+      <div data-select={''}>
         <SelectComponent variant={'Body 1'} />
       </div>
-      <div>
+      <div data-selectV2={''}>
+        <Select
+          disabled={false}
+          label={'Select-box'}
+          onValueChange={(v: string) => {
+            v
+          }}
+          typography={'Body 2'}
+        >
+          <SelectTrigger
+            disabled={false}
+            placeholder={'Select-box'}
+            typography={'Body 1'}
+          ></SelectTrigger>
+          <SelectContent>
+            <SelectItem disabled={false} typography={'Body 1'} value={'item1'}>
+              qwertyu
+            </SelectItem>
+            <SelectItem disabled={false} typography={'Body 1'} value={'item2'}>
+              zxcvbn
+            </SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      <div data-radioButton={''}>
         <RadioButton
-          callback={(v: string) => {}}
+          callback={(v: string) => {
+            v
+          }}
           defaultValue={'ReactNode1'}
           disabled={false}
           state={[
@@ -36,28 +66,32 @@ export function App() {
           ]}
         />
       </div>
-      <RadioGroup
-        aria-label={'radio1'}
-        className={''}
-        defaultValue={'ReactNode1'}
-        disabled={false}
-        onValueChange={(v: string) => {}}
-      >
-        <RadioGroupItem
+      <div data-radioGroupV2={''}>
+        <RadioGroup
+          aria-label={'radio1'}
+          className={''}
+          defaultValue={'ReactNode1'}
           disabled={false}
-          id={'q1'}
-          label={'RadioGroup'}
-          value={'ReactNode1'}
-          variant={'Body 2'}
-        />
-        <RadioGroupItem
-          disabled={false}
-          id={'q2'}
-          label={'RadioGroup'}
-          value={'ReactNode2'}
-          variant={'Body 2'}
-        />
-      </RadioGroup>
+          onValueChange={(v: string) => {
+            v
+          }}
+        >
+          <RadioGroupItem
+            disabled={false}
+            id={'q1'}
+            label={'RadioGroup'}
+            value={'ReactNode1'}
+            variant={'Body 2'}
+          />
+          <RadioGroupItem
+            disabled={false}
+            id={'q2'}
+            label={'RadioGroup'}
+            value={'ReactNode2'}
+            variant={'Body 2'}
+          />
+        </RadioGroup>
+      </div>
     </>
   )
 }
