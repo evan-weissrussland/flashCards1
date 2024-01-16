@@ -7,6 +7,7 @@ import s from '@/components/ui/selectV2/selectV2.module.scss'
 
 type OwnerProps = {
   children: ReactNode
+  defaultValue?: string
   disabled: boolean
   label?: string
   onValueChange: (v: string) => void

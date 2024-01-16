@@ -1,6 +1,9 @@
+import { useState } from 'react'
+
 import { Button } from '@/components/ui/button'
 import { CheckboxComponent } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
+import { Paginator } from '@/components/ui/paginator/paginator'
 import { RadioGroup } from '@/components/ui/radioGroupV2/radioGroup'
 import { RadioGroupItem } from '@/components/ui/radioGroupV2/radioGroupItem'
 import { SelectComponent } from '@/components/ui/select'
@@ -12,6 +15,9 @@ import { Select } from '@/components/ui/selectV2/selectV2'
 import { RadioButton } from './components/ui/radioGroupV1'
 
 export function App() {
+  const [currPage, setCurrPage] = useState(1)
+  const [pageSize, setPageSize] = useState(30)
+
   return (
     <>
       <div style={{ padding: '20px' }}>
@@ -91,6 +97,19 @@ export function App() {
             variant={'Body 2'}
           />
         </RadioGroup>
+      </div>
+      <div>
+        <Paginator
+          currentPage={currPage}
+          onPageChanged={(n: number) => {
+            setCurrPage(n)
+          }}
+          onPageSizeChanged={(h: number) => {
+            setPageSize(h)
+          }}
+          pageSize={pageSize}
+          totalItemsCount={1000}
+        />
       </div>
     </>
   )

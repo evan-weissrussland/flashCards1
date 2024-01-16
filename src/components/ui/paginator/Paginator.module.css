@@ -1,0 +1,37 @@
+.waipperSpans {
+  display: flex;
+  flex-wrap: wrap;
+
+  /* border: 2px solid red; */
+  align-items: center;
+}
+
+.pageNumber {
+  cursor: pointer;
+
+  padding: 2px 5px;
+
+  font-weight: bold;
+  color: white;
+
+  border: 1px solid yellow;
+}
+
+.pageNumber:hover {
+  color: hotpink;
+  box-shadow: 0 0 5px 5px yellow;
+}
+
+.pageNumber.selectedPage {
+  cursor: default;
+
+  padding: 2px 5px;
+
+  font-size: 2em;
+  font-weight: bold;
+  color: orange;
+}
+
+.pageNumber.selectedPage:hover {
+  box-shadow: none;
+}
