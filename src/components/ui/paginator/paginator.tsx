@@ -151,3 +151,4 @@ export const Paginator: FC<Props> = ({
     </>
   )
 }
+//TODO не знаю, как сделать, чтобы portionSize = 3, крмое 1-й и последней порции
