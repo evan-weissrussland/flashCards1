@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { Header } from '@/components/ui/Header/Header'
 import { Button } from '@/components/ui/button'
 import { CheckboxComponent } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
@@ -20,6 +21,7 @@ export function App() {
 
   return (
     <>
+      <Header />
       <div style={{ padding: '20px' }}>
         <Button as={'a'} href={'https://google.com'} icon>
           Hello
