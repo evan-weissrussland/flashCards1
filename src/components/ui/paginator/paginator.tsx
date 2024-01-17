@@ -11,6 +11,7 @@ type Props = {
   onPageChanged: (pageNumber: number) => void //изменение текущей страницы
   onPageSizeChanged?: (pageSizeNumber: number) => void //изменение порции страниц. Делает селект
   pageSize: number //размер товаров на одной странице
+  theme?: 'dark' | null
   totalItemsCount: number //общее число всех товаров
 }
 
@@ -19,6 +20,7 @@ export const Paginator: FC<Props> = ({
   onPageChanged,
   onPageSizeChanged,
   pageSize,
+  theme,
   totalItemsCount,
 }) => {
   const [portionNumber, setPortionNumber] = useState(1)
@@ -63,7 +65,9 @@ export const Paginator: FC<Props> = ({
             setPortionNumber(1)
           }}
         >
-          <Typography variant={'Body 2'}>1</Typography>
+          <Typography dataColor theme={theme} variant={'Body 2'}>
+            1
+          </Typography>
         </button>
 
         {portionNumber > 1 && <button className={s.pageNumber}>...</button>}
@@ -77,7 +81,9 @@ export const Paginator: FC<Props> = ({
                 key={i}
                 onClick={() => onPageChanged(p)}
               >
-                <Typography variant={'Body 2'}>{p}</Typography>
+                <Typography dataColor theme={theme} variant={'Body 2'}>
+                  {p}
+                </Typography>
               </button>
             )
           })}
@@ -91,7 +97,9 @@ export const Paginator: FC<Props> = ({
             setPortionNumber(portionCount)
           }}
         >
-          <Typography variant={'Body 2'}>{pagesCount}</Typography>
+          <Typography theme={theme} variant={'Body 2'}>
+            {pagesCount}
+          </Typography>
         </button>
 
         <button
@@ -104,7 +112,7 @@ export const Paginator: FC<Props> = ({
           <PaginationIconNext disabled={disabledNextButton} />
         </button>
 
-        <Typography style={{ marginRight: '6px' }} variant={'Body 2'}>
+        <Typography style={{ marginRight: '6px' }} theme={theme} variant={'Body 2'}>
           Показать
         </Typography>
 
@@ -122,29 +130,30 @@ export const Paginator: FC<Props> = ({
           <SelectTrigger
             disabled={false}
             placeholder={''}
+            theme={theme}
             typography={'Body 1'}
             width={'60px'}
           ></SelectTrigger>
           <SelectContent>
-            <SelectItem disabled={false} typography={'Body 2'} value={'10'}>
+            <SelectItem disabled={false} theme={theme} typography={'Body 2'} value={'10'}>
               10
             </SelectItem>
-            <SelectItem disabled={false} typography={'Body 2'} value={'20'}>
+            <SelectItem disabled={false} theme={theme} typography={'Body 2'} value={'20'}>
               20
             </SelectItem>
-            <SelectItem disabled={false} typography={'Body 2'} value={'30'}>
+            <SelectItem disabled={false} theme={theme} typography={'Body 2'} value={'30'}>
               30
             </SelectItem>
-            <SelectItem disabled={false} typography={'Body 2'} value={'50'}>
+            <SelectItem disabled={false} theme={theme} typography={'Body 2'} value={'50'}>
               50
             </SelectItem>
-            <SelectItem disabled={false} typography={'Body 2'} value={'100'}>
+            <SelectItem disabled={false} theme={theme} typography={'Body 2'} value={'100'}>
               100
             </SelectItem>
           </SelectContent>
         </Select>
 
-        <Typography style={{ marginLeft: '9px' }} variant={'Body 2'}>
+        <Typography style={{ marginLeft: '9px' }} theme={theme} variant={'Body 2'}>
           на странице
         </Typography>
       </div>

@@ -1,9 +1,11 @@
 import { Button } from '@/components/ui/button'
+import { DropDown } from '@/components/ui/dropDown'
 
 import s from './header.module.scss'
+
 export const Header = () => {
   //вытягивам из Redux'а состояние: залогинен или нет
-  const isLogged = false
+  const isLogged = true
   const signInHandler = () => {
     //здесь диспатч санккреатора: вход на сайт
   }
@@ -19,7 +21,7 @@ export const Header = () => {
             Sign In
           </Button>
         ) : (
-          <>DropDown</>
+          <DropDown />
         )}
       </div>
     </div>

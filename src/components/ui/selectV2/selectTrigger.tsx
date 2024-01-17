@@ -8,15 +8,16 @@ import s from '@/components/ui/selectV2/selectV2.module.scss'
 type OwnerProps = {
   disabled: boolean
   placeholder: string
+  theme?: 'dark' | null
   typography: VariantType
   width?: string
 }
 export const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   OwnerProps & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ disabled, placeholder, typography, width = '', ...props }, ref) => {
+>(({ disabled, placeholder, theme, typography, width = '', ...props }, ref) => {
   const placeholderValue = (
-    <Typography variant={typography}>
+    <Typography theme={theme} variant={typography}>
       <span className={disabled ? s.disabled : ''}>{placeholder}</span>
     </Typography>
   )

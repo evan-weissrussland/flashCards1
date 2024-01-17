@@ -7,6 +7,7 @@ export type InputProps<T extends ElementType = 'input'> = {
   callback?: (inputData: string) => void
   className?: string
   error?: string
+  // placeholder?: string
   type?: string
 }
 /**

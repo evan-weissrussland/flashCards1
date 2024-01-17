@@ -8,7 +8,7 @@ import s from '@/components/ui/radioGroupV2/radioGroupItem.module.scss'
 
 export const RadioGroupItem = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,
-  { label: string; variant: VariantType } & React.ComponentPropsWithoutRef<
+  { label: string; theme?: 'dark' | null; variant: VariantType } & React.ComponentPropsWithoutRef<
     typeof RadioGroupPrimitive.Item
   >
 >((props, ref) => {
@@ -17,7 +17,7 @@ export const RadioGroupItem = React.forwardRef<
       <RadioGroupPrimitive.Item className={s.RadioGroupItem} ref={ref} {...props}>
         <RadioGroupPrimitive.Indicator className={s.RadioGroupIndicator} />
       </RadioGroupPrimitive.Item>
-      <Typography variant={props.variant}>
+      <Typography theme={props.theme} variant={props.variant}>
         <Label.Root
           className={`${s.label} ${props.disabled ? s.labelDisabled : ''}`}
           htmlFor={props.id}

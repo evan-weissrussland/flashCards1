@@ -1,5 +1,9 @@
 %color-inherit {
-  &[data-color] {
+  &[theme*='dark'] {
+    color: var(--color-light-100);
+  }
+
+  &[data-color*='true'] {
     color: inherit;
   }
 }

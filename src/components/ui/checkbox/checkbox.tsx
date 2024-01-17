@@ -12,6 +12,7 @@ export type CheckboxProps = {
   children?: React.ReactNode
   className?: string
   disabled?: boolean
+  theme?: 'dark' | null
   variant?: VariantType
 }
 
@@ -22,6 +23,7 @@ export const CheckboxComponent: FC<CheckboxProps> = props => {
     children = '',
     className = '',
     disabled = false,
+    theme,
     variant = 'Body 2',
   } = props
 
@@ -34,7 +36,7 @@ export const CheckboxComponent: FC<CheckboxProps> = props => {
           id={'check1'}
           onCheckedChange={callback}
         ></Checkbox.Root>
-        <Typography variant={variant}>
+        <Typography theme={theme} variant={variant}>
           <Label.Root
             className={`${s.label} ${disabled ? s.labelDisabled : ''}`}
             htmlFor={'check1'}

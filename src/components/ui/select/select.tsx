@@ -10,13 +10,14 @@ export type SelectProps = {
   children?: ReactNode
   className?: string
   disabled?: boolean
+  theme?: 'dark' | null
   variant?: VariantType
 }
 
 export const SelectComponent: FC<SelectProps> = props => {
-  const { callback, disabled = false, variant = 'Body 2' } = props
+  const { callback, disabled = false, theme, variant = 'Body 2' } = props
   const placeholderValue = (
-    <Typography variant={variant}>
+    <Typography theme={theme} variant={variant}>
       <span className={disabled ? s.disabled : ''}>Select-box</span>
     </Typography>
   )

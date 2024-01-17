@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { Header } from '@/components/ui/Header/Header'
 import { Button } from '@/components/ui/button'
 import { CheckboxComponent } from '@/components/ui/checkbox'
+import { DropDown } from '@/components/ui/dropDown'
 import { Input } from '@/components/ui/input'
 import { Paginator } from '@/components/ui/paginator/paginator'
 import { RadioGroup } from '@/components/ui/radioGroupV2/radioGroup'
@@ -31,13 +32,15 @@ export function App() {
         </Button>
       </div>
       <div>
-        <Input type={'search'} />
-        <CheckboxComponent variant={'Body 2'}>asdvdhhsd</CheckboxComponent>
+        <Input placeholder={'Input'} type={'search'} />
+        <CheckboxComponent theme={'dark'} variant={'Body 2'}>
+          asdvdhhsd
+        </CheckboxComponent>
       </div>
       <div data-select={''}>
-        <SelectComponent variant={'Body 1'} />
+        <SelectComponent theme={'dark'} variant={'Body 1'} />
       </div>
-      <div data-selectV2={''}>
+      <div data-selectv2={''}>
         <Select
           disabled={false}
           label={'Select-box'}
@@ -49,6 +52,7 @@ export function App() {
           <SelectTrigger
             disabled={false}
             placeholder={'Select-box'}
+            theme={'dark'}
             typography={'Body 1'}
           ></SelectTrigger>
           <SelectContent>
@@ -61,7 +65,7 @@ export function App() {
           </SelectContent>
         </Select>
       </div>
-      <div data-radioButton={''}>
+      <div data-radiobutton={''}>
         <RadioButton
           callback={(v: string) => {
             v
@@ -72,9 +76,10 @@ export function App() {
             { id: 'id1', label: 'RadioGroup', value: 'ReactNode1' },
             { id: 'id2', label: 'RadioGroup', value: 'ReactNode2' },
           ]}
+          theme={'dark'}
         />
       </div>
-      <div data-radioGroupV2={''}>
+      <div data-radiogroupv2={''}>
         <RadioGroup
           aria-label={'radio1'}
           className={''}
@@ -88,6 +93,7 @@ export function App() {
             disabled={false}
             id={'q1'}
             label={'RadioGroup'}
+            theme={'dark'}
             value={'ReactNode1'}
             variant={'Body 2'}
           />
@@ -95,6 +101,7 @@ export function App() {
             disabled={false}
             id={'q2'}
             label={'RadioGroup'}
+            theme={'dark'}
             value={'ReactNode2'}
             variant={'Body 2'}
           />
@@ -110,8 +117,12 @@ export function App() {
             setPageSize(h)
           }}
           pageSize={pageSize}
+          theme={'dark'}
           totalItemsCount={1000}
         />
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <DropDown />
       </div>
     </>
   )
