@@ -7,31 +7,33 @@
 }
 
 .pageNumber {
-  cursor: pointer;
+  all: unset;
 
-  padding: 2px 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-  font-weight: bold;
-  color: white;
+  box-sizing: border-box;
+  width: 24px;
+  margin: 0 6px;
 
-  border: 1px solid yellow;
-}
+  border: none;
+  border-radius: 2px;
 
-.pageNumber:hover {
-  color: hotpink;
-  box-shadow: 0 0 5px 5px yellow;
-}
+  &.selectedPage {
+    color: var(--color-dark-900);
+    background: var(--color-light-100);
+  }
 
-.pageNumber.selectedPage {
-  cursor: default;
+  &.prev {
+    margin-left: 0;
+  }
 
-  padding: 2px 5px;
+  &.next {
+    margin-right: 20px;
+  }
 
-  font-size: 2em;
-  font-weight: bold;
-  color: orange;
-}
-
-.pageNumber.selectedPage:hover {
-  box-shadow: none;
+  &:focus-visible {
+    outline: 2px solid var(--color-info-900);
+  }
 }

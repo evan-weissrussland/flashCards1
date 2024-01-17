@@ -1,6 +1,8 @@
 import { FC, useState } from 'react'
 
+import { PaginationIconNext, PaginationIconPrev } from '@/components/icons/icons'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/selectV2'
+import { Typography } from '@/components/ui/typography'
 
 import s from './Paginator.module.css'
 
@@ -20,80 +22,91 @@ export const Paginator: FC<Props> = ({
   totalItemsCount,
 }) => {
   const [portionNumber, setPortionNumber] = useState(1)
+  //количество номеров порций страниц, видимых между кнопками "предыдущая порция страниц" и "следующая порция страниц"
   const portionSize = 5
-  const pagesCount = Math.ceil(totalItemsCount / pageSize) //34
-
+  //общее количество страниц
+  const pagesCount = Math.ceil(totalItemsCount / pageSize)
+  //массив из количества страниц
   const pages: number[] = []
 
   for (let i = 2; i < pagesCount; i++) {
     pages.push(i)
   }
-
-  const portionCount = Math.ceil(pagesCount / portionSize) //7 12
-
-  const leftPortionPageNumber = (portionNumber - 1) * portionSize //0 3
-  const rightPortionPageNumber = portionNumber * portionSize //5 6
+  // количество порций страниц
+  const portionCount = Math.ceil(pagesCount / portionSize)
+  //номер крайней левой страницы в порции страниц
+  const leftPortionPageNumber = (portionNumber - 1) * portionSize
+  //номер крайней правой страницы в порции страниц
+  const rightPortionPageNumber = portionNumber * portionSize
+  //условие блокировки кнопки "предыдущая порция страниц"
+  const disabledPrevButton = !(portionNumber > 1)
+  //условие блокировки кнопки "следующая порция страниц"
+  const disabledNextButton = !(portionCount > portionNumber)
 
   return (
     <>
       <div className={s.waipperSpans}>
         <button
-          disabled={!(portionNumber > 1)}
+          className={`${s.pageNumber} ${s.prev}`}
+          disabled={disabledPrevButton}
           onClick={() => {
             setPortionNumber(portionNumber - 1)
           }}
         >
-          Prev
+          <PaginationIconPrev disabled={disabledPrevButton} />
         </button>
 
-        <span
+        <button
           className={`${s.pageNumber} ${1 === currentPage ? s.selectedPage : ''}`}
           onClick={() => {
             onPageChanged(1)
             setPortionNumber(1)
           }}
         >
-          1
-        </span>
+          <Typography variant={'Body 2'}>1</Typography>
+        </button>
 
-        {portionNumber > 1 && <span>...</span>}
+        {portionNumber > 1 && <button className={s.pageNumber}>...</button>}
 
         {pages
           .filter(p => p > leftPortionPageNumber && p <= rightPortionPageNumber)
           .map((p, i) => {
             return (
-              <span
+              <button
                 className={`${s.pageNumber} ${p === currentPage ? s.selectedPage : ''}`}
                 key={i}
                 onClick={() => onPageChanged(p)}
               >
-                {p}
-              </span>
+                <Typography variant={'Body 2'}>{p}</Typography>
+              </button>
             )
           })}
 
-        {portionNumber < portionCount && <span>...</span>}
+        {portionNumber < portionCount && <button className={s.pageNumber}>...</button>}
 
-        <span
+        <button
           className={`${s.pageNumber} ${pagesCount === currentPage ? s.selectedPage : ''}`}
           onClick={() => {
             onPageChanged(pagesCount)
             setPortionNumber(portionCount)
           }}
         >
-          {pagesCount}
-        </span>
+          <Typography variant={'Body 2'}>{pagesCount}</Typography>
+        </button>
 
         <button
-          disabled={!(portionCount > portionNumber)}
+          className={`${s.pageNumber} ${s.next}`}
+          disabled={disabledNextButton}
           onClick={() => {
             setPortionNumber(portionNumber + 1)
           }}
         >
-          Next
+          <PaginationIconNext disabled={disabledNextButton} />
         </button>
 
-        <span>Показать</span>
+        <Typography style={{ marginRight: '6px' }} variant={'Body 2'}>
+          Показать
+        </Typography>
 
         <Select
           defaultValue={pageSize.toString()}
@@ -131,7 +144,9 @@ export const Paginator: FC<Props> = ({
           </SelectContent>
         </Select>
 
-        <span>на странице</span>
+        <Typography style={{ marginLeft: '9px' }} variant={'Body 2'}>
+          на странице
+        </Typography>
       </div>
     </>
   )
