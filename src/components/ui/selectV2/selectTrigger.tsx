@@ -9,11 +9,12 @@ type OwnerProps = {
   disabled: boolean
   placeholder: string
   typography: VariantType
+  width?: string
 }
 export const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
   OwnerProps & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ disabled, placeholder, typography, ...props }, ref) => {
+>(({ disabled, placeholder, typography, width = '', ...props }, ref) => {
   const placeholderValue = (
     <Typography variant={typography}>
       <span className={disabled ? s.disabled : ''}>{placeholder}</span>
@@ -25,6 +26,7 @@ export const SelectTrigger = React.forwardRef<
       className={`${disabled && s.disabled} ${s.selectTrigger}`}
       disabled={disabled}
       ref={ref}
+      style={{ width: width }}
       {...props}
     >
       <SelectPrimitive.Value placeholder={placeholderValue} />

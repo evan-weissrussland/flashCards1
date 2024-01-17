@@ -106,21 +106,26 @@ export const Paginator: FC<Props> = ({
           }}
           typography={'Body 2'}
         >
-          <SelectTrigger disabled={false} placeholder={''} typography={'Body 1'}></SelectTrigger>
+          <SelectTrigger
+            disabled={false}
+            placeholder={''}
+            typography={'Body 1'}
+            width={'60px'}
+          ></SelectTrigger>
           <SelectContent>
-            <SelectItem disabled={false} typography={'Body 1'} value={'10'}>
+            <SelectItem disabled={false} typography={'Body 2'} value={'10'}>
               10
             </SelectItem>
-            <SelectItem disabled={false} typography={'Body 1'} value={'20'}>
+            <SelectItem disabled={false} typography={'Body 2'} value={'20'}>
               20
             </SelectItem>
-            <SelectItem disabled={false} typography={'Body 1'} value={'30'}>
+            <SelectItem disabled={false} typography={'Body 2'} value={'30'}>
               30
             </SelectItem>
-            <SelectItem disabled={false} typography={'Body 1'} value={'50'}>
+            <SelectItem disabled={false} typography={'Body 2'} value={'50'}>
               50
             </SelectItem>
-            <SelectItem disabled={false} typography={'Body 1'} value={'100'}>
+            <SelectItem disabled={false} typography={'Body 2'} value={'100'}>
               100
             </SelectItem>
           </SelectContent>
