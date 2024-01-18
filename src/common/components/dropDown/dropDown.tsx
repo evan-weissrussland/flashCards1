@@ -23,7 +23,19 @@ export const DropDown: DropDownWithRef = forwardRef(
     return (
       <DropdownMenu.Root>
         <DropDownTrigger>
-          <img alt={'ava'} src={'../../../../public/Ellipse%201.png'} />
+          <div style={{ display: 'inline-flex', gap: '14px' }}>
+            <Typography theme={'dark'} variant={'Subtitle 1'}>
+              <span
+                style={{
+                  textDecoration: 'underline',
+                  textDecorationStyle: 'dashed',
+                }}
+              >
+                Ivan
+              </span>
+            </Typography>
+            <img alt={'ava'} src={'../../../../public/Ellipse%201.png'} />
+          </div>
         </DropDownTrigger>
 
         <DropdownMenu.Portal>

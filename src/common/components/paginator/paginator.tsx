@@ -97,7 +97,7 @@ export const Paginator: FC<Props> = ({
             setPortionNumber(portionCount)
           }}
         >
-          <Typography theme={theme} variant={'Body 2'}>
+          <Typography dataColor theme={theme} variant={'Body 2'}>
             {pagesCount}
           </Typography>
         </button>
