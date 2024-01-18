@@ -11,6 +11,7 @@ import { SelectComponent } from '@/common/components/select'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/common/components/selectV2'
 import { Header } from '@/features/Header/ui/Header'
 import { SignIn } from '@/features/SignIn/ui'
+import { SignUp } from '@/features/SignUp/ui'
 
 export function App() {
   const [currPage, setCurrPage] = useState(1)
@@ -121,6 +122,8 @@ export function App() {
         <DropDown />
       </div>
       <SignIn />
+      <br />
+      <SignUp />
     </>
   )
 }
