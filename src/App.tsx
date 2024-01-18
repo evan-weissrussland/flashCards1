@@ -10,6 +10,7 @@ import { RadioGroup, RadioGroupItem } from '@/common/components/radioGroupV2'
 import { SelectComponent } from '@/common/components/select'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/common/components/selectV2'
 import { CheckEmail } from '@/features/Auth/ui/CheckEmail/ui'
+import { CreateNewPass } from '@/features/Auth/ui/CreateNewPass/ui'
 import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
 import { Header } from '@/features/Auth/ui/Header/ui'
 import { SignIn } from '@/features/Auth/ui/SignIn/ui'
@@ -130,6 +131,8 @@ export function App() {
       <ForgotPass />
       <br />
       <CheckEmail />
+      <br />
+      <CreateNewPass />
     </>
   )
 }

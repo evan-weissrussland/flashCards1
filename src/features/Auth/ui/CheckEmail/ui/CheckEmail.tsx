@@ -4,6 +4,9 @@ import { Typography } from '@/common/components/typography'
 import { CheckEmailIcon } from '@/common/icons/icons'
 
 export const CheckEmail = () => {
+  //email из стэйта
+  const email = 'example@mail.com'
+
   return (
     <Card className={'border'} style={{ padding: '33px 36px 25px 27px' }}>
       <Typography
@@ -21,7 +24,7 @@ export const CheckEmail = () => {
         theme={'dark'}
         variant={'Body 2'}
       >
-        `We’ve sent an Email with instructions to example@mail.com`
+        We’ve sent an Email with instructions to {email}
       </Typography>
       <Button style={{ marginBottom: '20px' }}>Back to Sign In</Button>
     </Card>

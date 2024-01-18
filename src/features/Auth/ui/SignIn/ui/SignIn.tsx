@@ -41,7 +41,9 @@ export const SignIn = () => {
         style={{ marginBottom: '5px', textAlign: 'center' }}
         theme={'dark'}
         variant={'Body 2'}
-      >{`Don't have an account?`}</Typography>
+      >
+        Don't have an account?
+      </Typography>
       <div style={{ textAlign: 'center' }}>
         <Button style={{ textDecoration: 'underline' }} variant={'link'}>
           Sign Up
