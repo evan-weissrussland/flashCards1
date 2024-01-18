@@ -1,8 +1,8 @@
 import { FC, useState } from 'react'
 
-import { PaginationIconNext, PaginationIconPrev } from '@/components/icons/icons'
-import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/selectV2'
-import { Typography } from '@/components/ui/typography'
+import { Select, SelectContent, SelectItem, SelectTrigger } from '@/common/components/selectV2'
+import { Typography } from '@/common/components/typography'
+import { PaginationIconNext, PaginationIconPrev } from '@/common/icons/icons'
 
 import s from './Paginator.module.css'
 

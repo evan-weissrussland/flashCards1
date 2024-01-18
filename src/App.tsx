@@ -1,20 +1,16 @@
 import { useState } from 'react'
 
-import { Header } from '@/components/ui/Header/Header'
-import { Button } from '@/components/ui/button'
-import { CheckboxComponent } from '@/components/ui/checkbox'
-import { DropDown } from '@/components/ui/dropDown'
-import { Input } from '@/components/ui/input'
-import { Paginator } from '@/components/ui/paginator/paginator'
-import { RadioGroup } from '@/components/ui/radioGroupV2/radioGroup'
-import { RadioGroupItem } from '@/components/ui/radioGroupV2/radioGroupItem'
-import { SelectComponent } from '@/components/ui/select'
-import { SelectContent } from '@/components/ui/selectV2/selectContent'
-import { SelectItem } from '@/components/ui/selectV2/selectItem'
-import { SelectTrigger } from '@/components/ui/selectV2/selectTrigger'
-import { Select } from '@/components/ui/selectV2/selectV2'
-
-import { RadioButton } from './components/ui/radioGroupV1'
+import { Button } from '@/common/components/button'
+import { CheckboxComponent } from '@/common/components/checkbox'
+import { DropDown } from '@/common/components/dropDown'
+import { Input } from '@/common/components/input'
+import { Paginator } from '@/common/components/paginator/paginator'
+import { RadioButton } from '@/common/components/radioGroupV1'
+import { RadioGroup, RadioGroupItem } from '@/common/components/radioGroupV2'
+import { SelectComponent } from '@/common/components/select'
+import { Select, SelectContent, SelectItem, SelectTrigger } from '@/common/components/selectV2'
+import { Header } from '@/features/Header/ui/Header'
+import { SignIn } from '@/features/SignIn/ui'
 
 export function App() {
   const [currPage, setCurrPage] = useState(1)
@@ -33,7 +29,7 @@ export function App() {
       </div>
       <div>
         <Input placeholder={'Input'} type={'search'} />
-        <CheckboxComponent theme={'dark'} variant={'Body 2'}>
+        <CheckboxComponent id={'q1'} name={'check1'} theme={'dark'} value={'c1'} variant={'Body 2'}>
           asdvdhhsd
         </CheckboxComponent>
       </div>
@@ -124,6 +120,7 @@ export function App() {
       <div style={{ textAlign: 'center' }}>
         <DropDown />
       </div>
+      <SignIn />
     </>
   )
 }

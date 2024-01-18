@@ -1,8 +1,8 @@
-import { Typography } from '@/components/ui/typography'
+import { Typography } from '@/common/components/typography'
 import * as Label from '@radix-ui/react-label'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 
-import s from '@/components/ui/radioGroupV1/radioButton.module.scss'
+import s from './radioButton.module.scss'
 
 export type RadioGroupProps = {
   callback?: (value: string) => void

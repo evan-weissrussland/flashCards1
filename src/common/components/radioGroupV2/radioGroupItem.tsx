@@ -1,10 +1,10 @@
 import * as React from 'react'
 
-import { Typography, VariantType } from '@/components/ui/typography'
+import { Typography, VariantType } from '@/common/components/typography'
 import * as Label from '@radix-ui/react-label'
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group'
 
-import s from '@/components/ui/radioGroupV2/radioGroupItem.module.scss'
+import s from './radioGroupItem.module.scss'
 
 export const RadioGroupItem = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,

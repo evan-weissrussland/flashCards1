@@ -2,6 +2,7 @@
   display: inline-flex;
   flex-direction: column;
 
+  width: 100%;
   height: 84px;
 
   font-size: var(--font-size-m);
@@ -9,7 +10,6 @@
 
   .input {
     box-sizing: border-box;
-    width: 284px;
     padding: 5px 11px;
 
     line-height: inherit;

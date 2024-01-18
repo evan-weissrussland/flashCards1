@@ -1,9 +1,9 @@
 import { FC, ReactNode } from 'react'
 
-import { Typography, VariantType } from '@/components/ui/typography'
+import { Typography, VariantType } from '@/common/components/typography'
 import * as SelectPrimitive from '@radix-ui/react-select'
 
-import s from '@/components/ui/selectV2/selectV2.module.scss'
+import s from './selectV2.module.scss'
 
 type OwnerProps = {
   children: ReactNode

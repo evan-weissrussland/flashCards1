@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ForwardedRef, ReactNode, forwardRef } from 'react'
 
-import { Typography } from '@/components/ui/typography'
+import { Typography } from '@/common/components/typography'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
 import s from './dropDown.module.scss'

@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementType, ForwardedRef, ReactNode, forwardRef } from 'react'
 
-import { LogOutIcon } from '@/components/icons/icons'
+import { LogOutIcon } from '@/common/icons/icons'
 
 import s from './button.module.scss'
 

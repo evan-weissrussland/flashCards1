@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import { Typography, VariantType } from '@/components/ui/typography'
+import { Typography, VariantType } from '@/common/components/typography'
 import * as Checkbox from '@radix-ui/react-checkbox'
 import * as Label from '@radix-ui/react-label'
 
@@ -12,7 +12,10 @@ export type CheckboxProps = {
   children?: React.ReactNode
   className?: string
   disabled?: boolean
+  id: string
+  name: string
   theme?: 'dark' | null
+  value: string
   variant?: VariantType
 }
 
@@ -23,24 +26,26 @@ export const CheckboxComponent: FC<CheckboxProps> = props => {
     children = '',
     className = '',
     disabled = false,
+    id,
+    name,
     theme,
+    value,
     variant = 'Body 2',
   } = props
 
   return (
-    <form action={'get'}>
+    <form action={'get'} style={{ display: 'flex' }}>
       <div className={s.checkWrapper}>
         <Checkbox.Root
           className={`${s.checkbox} ${disabled && s.disabled}`}
           disabled={disabled}
-          id={'check1'}
+          id={id}
+          name={name}
           onCheckedChange={callback}
+          value={value}
         ></Checkbox.Root>
         <Typography theme={theme} variant={variant}>
-          <Label.Root
-            className={`${s.label} ${disabled ? s.labelDisabled : ''}`}
-            htmlFor={'check1'}
-          >
+          <Label.Root className={`${s.label} ${disabled ? s.labelDisabled : ''}`} htmlFor={id}>
             {children}
           </Label.Root>
         </Typography>

@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import * as SelectPrimitive from '@radix-ui/react-select'
 
-import s from '@/components/ui/select/select.module.scss'
+import s from './selectV2.module.scss'
 
 export const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,

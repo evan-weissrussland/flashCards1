@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button'
-import { DropDown } from '@/components/ui/dropDown'
+import { Button } from '@/common/components/button'
+import { DropDown } from '@/common/components/dropDown'
 
 import s from './header.module.scss'
 

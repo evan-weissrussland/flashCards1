@@ -1,6 +1,6 @@
 import { FC, ReactNode } from 'react'
 
-import { Typography, VariantType } from '@/components/ui/typography'
+import { Typography, VariantType } from '@/common/components/typography'
 import * as Select from '@radix-ui/react-select'
 
 import s from './select.module.scss'
