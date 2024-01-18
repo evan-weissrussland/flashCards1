@@ -1,7 +1,7 @@
 import { Button } from '@/common/components/button'
 import { Card } from '@/common/components/card'
 import { Typography } from '@/common/components/typography'
-import { CheckEmailIcon, EditIcon } from '@/common/icons/icons'
+import { EditIcon } from '@/common/icons/icons'
 
 export const EditProfileLogout = () => {
   //email из стэйта
@@ -45,7 +45,7 @@ export const EditProfileLogout = () => {
         theme={'dark'}
         variant={'Body 2'}
       >
-        User Email
+        {email}
       </Typography>
       <div style={{ textAlign: 'center' }}>
         <Button icon style={{ textAlign: 'center' }} variant={'secondary'}>

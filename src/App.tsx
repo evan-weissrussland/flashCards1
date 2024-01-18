@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger } from '@/common/compo
 import { CheckEmail } from '@/features/Auth/ui/CheckEmail/ui'
 import { CreateNewPass } from '@/features/Auth/ui/CreateNewPass/ui'
 import { EditProfileLogout } from '@/features/Auth/ui/EditProfileLogout/ui'
+import { EditProfileSaveChange } from '@/features/Auth/ui/EditProfileSaveChange/ui'
 import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
 import { Header } from '@/features/Auth/ui/Header/ui'
 import { SignIn } from '@/features/Auth/ui/SignIn/ui'
@@ -136,6 +137,8 @@ export function App() {
       <CreateNewPass />
       <br />
       <EditProfileLogout />
+      <br />
+      <EditProfileSaveChange />
     </>
   )
 }
