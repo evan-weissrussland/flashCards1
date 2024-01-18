@@ -34,7 +34,11 @@ export const DropDown: DropDownWithRef = forwardRef(
                 Ivan
               </span>
             </Typography>
-            <img alt={'ava'} src={'../../../../public/Ellipse%201.png'} />
+            <img
+              alt={'ava'}
+              src={'../../../../public/Ellipse%201.png'}
+              style={{ height: '36px', width: '36px' }}
+            />
           </div>
         </DropDownTrigger>
 
@@ -50,7 +54,7 @@ export const DropDown: DropDownWithRef = forwardRef(
                 <img
                   alt={'ava'}
                   src={'../../../../public/Ellipse%201.png'}
-                  style={{ height: '36px' }}
+                  style={{ height: '36px', width: '36px' }}
                 />
                 <div style={{ display: 'inline-flex', flexDirection: 'column' }}>
                   <Typography theme={'dark'} variant={'Subtitle 2'}>
