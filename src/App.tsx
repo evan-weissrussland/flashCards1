@@ -9,9 +9,10 @@ import { RadioButton } from '@/common/components/radioGroupV1'
 import { RadioGroup, RadioGroupItem } from '@/common/components/radioGroupV2'
 import { SelectComponent } from '@/common/components/select'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/common/components/selectV2'
-import { Header } from '@/features/Header/ui/Header'
-import { SignIn } from '@/features/SignIn/ui'
-import { SignUp } from '@/features/SignUp/ui'
+import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
+import { Header } from '@/features/Auth/ui/Header/ui'
+import { SignIn } from '@/features/Auth/ui/SignIn/ui'
+import { SignUp } from '@/features/Auth/ui/SignUp/ui'
 
 export function App() {
   const [currPage, setCurrPage] = useState(1)
@@ -124,6 +125,8 @@ export function App() {
       <SignIn />
       <br />
       <SignUp />
+      <br />
+      <ForgotPass />
     </>
   )
 }

@@ -7,7 +7,11 @@ import { Typography } from '@/common/components/typography'
 export const SignIn = () => {
   return (
     <Card className={'border'} style={{ padding: '33px 36px 25px 27px' }}>
-      <Typography style={{ textAlign: 'center' }} theme={'dark'} variant={'Large'}>
+      <Typography
+        style={{ marginBottom: '27px', textAlign: 'center' }}
+        theme={'dark'}
+        variant={'Large'}
+      >
         Sign In
       </Typography>
       <div>
@@ -39,7 +43,9 @@ export const SignIn = () => {
         variant={'Body 2'}
       >{`Don't have an account?`}</Typography>
       <div style={{ textAlign: 'center' }}>
-        <Button variant={'link'}>Sign Up</Button>
+        <Button style={{ textDecoration: 'underline' }} variant={'link'}>
+          Sign Up
+        </Button>
       </div>
     </Card>
   )

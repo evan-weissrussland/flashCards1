@@ -6,7 +6,11 @@ import { Typography } from '@/common/components/typography'
 export const SignUp = () => {
   return (
     <Card className={'border'} style={{ padding: '33px 36px 25px 27px' }}>
-      <Typography style={{ textAlign: 'center' }} theme={'dark'} variant={'Large'}>
+      <Typography
+        style={{ marginBottom: '27px', textAlign: 'center' }}
+        theme={'dark'}
+        variant={'Large'}
+      >
         Sign Up
       </Typography>
       <div style={{ marginBottom: '36px' }}>
@@ -23,7 +27,9 @@ export const SignUp = () => {
         Already have an account?
       </Typography>
       <div style={{ textAlign: 'center' }}>
-        <Button variant={'link'}>Sign In</Button>
+        <Button style={{ textDecoration: 'underline' }} variant={'link'}>
+          Sign In
+        </Button>
       </div>
     </Card>
   )
