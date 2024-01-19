@@ -8,7 +8,6 @@ export type InputProps<T extends ElementType = 'input'> = {
   className?: string
   error?: string
   label?: string
-  // placeholder?: string
   type?: string
 }
 /**
@@ -36,7 +35,7 @@ export const Input: InputWithRef = forwardRef(
     const Component: ElementType = as || 'input'
 
     return (
-      <div className={s.inputWrapper}>
+      <div className={s.inputWrapper} style={props.style}>
         <span className={`${s.label} ${rest.disabled && s.disabledLabel}`}>{label}</span>
         <Component
           className={`${s[type]} ${s.input} ${s[className]} ${error && s.error}`}
