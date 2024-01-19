@@ -9,6 +9,7 @@ import { RadioButton } from '@/common/components/radioGroupV1'
 import { RadioGroup, RadioGroupItem } from '@/common/components/radioGroupV2'
 import { SelectComponent } from '@/common/components/select'
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/common/components/selectV2'
+import { RangeSlider } from '@/common/components/slider'
 import { CheckEmail } from '@/features/Auth/ui/CheckEmail/ui'
 import { CreateNewPass } from '@/features/Auth/ui/CreateNewPass/ui'
 import { EditProfileLogout } from '@/features/Auth/ui/EditProfileLogout/ui'
@@ -139,14 +140,10 @@ export function App() {
       <EditProfileLogout />
       <br />
       <EditProfileSaveChange />
+      <br />
+      <div>
+        <RangeSlider defaultValue={[25, 75] as never} max={100} min={1} onChangeRange={() => {}} />
+      </div>
     </>
-    <div>
-      <Button as={'a'} href={'https://google.com'}>
-        Hello
-      </Button>
-      <Button>Button primary</Button>
-      <Input type={'search'} />
-      <RangeSlider defaultValue={[25, 75]} max={100} min={1} />
-    </div>
   )
 }

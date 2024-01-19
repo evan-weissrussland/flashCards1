@@ -1,4 +1,4 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from 'react'
+import { DetailedHTMLProps, FC, InputHTMLAttributes } from 'react'
 
 import * as Slider from '@radix-ui/react-slider'
 
@@ -10,7 +10,7 @@ type DefaultInputPropsType = DetailedHTMLProps<
 >
 
 type SuperDoubleRangePropsType = DefaultInputPropsType & {
-  defaultValue?: [number, number]
+  defaultValue?: number[]
   disable?: boolean
   max?: number
   min?: number
@@ -19,7 +19,7 @@ type SuperDoubleRangePropsType = DefaultInputPropsType & {
   values?: number[]
 }
 
-export const RangeSlider: React.FC<SuperDoubleRangePropsType> = ({
+export const RangeSlider: FC<SuperDoubleRangePropsType> = ({
   defaultValue,
   max,
   min,
