@@ -7,27 +7,26 @@ import * as Label from '@radix-ui/react-label'
 import s from './checkbox.module.scss'
 
 export type CheckboxProps = {
-  callback?: (checked: 'indeterminate' | boolean) => void
   checked?: boolean
   children?: React.ReactNode
   className?: string
   disabled?: boolean
-  id: string
-  name: string
+  id?: string
+  name?: string
+  onCheckedChange?: (checked: 'indeterminate' | boolean) => void
   theme?: 'dark' | null
-  value: string
+  value?: string
   variant?: VariantType
 }
 
 export const CheckboxComponent: FC<CheckboxProps> = props => {
   const {
-    callback,
     checked = false,
     children = '',
-    className = '',
     disabled = false,
     id,
     name,
+    onCheckedChange,
     theme,
     value,
     variant = 'Body 2',
@@ -37,11 +36,12 @@ export const CheckboxComponent: FC<CheckboxProps> = props => {
     <form action={'get'} style={{ display: 'flex' }}>
       <div className={s.checkWrapper}>
         <Checkbox.Root
+          checked={checked}
           className={`${s.checkbox} ${disabled && s.disabled}`}
           disabled={disabled}
           id={id}
           name={name}
-          onCheckedChange={callback}
+          onCheckedChange={onCheckedChange}
           value={value}
         ></Checkbox.Root>
         <Typography theme={theme} variant={variant}>
