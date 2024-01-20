@@ -1,13 +1,17 @@
+import { useNavigate } from 'react-router-dom'
+
 import { Button } from '@/common/components/button'
 import { DropDown } from '@/common/components/dropDown'
 
 import s from './header.module.scss'
 
 export const Header = () => {
+  const navigate = useNavigate()
   //вытягивам из Redux'а состояние: залогинен или нет
-  const isLogged = true
+  const isLogged = false
   const signInHandler = () => {
-    //здесь диспатч санккреатора: вход на сайт
+    //перенаправляем на страницу создания аккаунта
+    navigate('/signIn')
   }
 
   return (

@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { Outlet } from 'react-router-dom'
 
+import { Header } from '@/app/ui/Header/ui'
 import { Button } from '@/common/components/button'
 import { CheckboxComponent } from '@/common/components/checkbox'
 import { DropDown } from '@/common/components/dropDown'
@@ -15,7 +17,6 @@ import { CreateNewPass } from '@/features/Auth/ui/CreateNewPass/ui'
 import { EditProfileLogout } from '@/features/Auth/ui/EditProfileLogout/ui'
 import { EditProfileSaveChange } from '@/features/Auth/ui/EditProfileSaveChange/ui'
 import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
-import { Header } from '@/features/Auth/ui/Header/ui'
 import { SignIn } from '@/features/Auth/ui/SignIn/ui'
 import { SignUp } from '@/features/Auth/ui/SignUp/ui'
 
@@ -26,6 +27,7 @@ export function App() {
   return (
     <>
       <Header />
+      <Outlet />
       <div style={{ padding: '20px' }}>
         <Button as={'a'} href={'https://google.com'} icon>
           Hello

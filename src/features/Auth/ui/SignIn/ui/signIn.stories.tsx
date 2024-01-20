@@ -1,13 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { DropDown } from '@/common/components/dropDown/dropDown'
+import { SignIn } from '@/features/Auth/ui/SignIn/ui/SignIn'
 
 const meta = {
-  argTypes: {},
-  component: DropDown,
+  component: SignIn,
   tags: ['autodocs'],
-  title: 'Components/DropDown',
-} satisfies Meta<typeof DropDown>
+  title: 'Auth/SignIn',
+} satisfies Meta<typeof SignIn>
 
 export default meta
 type Story = StoryObj<typeof meta>
