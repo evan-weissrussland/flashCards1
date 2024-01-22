@@ -36,7 +36,7 @@ export function App() {
           Button primary
         </Button>
       </div>
-      <div>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Input placeholder={'Input'} style={{ width: '258px' }} type={'search'} />
         <CheckboxComponent id={'q1'} name={'check1'} theme={'dark'} value={'c1'} variant={'Body 2'}>
           asdvdhhsd

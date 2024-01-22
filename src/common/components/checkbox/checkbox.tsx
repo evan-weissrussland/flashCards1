@@ -33,24 +33,22 @@ export const CheckboxComponent: FC<CheckboxProps> = props => {
   } = props
 
   return (
-    <form action={'get'} style={{ display: 'flex' }}>
-      <div className={s.checkWrapper}>
-        <Checkbox.Root
-          checked={checked}
-          className={`${s.checkbox} ${disabled && s.disabled}`}
-          disabled={disabled}
-          id={id}
-          name={name}
-          onCheckedChange={onCheckedChange}
-          value={value}
-        ></Checkbox.Root>
-        <Typography theme={theme} variant={variant}>
-          <Label.Root className={`${s.label} ${disabled ? s.labelDisabled : ''}`} htmlFor={id}>
-            {children}
-          </Label.Root>
-        </Typography>
-      </div>
-    </form>
+    <div className={s.checkWrapper}>
+      <Checkbox.Root
+        checked={checked}
+        className={`${s.checkbox} ${disabled && s.disabled}`}
+        disabled={disabled}
+        id={id}
+        name={name}
+        onCheckedChange={onCheckedChange}
+        value={value}
+      ></Checkbox.Root>
+      <Typography theme={theme} variant={variant}>
+        <Label.Root className={`${s.label} ${disabled ? s.labelDisabled : ''}`} htmlFor={id}>
+          {children}
+        </Label.Root>
+      </Typography>
+    </div>
   )
 }
 //TODO почти заработало.
