@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom'
 
 import { App } from '@/app/ui/App'
+import { Error404 } from '@/app/ui/Error404/Error404'
 import { CheckEmail } from '@/features/Auth/ui/CheckEmail/ui'
 import { CreateNewPass } from '@/features/Auth/ui/CreateNewPass/ui'
 import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
@@ -29,6 +30,10 @@ export const router = createBrowserRouter([
       {
         element: <ForgotPass />,
         path: 'forgotPass',
+      },
+      {
+        element: <Error404 />,
+        path: '*',
       },
     ],
     element: <App />,
