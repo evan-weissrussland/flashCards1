@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import { Header } from '@/app/ui/Header/ui'
 import { Button } from '@/common/components/button'
 import { CheckboxComponent } from '@/common/components/checkbox'
 import { DropDown } from '@/common/components/dropDown'
 import { Input } from '@/common/components/input'
-import { Paginator } from '@/common/components/paginator/paginator'
+import { PageSizeType, Paginator } from '@/common/components/paginator/paginator'
 import { RadioButton } from '@/common/components/radioGroupV1'
 import { RadioGroup, RadioGroupItem } from '@/common/components/radioGroupV2'
 import { SelectComponent } from '@/common/components/select'
@@ -22,17 +22,21 @@ import { SignUp } from '@/features/Auth/ui/SignUp/ui'
 
 export function App() {
   const [currPage, setCurrPage] = useState(1)
-  const [pageSize, setPageSize] = useState(30)
+  const [pageSize, setPageSize] = useState<PageSizeType>(30)
+  const isLogged = false
+  const navigate = useNavigate()
+
+  isLogged && navigate('/decks')
 
   return (
     <>
       <Header />
       <Outlet />
       <div style={{ padding: '20px' }}>
-        <Button as={'a'} href={'https://google.com'} icon>
+        <Button as={'a'} href={'https://google.com'} icon={'delete'}>
           Hello
         </Button>
-        <Button disabled icon>
+        <Button disabled icon={'logout'}>
           Button primary
         </Button>
       </div>
@@ -118,7 +122,7 @@ export function App() {
           onPageChanged={(n: number) => {
             setCurrPage(n)
           }}
-          onPageSizeChanged={(h: number) => {
+          onPageSizeChanged={(h: PageSizeType) => {
             setPageSize(h)
           }}
           pageSize={pageSize}

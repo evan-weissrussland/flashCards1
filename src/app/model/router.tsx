@@ -7,6 +7,7 @@ import { CreateNewPass } from '@/features/Auth/ui/CreateNewPass/ui'
 import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
 import { SignIn } from '@/features/Auth/ui/SignIn/ui'
 import { SignUp } from '@/features/Auth/ui/SignUp/ui'
+import { Decks } from '@/features/Decks/Decks'
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         element: <ForgotPass />,
         path: 'forgotPass',
+      },
+      {
+        element: <Decks />,
+        path: 'decks',
       },
       {
         element: <Error404 />,

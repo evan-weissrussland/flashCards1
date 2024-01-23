@@ -33,7 +33,7 @@ export const Typography = <T extends ElementType = 'div'>(
     children,
     className = '',
     dataColor = false,
-    theme,
+    theme = 'dark',
     variant = 'Body 2',
     ...rest
   } = props

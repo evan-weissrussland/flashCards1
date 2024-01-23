@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementType, ForwardedRef, ReactNode, forwardRef } from 'react'
 
-import { LogOutIcon } from '@/common/icons/icons'
+import { DeleteIcon, LogOutIcon } from '@/common/icons/icons'
 
 import s from './button.module.scss'
 
@@ -11,7 +11,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
   className?: string
   fullWidth?: boolean
-  icon?: boolean
+  icon?: 'delete' | 'logout'
   onClick?: () => void
   variant?: 'link' | 'primary' | 'secondary' | 'tertiary'
 }
@@ -51,7 +51,8 @@ export const Button: ButtonWithRef = forwardRef(
         ref={ref}
         {...rest}
       >
-        {icon && <LogOutIcon disabled={rest.disabled} />}
+        {icon === 'logout' && <LogOutIcon disabled={rest.disabled} />}
+        {icon === 'delete' && <DeleteIcon />}
         {children}
       </Component>
     )

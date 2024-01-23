@@ -48,7 +48,7 @@ export const EditProfileLogout = () => {
         {email}
       </Typography>
       <div style={{ textAlign: 'center' }}>
-        <Button icon style={{ textAlign: 'center' }} variant={'secondary'}>
+        <Button icon={'logout'} style={{ textAlign: 'center' }} variant={'secondary'}>
           Logout
         </Button>
       </div>

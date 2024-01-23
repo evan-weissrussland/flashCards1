@@ -9,11 +9,12 @@ import s from './Paginator.module.css'
 type Props = {
   currentPage: number //текущая выбранная страница
   onPageChanged: (pageNumber: number) => void //изменение текущей страницы
-  onPageSizeChanged?: (pageSizeNumber: number) => void //изменение порции страниц. Делает селект
-  pageSize: number //размер товаров на одной странице
+  onPageSizeChanged?: (pageSizeNumber: PageSizeType) => void //изменение порции страниц. Делает селект
+  pageSize: PageSizeType //размер товаров на одной странице
   theme?: 'dark' | null
   totalItemsCount: number //общее число всех товаров
 }
+export type PageSizeType = 10 | 20 | 30 | 40 | 50
 
 export const Paginator: FC<Props> = ({
   currentPage,
@@ -122,7 +123,7 @@ export const Paginator: FC<Props> = ({
           label={''}
           onValueChange={(v: string) => {
             if (onPageSizeChanged) {
-              onPageSizeChanged(+v)
+              onPageSizeChanged(+v as PageSizeType)
             }
           }}
           typography={'Body 2'}
@@ -145,10 +146,10 @@ export const Paginator: FC<Props> = ({
               30
             </SelectItem>
             <SelectItem disabled={false} theme={theme} typography={'Body 2'} value={'50'}>
-              50
+              40
             </SelectItem>
             <SelectItem disabled={false} theme={theme} typography={'Body 2'} value={'100'}>
-              100
+              50
             </SelectItem>
           </SelectContent>
         </Select>
