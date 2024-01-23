@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { BrowserRouter } from 'react-router-dom'
+
 import { Error404 } from '@/app/ui/Error404/Error404'
 
 const meta = {
@@ -12,4 +14,16 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Error404Page: Story = {}
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Error404 />
+    </BrowserRouter>
+  )
+}
+
+export const Error404Page: Story = {
+  render: () => {
+    return <App />
+  },
+}
