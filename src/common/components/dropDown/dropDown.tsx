@@ -27,8 +27,7 @@ export const DropDown: DropDownWithRef = forwardRef(
             <Typography theme={'dark'} variant={'Subtitle 1'}>
               <span
                 style={{
-                  textDecoration: 'underline',
-                  textDecorationStyle: 'dashed',
+                  borderBottomStyle: 'dashed',
                 }}
               >
                 Ivan
@@ -44,8 +43,8 @@ export const DropDown: DropDownWithRef = forwardRef(
 
         <DropdownMenu.Portal>
           <DropdownMenu.Content
-            align={'start'}
-            alignOffset={-221}
+            align={'end'}
+            alignOffset={-40}
             className={s.dropDownContent}
             sideOffset={18}
           >
@@ -61,7 +60,7 @@ export const DropDown: DropDownWithRef = forwardRef(
                     Ivan
                   </Typography>
                   <Typography dataColor variant={'Caption'}>
-                    email11111111111111111111111111111
+                    emai1111111111
                   </Typography>
                 </div>
               </DropDownLabel>
@@ -80,7 +79,7 @@ export const DropDown: DropDownWithRef = forwardRef(
                 </DropDownItem>
               </DropDownGroup>
             </div>
-            <DropDownGroup>
+            {/*<DropDownGroup>
               <DropDownItem>
                 <img alt={'icon'} src={'../../../../public/image/dropDown/learn.png'} />
                 <Typography theme={'dark'} variant={'Caption'}>
@@ -99,7 +98,7 @@ export const DropDown: DropDownWithRef = forwardRef(
                   Delete
                 </Typography>
               </DropDownItem>
-            </DropDownGroup>
+            </DropDownGroup>*/}
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
