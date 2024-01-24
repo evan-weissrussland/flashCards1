@@ -23,7 +23,7 @@ export const SignIn = () => {
     resolver: zodResolver(signInSchema),
   })
 
-  console.log('errors: ', errors)
+  // console.log('errors: ', errors)
 
   const onSubmit = (data: FormValues) => {
     console.log(data)
