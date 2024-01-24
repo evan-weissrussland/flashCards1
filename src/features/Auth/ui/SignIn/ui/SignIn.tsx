@@ -13,6 +13,7 @@ import { FormValues } from './types'
 
 export const SignIn = () => {
   const navigate = useNavigate()
+  //обработка и валидация формы
   const {
     control,
     formState: { errors },

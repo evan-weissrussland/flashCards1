@@ -1,3 +1,5 @@
+import { Navigate } from 'react-router-dom'
+
 import { Button } from '@/common/components/button'
 import { Input } from '@/common/components/input'
 import { Paginator } from '@/common/components/paginator/paginator'
@@ -5,7 +7,13 @@ import { RangeSlider } from '@/common/components/slider'
 import { Typography } from '@/common/components/typography'
 
 export const Decks = () => {
-  return (
+  //вытягивам из Redux'а состояние: залогинен или нет
+  const isLogged = false
+
+  //если не залогинены, то переходим на страницу логина, если залогинены, то на страницу карточек. Несмотря на то, что такая же проверка есть в компоненте PrivateRouter, здесь она для того, чтобы не пустить незалогиненного юзера в карточки, если он введёт в URL прямой адрес на эту страницу "/decks"
+  return !isLogged ? (
+    <Navigate to={'/signIn'} />
+  ) : (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '0 136px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant={'Large'}>Decks list</Typography>

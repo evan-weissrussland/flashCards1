@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { Navigate, createBrowserRouter } from 'react-router-dom'
 
 import { App } from '@/app/ui/App'
 import { Error404 } from '@/app/ui/Error404/Error404'
@@ -8,6 +8,13 @@ import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
 import { SignIn } from '@/features/Auth/ui/SignIn/ui'
 import { SignUp } from '@/features/Auth/ui/SignUp/ui'
 import { Decks } from '@/features/Decks/Decks'
+
+const PrivateRouter = () => {
+  //вытягивам из Redux'а состояние: залогинен или нет
+  const isLogged = false
+
+  return !isLogged ? <Navigate to={'/signIn'} /> : <Navigate to={'/decks'} />
+}
 
 export const router = createBrowserRouter([
   {
@@ -37,11 +44,15 @@ export const router = createBrowserRouter([
         path: 'decks',
       },
       {
+        element: <PrivateRouter />,
+        path: '/',
+      },
+      {
         element: <Error404 />,
         path: '*',
       },
     ],
     element: <App />,
-    path: '/',
   },
 ])
+//т.к. для <App/> нет path, то он будет отображаться всегда.

@@ -8,9 +8,9 @@ import s from './header.module.scss'
 export const Header = () => {
   const navigate = useNavigate()
   //вытягивам из Redux'а состояние: залогинен или нет
-  const isLogged = false
+  const isLogged = true
+  //перенаправляем на страницу создания аккаунта
   const signInHandler = () => {
-    //перенаправляем на страницу создания аккаунта
     navigate('/signIn')
   }
 

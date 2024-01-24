@@ -7,7 +7,7 @@ import s from './error404.module.scss'
 export const Error404 = () => {
   const navigate = useNavigate()
   const returnToHomePageHandler = () => {
-    navigate('/signIn')
+    navigate('/decks')
   }
 
   return (
