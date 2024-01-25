@@ -25,7 +25,7 @@ export const Primary: Story = {
     children: 'Button Primary',
     disabled: false,
     fullWidth: false,
-    icon: false,
+    icon: 'delete',
     variant: 'primary',
   },
 }
