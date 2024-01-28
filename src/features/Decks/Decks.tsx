@@ -1,19 +1,12 @@
-import { Navigate } from 'react-router-dom'
-
 import { Button } from '@/common/components/button'
 import { Input } from '@/common/components/input'
 import { Paginator } from '@/common/components/paginator/paginator'
 import { RangeSlider } from '@/common/components/slider'
+import { Tabs, TabsList, TabsTrigger } from '@/common/components/tabSwitcher'
 import { Typography } from '@/common/components/typography'
 
 export const Decks = () => {
-  //вытягивам из Redux'а состояние: залогинен или нет
-  const isLogged = false
-
-  //если не залогинены, то переходим на страницу логина, если залогинены, то на страницу карточек. Несмотря на то, что такая же проверка есть в компоненте PrivateRouter, здесь она для того, чтобы не пустить незалогиненного юзера в карточки, если он введёт в URL прямой адрес на эту страницу "/decks"
-  return !isLogged ? (
-    <Navigate to={'/signIn'} />
-  ) : (
+  return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '0 136px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant={'Large'}>Decks list</Typography>
@@ -21,7 +14,15 @@ export const Decks = () => {
       </div>
       <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
         <Input label={' '} placeholder={'Input search'} type={'search'}></Input>
-        <RangeSlider defaultValue={[2, 2] as never} max={10} min={2} onChangeRange={() => {}} />
+        <div style={{ flexShrink: '0' }}>
+          <Tabs defaultValue={'All-cards'}>
+            <TabsList>
+              <TabsTrigger value={'My-cards'}>My Cards</TabsTrigger>
+              <TabsTrigger value={'All-cards'}>All Cards</TabsTrigger>
+            </TabsList>
+          </Tabs>
+        </div>
+        <RangeSlider defaultValue={[2, 10] as never} max={10} min={2} onChangeRange={() => {}} />
         <Button icon={'delete'} variant={'secondary'}>
           Clear filter
         </Button>
