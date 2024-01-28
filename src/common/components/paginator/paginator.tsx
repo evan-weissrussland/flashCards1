@@ -7,23 +7,25 @@ import { PaginationIconNext, PaginationIconPrev } from '@/common/icons/icons'
 import s from './Paginator.module.css'
 
 type Props = {
-  currentPage: number //текущая выбранная страница
+  currentPage: number | undefined //текущая выбранная страница
   onPageChanged: (pageNumber: number) => void //изменение текущей страницы
   onPageSizeChanged?: (pageSizeNumber: PageSizeType) => void //изменение порции страниц. Делает селект
   pageSize: PageSizeType //размер товаров на одной странице
-  theme?: 'dark' | null
-  totalItemsCount: number //общее число всех товаров
+  theme?: 'dark' | null //для компонента типография. Менять цвет текста на белый
+  totalItemsCount: number | undefined //общее число всех товаров
 }
+//типизация возможных порций страниц
 export type PageSizeType = 10 | 20 | 30 | 40 | 50
 
 export const Paginator: FC<Props> = ({
-  currentPage,
+  currentPage = 1,
   onPageChanged,
   onPageSizeChanged,
-  pageSize,
+  pageSize = 10,
   theme,
-  totalItemsCount,
+  totalItemsCount = 100,
 }) => {
+  //с помощью useState меняем порцию страниц
   const [portionNumber, setPortionNumber] = useState(1)
   //количество номеров порций страниц, видимых между кнопками "предыдущая порция страниц" и "следующая порция страниц"
   const portionSize = 5
@@ -62,8 +64,10 @@ export const Paginator: FC<Props> = ({
         <button
           className={`${s.pageNumber} ${1 === currentPage ? s.selectedPage : ''}`}
           onClick={() => {
-            onPageChanged(1)
-            setPortionNumber(1)
+            if (1 !== currentPage) {
+              onPageChanged(1)
+              setPortionNumber(1)
+            }
           }}
         >
           <Typography dataColor theme={theme} variant={'Body 2'}>
@@ -91,17 +95,19 @@ export const Paginator: FC<Props> = ({
 
         {portionNumber < portionCount && <button className={s.pageNumber}>...</button>}
 
-        <button
-          className={`${s.pageNumber} ${pagesCount === currentPage ? s.selectedPage : ''}`}
-          onClick={() => {
-            onPageChanged(pagesCount)
-            setPortionNumber(portionCount)
-          }}
-        >
-          <Typography dataColor theme={theme} variant={'Body 2'}>
-            {pagesCount}
-          </Typography>
-        </button>
+        {pagesCount > 1 && (
+          <button
+            className={`${s.pageNumber} ${pagesCount === currentPage ? s.selectedPage : ''}`}
+            onClick={() => {
+              onPageChanged(pagesCount)
+              setPortionNumber(portionCount)
+            }}
+          >
+            <Typography dataColor theme={theme} variant={'Body 2'}>
+              {pagesCount}
+            </Typography>
+          </button>
+        )}
 
         <button
           className={`${s.pageNumber} ${s.next}`}

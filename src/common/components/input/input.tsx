@@ -4,7 +4,7 @@ import s from './input.module.scss'
 
 export type InputProps<T extends ElementType = 'input'> = {
   as?: T
-  callback?: (inputData: string) => void
+  callback: (inputData: string) => void
   className?: string
   error?: string
   label?: string
@@ -39,7 +39,9 @@ export const Input: InputWithRef = forwardRef(
         <span className={`${s.label} ${rest.disabled && s.disabledLabel}`}>{label}</span>
         <Component
           className={`${s[type]} ${s.input} ${s[className]} ${error && s.error}`}
-          onChange={(e: { currentTarget: { value: any } }) => e.currentTarget.value}
+          onChange={(e: { currentTarget: { value: any } }) => {
+            callback(e.currentTarget.value)
+          }}
           ref={ref}
           type={type === 'search' ? 'text' : type}
           {...rest}
