@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/common/components/selectV2'
 import { Typography } from '@/common/components/typography'
@@ -47,6 +47,20 @@ export const Paginator: FC<Props> = ({
   const disabledPrevButton = !(portionNumber > 1)
   //условие блокировки кнопки "следующая порция страниц"
   const disabledNextButton = !(portionCount > portionNumber)
+
+  //если мы выбрали какую-либо страницу, а после применили фильтр и нам пришло количество страниц меньше, чем номер последней выбранной страницы, то необходимо выбрать первую страницу, иначе в пагинации не будет выбрана никакая страница
+  useEffect(() => {
+    if (pagesCount < currentPage) {
+      onPageChanged(1)
+      setPortionNumber(1)
+    }
+  }, [pagesCount, currentPage, onPageChanged])
+  //нужно сбросить порцию страниц на 1 в следующей ситуации: когда выбрали порцию страниц, но не выбрали страницу, а потом сбросили фильтр, то useState порции страниц остался прежним, не равным 1. Недостаток кода в том, что он повторно передаст в useState единицу при первом запуске приложения, а также при выборе 1-й страницы пользователем
+  useEffect(() => {
+    if (currentPage === 1) {
+      setPortionNumber(1)
+    }
+  }, [currentPage])
 
   return (
     <>
