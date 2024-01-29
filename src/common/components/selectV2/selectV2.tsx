@@ -1,4 +1,5 @@
 import { FC, ReactNode } from 'react'
+import * as React from 'react'
 
 import { Typography, VariantType } from '@/common/components/typography'
 import * as SelectPrimitive from '@radix-ui/react-select'
@@ -13,13 +14,9 @@ type OwnerProps = {
   onValueChange: (v: string) => void
   typography: VariantType
 }
-export const Select: FC<OwnerProps> = ({
-  disabled,
-  label,
-  onValueChange,
-  typography,
-  ...props
-}) => {
+export const Select: FC<
+  OwnerProps & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>
+> = ({ disabled, label, onValueChange, typography, ...props }) => {
   return (
     <div className={s.div} style={{ display: 'inline-block' }}>
       <Typography variant={typography}>

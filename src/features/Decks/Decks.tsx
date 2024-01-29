@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 
+import { Context } from '@/app/ui/App'
 import { Button } from '@/common/components/button'
 import { Input } from '@/common/components/input'
 import { PageSizeType, Paginator } from '@/common/components/paginator/paginator'
@@ -9,6 +10,8 @@ import { Typography } from '@/common/components/typography'
 import { useGetDecksQuery } from '@/features/Auth/api/getDecks'
 
 export const Decks = () => {
+  const resultAuthMe = useContext(Context)
+
   //для изменения value инпута
   const [search, setSearch] = useState('')
 
@@ -24,11 +27,15 @@ export const Decks = () => {
   //изменить сортировку по максимальному и минимальному количеству карт в колоде и сделать новый запрос на сервер
   const [cardsCountFromSlider, setCardsCountFromSlider] = useState<number | number[]>([2, 10])
 
+  //изменить сортировку по моим колодам или по всем колодам и сделать новый запрос на сервер
+  const [myId, setMyId] = useState<string | undefined>(undefined)
+
   //номер таймера из функции задержки посыла текста из инпута на сервер
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
 
   //хук RTK Query. Передаёт параметры в bseApi для запрсоа на сервер и получает назад Response от сервера
   const { data } = useGetDecksQuery({
+    authorId: myId,
     currentPage: currentPage ? currentPage : undefined,
     itemsPerPage: itemsPerPage ? itemsPerPage : undefined,
     maxCardsCount: Array.isArray(cardsCountFromSlider) ? cardsCountFromSlider[1] : undefined,
@@ -58,6 +65,21 @@ export const Decks = () => {
     setCardsCountFromSlider([2, 10])
   }
 
+  const changeTabMyCardsOrAllCards = (v: string) => {
+    if (resultAuthMe) {
+      switch (v) {
+        case 'My-cards':
+          setMyId(resultAuthMe)
+          break
+        case 'All-cards':
+          setMyId(undefined)
+          break
+        default:
+          break
+      }
+    }
+  }
+
   //отрисовываем таблицу из карт с сервера
   const table = data?.items.map(it => (
     <tr key={it.id}>
@@ -83,7 +105,7 @@ export const Decks = () => {
           value={search}
         ></Input>
         <div style={{ flexShrink: '0' }}>
-          <Tabs defaultValue={'All-cards'}>
+          <Tabs defaultValue={'All-cards'} onValueChange={changeTabMyCardsOrAllCards}>
             <TabsList>
               <TabsTrigger value={'My-cards'}>My Cards</TabsTrigger>
               <TabsTrigger value={'All-cards'}>All Cards</TabsTrigger>

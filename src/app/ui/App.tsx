@@ -1,8 +1,11 @@
+import { createContext } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { PrivateRouter } from '@/app/model/router'
 import { Header } from '@/app/ui/Header/ui'
 import { useAuthMeQuery } from '@/features/Auth/api/authMe-api'
+
+export const Context = createContext('')
 
 export function App() {
   const result = useAuthMeQuery()
@@ -25,9 +28,11 @@ export function App() {
 
   return (
     <>
-      <Header />
-      <Outlet />
-      <PrivateRouter data={result.data.name} />
+      <Context.Provider value={result.data.id}>
+        <Header />
+        <Outlet />
+        <PrivateRouter data={result.data.name} />
+      </Context.Provider>
     </>
   )
 }

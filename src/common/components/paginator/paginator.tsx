@@ -133,6 +133,7 @@ export const Paginator: FC<Props> = ({
             }
           }}
           typography={'Body 2'}
+          value={pageSize.toString()}
         >
           <SelectTrigger
             disabled={false}
