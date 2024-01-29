@@ -46,10 +46,17 @@ export const baseApi = createApi({
   }),
   endpoints: builder => {
     return {
-      getDecks: builder.query<Response, GetDecksRequestType | void>({
+      createDeck: builder.mutation<any, CreateDeckRequestType>({
+        query: args => ({
+          body: args,
+          method: 'POST',
+          url: `v1/decks`,
+        }),
+      }),
+      getDecks: builder.query<Response, GetDecksRequestType>({
         query: args => ({
           params: args ? args : undefined,
-          url: `v1/decks`,
+          url: `v2/decks`,
         }),
       }),
     }
@@ -57,4 +64,10 @@ export const baseApi = createApi({
   reducerPath: 'baseApi',
 })
 
-export const { useGetDecksQuery } = baseApi
+export const { useCreateDeckMutation, useGetDecksQuery } = baseApi
+
+type CreateDeckRequestType = {
+  cover?: string
+  isPrivate?: boolean
+  name: string
+}
