@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { Decks } from '@/features/Decks/Decks'
+import { Decks } from '@/features/Decks/ui/Decks'
 
 const meta = {
   argTypes: {},

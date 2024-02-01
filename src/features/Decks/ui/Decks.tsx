@@ -3,12 +3,12 @@ import { useContext, useState } from 'react'
 import { Context } from '@/app/ui/App'
 import { Button } from '@/common/components/button'
 import { Input } from '@/common/components/input'
-import { Modalka } from '@/common/components/modal'
 import { PageSizeType, Paginator } from '@/common/components/paginator/paginator'
 import { RangeSlider } from '@/common/components/slider'
 import { Tabs, TabsList, TabsTrigger } from '@/common/components/tabSwitcher'
 import { Typography } from '@/common/components/typography'
-import { useGetDecksQuery } from '@/features/Auth/api/getDecks'
+import { useGetDecksQuery, useGetMinMaxAmoundCardsQuery } from '@/features/Auth/api/getDecks'
+import { ModalAddNewDeck } from '@/features/Decks/ui/ModalAddNewDeck'
 
 export const Decks = () => {
   const resultAuthMe = useContext(Context)
@@ -18,6 +18,11 @@ export const Decks = () => {
 
   //окончательное value из инпута для запрса на сервер. Берётся с задержкой
   const [textFromDebounceInput, setTextFromDebounceInput] = useState('')
+
+  //окончательное value[] из slider для запрса на сервер. Берётся с задержкой
+  const [valuesArrayFromDebounceSlider, setValuesArrayFromDebounceSlider] = useState<
+    number | number[]
+  >([0, 11])
 
   //изменить размер порции страницы и сделать новый запрос на сервер
   const [itemsPerPage, setItemsPerPage] = useState<PageSizeType | null>(null)
@@ -39,11 +44,31 @@ export const Decks = () => {
     authorId: myId,
     currentPage: currentPage ? currentPage : undefined,
     itemsPerPage: itemsPerPage ? itemsPerPage : undefined,
-    maxCardsCount: Array.isArray(cardsCountFromSlider) ? cardsCountFromSlider[1] : undefined,
-    minCardsCount: Array.isArray(cardsCountFromSlider) ? cardsCountFromSlider[0] : undefined,
+    maxCardsCount: Array.isArray(valuesArrayFromDebounceSlider)
+      ? valuesArrayFromDebounceSlider[1]
+      : undefined,
+    minCardsCount: Array.isArray(valuesArrayFromDebounceSlider)
+      ? valuesArrayFromDebounceSlider[0]
+      : undefined,
     name: textFromDebounceInput,
   })
+  const result = useGetMinMaxAmoundCardsQuery()
 
+  if (result.isLoading) {
+    return (
+      <div
+        style={{
+          alignItems: 'center',
+          display: 'flex',
+          height: '100vh',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        ...Loading
+      </div>
+    )
+  }
   /**
    * функция задержки посыла текста из инпута на сервер (debounce)
    * @param inputData - текст из инпута
@@ -58,12 +83,22 @@ export const Decks = () => {
     setTimerId(+idTimer)
   }
 
+  const onChangeValueFromSliderWithDebounce = (value: number | number[]) => {
+    setCardsCountFromSlider(value)
+    clearTimeout(timerId)
+    const idTimer = setTimeout(() => {
+      setValuesArrayFromDebounceSlider(value)
+    }, 3500)
+
+    setTimerId(+idTimer)
+  }
+
   const clearFilterHandler = () => {
     setSearch('')
     setTextFromDebounceInput('')
     setItemsPerPage(null)
     setCurrentPage(null)
-    setCardsCountFromSlider([2, 10])
+    setCardsCountFromSlider([0, 10])
   }
 
   const changeTabMyCardsOrAllCards = (v: string) => {
@@ -95,7 +130,7 @@ export const Decks = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '0 136px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant={'Large'}>Decks list</Typography>
-        <Modalka />
+        <ModalAddNewDeck />
       </div>
       <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
         <Input
@@ -114,10 +149,9 @@ export const Decks = () => {
           </Tabs>
         </div>
         <RangeSlider
-          defaultValue={[0, 10] as never}
-          max={Array.isArray(cardsCountFromSlider) ? cardsCountFromSlider[1] : cardsCountFromSlider}
-          min={Array.isArray(cardsCountFromSlider) ? cardsCountFromSlider[0] : cardsCountFromSlider}
-          onChangeRange={setCardsCountFromSlider}
+          max={result.data?.max}
+          min={result.data?.min}
+          onChangeRange={onChangeValueFromSliderWithDebounce}
           values={cardsCountFromSlider as number[]}
         />
         <Button icon={'delete'} onClick={clearFilterHandler} variant={'secondary'}>
@@ -149,3 +183,4 @@ export const Decks = () => {
     </div>
   )
 }
+//TODO: не получается сделать задержку на отправку запросов на сервер при изменении slider (onChangeValueFromSliderWithDebounce). Всё равно вместо  одного запроса идёт несколько

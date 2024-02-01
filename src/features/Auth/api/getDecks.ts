@@ -59,12 +59,15 @@ export const baseApi = createApi({
           url: `v2/decks`,
         }),
       }),
+      getMinMaxAmoundCards: builder.query<{ max: number; min: number }, void>({
+        query: () => `v2/decks/min-max-cards`,
+      }),
     }
   },
   reducerPath: 'baseApi',
 })
 
-export const { useCreateDeckMutation, useGetDecksQuery } = baseApi
+export const { useCreateDeckMutation, useGetDecksQuery, useGetMinMaxAmoundCardsQuery } = baseApi
 
 type CreateDeckRequestType = {
   cover?: string

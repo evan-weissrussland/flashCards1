@@ -10,7 +10,6 @@ type DefaultInputPropsType = DetailedHTMLProps<
 >
 
 type SuperDoubleRangePropsType = DefaultInputPropsType & {
-  defaultValue?: number[]
   disable?: boolean
   max?: number
   min?: number
@@ -20,7 +19,6 @@ type SuperDoubleRangePropsType = DefaultInputPropsType & {
 }
 
 export const RangeSlider: FC<SuperDoubleRangePropsType> = ({
-  defaultValue,
   max,
   min,
   onChangeRange,
@@ -37,7 +35,6 @@ export const RangeSlider: FC<SuperDoubleRangePropsType> = ({
       <form>
         <Slider.Root
           className={s.SliderRoot}
-          defaultValue={defaultValue}
           max={max}
           min={min}
           onValueChange={onValueChangeHandler}

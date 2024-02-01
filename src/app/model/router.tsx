@@ -7,7 +7,7 @@ import { CreateNewPass } from '@/features/Auth/ui/CreateNewPass/ui'
 import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
 import { SignIn } from '@/features/Auth/ui/SignIn/ui'
 import { SignUp } from '@/features/Auth/ui/SignUp/ui'
-import { Decks } from '@/features/Decks/Decks'
+import { Decks } from '@/features/Decks/ui/Decks'
 
 type Props = {
   data: string
