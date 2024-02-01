@@ -1,0 +1,46 @@
+.dropDownTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  box-sizing: border-box;
+  width: 36px;
+  height: 36px;
+
+  border: none;
+  border-radius: 50%;
+  outline: none;
+}
+
+.dropDownLabel {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+
+  margin-bottom: 24px;
+
+  color: var(--color-dark-100);
+}
+
+.dropDownGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.dropDownItem {
+  cursor: pointer;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+
+  &:hover {
+    outline: none;
+  }
+}
+
+.dropDownContent {
+  display: flex;
+  gap: 104px;
+  background-color: black;
+}
