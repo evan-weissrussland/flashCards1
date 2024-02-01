@@ -3,6 +3,7 @@ import { useContext, useState } from 'react'
 import { Context } from '@/app/ui/App'
 import { Button } from '@/common/components/button'
 import { Input } from '@/common/components/input'
+import { Modalka } from '@/common/components/modal'
 import { PageSizeType, Paginator } from '@/common/components/paginator/paginator'
 import { RangeSlider } from '@/common/components/slider'
 import { Tabs, TabsList, TabsTrigger } from '@/common/components/tabSwitcher'
@@ -25,7 +26,7 @@ export const Decks = () => {
   const [currentPage, setCurrentPage] = useState<null | number>(null)
 
   //изменить сортировку по максимальному и минимальному количеству карт в колоде и сделать новый запрос на сервер
-  const [cardsCountFromSlider, setCardsCountFromSlider] = useState<number | number[]>([2, 10])
+  const [cardsCountFromSlider, setCardsCountFromSlider] = useState<number | number[]>([0, 11])
 
   //изменить сортировку по моим колодам или по всем колодам и сделать новый запрос на сервер
   const [myId, setMyId] = useState<string | undefined>(undefined)
@@ -33,7 +34,7 @@ export const Decks = () => {
   //номер таймера из функции задержки посыла текста из инпута на сервер
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
 
-  //хук RTK Query. Передаёт параметры в bseApi для запрсоа на сервер и получает назад Response от сервера
+  //хук RTK Query. Передаёт параметры в baseApi для запрсоа на сервер и получает назад Response от сервера
   const { data } = useGetDecksQuery({
     authorId: myId,
     currentPage: currentPage ? currentPage : undefined,
@@ -94,7 +95,7 @@ export const Decks = () => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '0 136px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant={'Large'}>Decks list</Typography>
-        <Button>Add New Deck</Button>
+        <Modalka />
       </div>
       <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
         <Input
@@ -113,9 +114,9 @@ export const Decks = () => {
           </Tabs>
         </div>
         <RangeSlider
-          defaultValue={[2, 10] as never}
-          max={10}
-          min={2}
+          defaultValue={[0, 10] as never}
+          max={Array.isArray(cardsCountFromSlider) ? cardsCountFromSlider[1] : cardsCountFromSlider}
+          min={Array.isArray(cardsCountFromSlider) ? cardsCountFromSlider[0] : cardsCountFromSlider}
           onChangeRange={setCardsCountFromSlider}
           values={cardsCountFromSlider as number[]}
         />

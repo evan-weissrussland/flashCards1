@@ -4,7 +4,7 @@ import s from './input.module.scss'
 
 export type InputProps<T extends ElementType = 'input'> = {
   as?: T
-  callback: (inputData: string) => void
+  callback?: (inputData: string) => void
   className?: string
   error?: string
   label?: string
@@ -40,7 +40,7 @@ export const Input: InputWithRef = forwardRef(
         <Component
           className={`${s[type]} ${s.input} ${s[className]} ${error && s.error}`}
           onChange={(e: { currentTarget: { value: any } }) => {
-            callback(e.currentTarget.value)
+            callback && callback(e.currentTarget.value)
           }}
           ref={ref}
           type={type === 'search' ? 'text' : type}
