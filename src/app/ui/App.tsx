@@ -3,7 +3,6 @@ import { Outlet } from 'react-router-dom'
 
 import { PrivateRouter } from '@/app/model/router'
 import { Header } from '@/app/ui/Header/ui'
-import { Modalka } from '@/common/components/modal'
 import { useAuthMeQuery } from '@/features/Auth/api/authMe-api'
 
 export const Context = createContext('')
