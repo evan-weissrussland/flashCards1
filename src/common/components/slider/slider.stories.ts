@@ -18,5 +18,6 @@ export const Primary: Story = {
     disabled: false,
     max: 100,
     min: 1,
+    values: [0, 11],
   },
 }

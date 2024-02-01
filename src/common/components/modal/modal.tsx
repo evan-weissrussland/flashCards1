@@ -18,7 +18,7 @@ import { FormValues } from './types'
 export const Modalka = forwardRef<
   ElementRef<typeof AlertDialog.Root>,
   ComponentPropsWithoutRef<typeof AlertDialog.Root>
->((props, ref) => {
+>(() => {
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
   const [open, setOpen] = useState(false)
 

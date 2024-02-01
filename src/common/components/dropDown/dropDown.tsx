@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef, ForwardedRef, ReactNode, forwardRef } from 'r
 
 import { Typography } from '@/common/components/typography'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
+import clsx from 'clsx'
 
 import s from './dropDown.module.scss'
 
@@ -20,6 +21,8 @@ type DropDownWithRef = (props: OwnerDropDownProps, ref: ForwardedRef<any>) => Re
 
 export const DropDown: DropDownWithRef = forwardRef(
   (props: OwnerDropDownProps, ref: ForwardedRef<any>) => {
+    const { className = '' } = props
+
     return (
       <DropdownMenu.Root>
         <DropDownTrigger>
@@ -45,7 +48,8 @@ export const DropDown: DropDownWithRef = forwardRef(
           <DropdownMenu.Content
             align={'end'}
             alignOffset={-40}
-            className={s.dropDownContent}
+            className={clsx(s.dropDownContent, s[className])}
+            ref={ref}
             sideOffset={18}
           >
             <div>
@@ -191,7 +195,7 @@ export const DropDownItem: DropDownItemWithRef = forwardRef(
     const { children, onclick } = props
 
     return (
-      <DropdownMenu.Item className={s.dropDownItem} onSelect={e => onclick && onclick()} ref={ref}>
+      <DropdownMenu.Item className={s.dropDownItem} onSelect={() => onclick && onclick()} ref={ref}>
         {children}
       </DropdownMenu.Item>
     )
