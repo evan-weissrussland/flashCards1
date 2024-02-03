@@ -28,8 +28,6 @@ export const ModalAddNewDeck = forwardRef<
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
   const [open, setOpen] = useState(false)
 
-  const [formData, setFormData] = useState<any>('')
-
   //хук из RTK Query для выполнения запроса POST создания новой колоды
   const [createDeck] = useCreateDeckMutation()
 
@@ -46,14 +44,14 @@ export const ModalAddNewDeck = forwardRef<
 
   //обработчик передачи данных из формы на сервер
   const onSubmit = async (data: FormValues) => {
-    console.log(data.image)
-    // try {
-    //   await createDeck({ cover: formData, isPrivate: data.privatePack, name: data.namePack })
-    //   setOpen(false)
-    //   reset()
-    // } catch (e: any) {
-    //   console.error('error to add deck')
-    // }
+    console.log(data)
+    try {
+      await createDeck({ cover: data.image, isPrivate: data.privatePack, name: data.namePack })
+      setOpen(false)
+      reset()
+    } catch (e: any) {
+      console.error('error to add deck')
+    }
   }
   const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
@@ -61,7 +59,6 @@ export const ModalAddNewDeck = forwardRef<
       const formData = new FormData()
 
       formData.append('cover', file)
-      setFormData(formData)
     }
   }
 
