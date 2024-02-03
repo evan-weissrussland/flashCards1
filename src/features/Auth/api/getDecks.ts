@@ -46,7 +46,7 @@ export const baseApi = createApi({
   }),
   endpoints: builder => {
     return {
-      createDeck: builder.mutation<Deck, CreateDeckRequestType>({
+      createDeck: builder.mutation<Deck, FormData>({
         query: args => ({
           body: args,
           method: 'POST',
@@ -68,9 +68,3 @@ export const baseApi = createApi({
 })
 
 export const { useCreateDeckMutation, useGetDecksQuery, useGetMinMaxAmoundCardsQuery } = baseApi
-
-type CreateDeckRequestType = {
-  cover?: any
-  isPrivate?: boolean
-  name: string
-}

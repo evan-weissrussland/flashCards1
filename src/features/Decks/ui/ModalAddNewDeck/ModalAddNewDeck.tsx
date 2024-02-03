@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
 import { useController, useForm } from 'react-hook-form'
 
 import { Button } from '@/common/components/button'
@@ -42,27 +42,27 @@ export const ModalAddNewDeck = forwardRef<
     resolver: zodResolver(modalSchema),
   })
 
-  //обработчик передачи данных из формы на сервер
+  //обработчик передачи данных из формы на сервер. Обязательно через formData (у Андрея на серваке так сделано)
   const onSubmit = async (data: FormValues) => {
-    console.log(data)
+    console.log(Object.keys(data.image).length)
+    const formData = new FormData()
+
+    formData.append('name', data.namePack)
+    formData.append('isPrivate', data.privatePack.toString())
+
+    if (Object.keys(data.image).length) {
+      formData.append('cover', data.image[0])
+    }
     try {
-      await createDeck({ cover: data.image, isPrivate: data.privatePack, name: data.namePack })
+      await createDeck(formData)
       setOpen(false)
       reset()
     } catch (e: any) {
       console.error('error to add deck')
     }
   }
-  const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length) {
-      const file = e.target.files[0]
-      const formData = new FormData()
 
-      formData.append('cover', file)
-    }
-  }
-
-  //для чекбокса
+  //для связи между кастомным чекбоксом и хукщм useForm
   const {
     field: { onChange, value },
   } = useController({
@@ -97,12 +97,7 @@ export const ModalAddNewDeck = forwardRef<
             </div>
             <div>
               <label>
-                <input
-                  {...register('image')}
-                  onChange={uploadImageHandler}
-                  style={{ display: 'none' }}
-                  type={'file'}
-                />
+                <input {...register('image')} style={{ display: 'none' }} type={'file'} />
                 <Button as={'span'} fullWidth icon={'uploadImage'} variant={'secondary'}>
                   Upload image
                 </Button>
