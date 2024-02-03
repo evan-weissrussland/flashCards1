@@ -47,13 +47,22 @@ export const baseApi = createApi({
   endpoints: builder => {
     return {
       createDeck: builder.mutation<Deck, FormData>({
+        invalidatesTags: ['Deck'],
         query: args => ({
           body: args,
           method: 'POST',
           url: `v1/decks`,
         }),
       }),
+      deleteDeck: builder.mutation<Omit<Deck, 'author'>, string>({
+        invalidatesTags: ['Deck'],
+        query: id => ({
+          method: 'DELETE',
+          url: `v1/decks/${id}`,
+        }),
+      }),
       getDecks: builder.query<Response, GetDecksRequestType>({
+        providesTags: ['Deck'],
         query: args => ({
           params: args ? args : undefined,
           url: `v2/decks`,
@@ -65,6 +74,12 @@ export const baseApi = createApi({
     }
   },
   reducerPath: 'baseApi',
+  tagTypes: ['Deck'],
 })
 
-export const { useCreateDeckMutation, useGetDecksQuery, useGetMinMaxAmoundCardsQuery } = baseApi
+export const {
+  useCreateDeckMutation,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useGetMinMaxAmoundCardsQuery,
+} = baseApi

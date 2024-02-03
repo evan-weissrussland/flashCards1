@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { ModalAddNewDeck } from '@/features/Decks/ui/ModalAddNewDeck/ModalAddNewDeck'
+import { ModalDeleteDeck } from '@/features/Decks/ui/ModalDeleteDeck/ModalDeleteDeck'
 
 const meta = {
   argTypes: {},
-  component: ModalAddNewDeck,
+  component: ModalDeleteDeck,
   tags: ['autodocs'],
-  title: 'Components/ModalAddNewDeck',
-} satisfies Meta<typeof ModalAddNewDeck>
+  title: 'Components/ModalDeleteDeck',
+} satisfies Meta<typeof ModalDeleteDeck>
 
 export default meta
 type Story = StoryObj<typeof meta>

@@ -9,6 +9,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/common/components/tabSwitcher'
 import { Typography } from '@/common/components/typography'
 import { useGetDecksQuery, useGetMinMaxAmoundCardsQuery } from '@/features/Auth/api/getDecks'
 import { ModalAddNewDeck } from '@/features/Decks/ui/ModalAddNewDeck'
+import { ModalDeleteDeck } from '@/features/Decks/ui/ModalDeleteDeck'
 
 export const Decks = () => {
   const resultIdAuthMe = useContext(Context)
@@ -142,6 +143,12 @@ export const Decks = () => {
       <td>{it.cardsCount}</td>
       <td>{it.updated}</td>
       <td>{it.author.name}</td>
+      {it.userId === resultIdAuthMe && (
+        <td>
+          <Button className={'padding4px'} icon={'edit'} variant={'secondary'} />
+          <ModalDeleteDeck deckName={it.name} idDeck={it.id} />
+        </td>
+      )}
     </tr>
   ))
 
