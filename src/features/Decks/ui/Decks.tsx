@@ -10,6 +10,7 @@ import { Typography } from '@/common/components/typography'
 import { useGetDecksQuery, useGetMinMaxAmoundCardsQuery } from '@/features/Auth/api/getDecks'
 import { ModalAddNewDeck } from '@/features/Decks/ui/ModalAddNewDeck'
 import { ModalDeleteDeck } from '@/features/Decks/ui/ModalDeleteDeck'
+import { ModalEditDeck } from '@/features/Decks/ui/ModalEditDeck'
 
 export const Decks = () => {
   const resultIdAuthMe = useContext(Context)
@@ -145,7 +146,12 @@ export const Decks = () => {
       <td>{it.author.name}</td>
       {it.userId === resultIdAuthMe && (
         <td>
-          <Button className={'padding4px'} icon={'edit'} variant={'secondary'} />
+          <ModalEditDeck
+            deckCover={it.cover}
+            deckId={it.id}
+            deckIsPrivate={it.isPrivate}
+            deckName={it.name}
+          />
           <ModalDeleteDeck deckName={it.name} idDeck={it.id} />
         </td>
       )}
