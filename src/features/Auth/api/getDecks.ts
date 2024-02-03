@@ -46,7 +46,7 @@ export const baseApi = createApi({
   }),
   endpoints: builder => {
     return {
-      createDeck: builder.mutation<any, CreateDeckRequestType>({
+      createDeck: builder.mutation<Deck, CreateDeckRequestType>({
         query: args => ({
           body: args,
           method: 'POST',
