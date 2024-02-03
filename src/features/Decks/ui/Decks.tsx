@@ -11,7 +11,7 @@ import { useGetDecksQuery, useGetMinMaxAmoundCardsQuery } from '@/features/Auth/
 import { ModalAddNewDeck } from '@/features/Decks/ui/ModalAddNewDeck'
 
 export const Decks = () => {
-  const resultAuthMe = useContext(Context)
+  const resultIdAuthMe = useContext(Context)
 
   //для изменения value инпута
   const [search, setSearch] = useState('')
@@ -35,6 +35,9 @@ export const Decks = () => {
 
   //изменить сортировку по моим колодам или по всем колодам и сделать новый запрос на сервер
   const [myId, setMyId] = useState<string | undefined>(undefined)
+
+  //изменить сортировку по моим колодам или по всем колодам и сделать новый запрос на сервер
+  const [authorCards, setAuthorCards] = useState<string>('All-cards')
 
   //номер таймера из функции задержки посыла текста из инпута на сервер
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
@@ -93,33 +96,49 @@ export const Decks = () => {
     setTimerId(+idTimer)
   }
 
+  //зачистка фильтра
   const clearFilterHandler = () => {
     setSearch('')
     setTextFromDebounceInput('')
     setItemsPerPage(null)
     setCurrentPage(null)
     setCardsCountFromSlider([0, 10])
+    setValuesArrayFromDebounceSlider([0, 10])
+    setAuthorCards('All-cards')
+    setMyId(undefined)
   }
 
+  //если мы зарегистрированы (есть resultAuthMe), и нажимаем на MyCards, то делаем запрос на сервер за моими колодами, если нажимаем на "All  Cards" - то делаем запрос за всеми колодами. Если мы не зарегистрированы, то делаем запрос за всеми колодами
   const changeTabMyCardsOrAllCards = (v: string) => {
-    if (resultAuthMe) {
+    if (resultIdAuthMe) {
       switch (v) {
         case 'My-cards':
-          setMyId(resultAuthMe)
+          setMyId(resultIdAuthMe)
+          setAuthorCards('My-cards')
           break
         case 'All-cards':
           setMyId(undefined)
+          setAuthorCards('All-cards')
           break
         default:
           break
       }
+    } else {
+      setMyId(undefined)
     }
   }
 
   //отрисовываем таблицу из карт с сервера
   const table = data?.items.map(it => (
-    <tr key={it.id}>
-      <td>{it.name}</td>
+    <tr key={it.id} style={{ padding: '6px 24px' }}>
+      <td style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
+        <img
+          alt={'image'}
+          src={it.cover}
+          style={{ borderRadius: '2px', height: '48px', width: '118px' }}
+        />
+        <div>{it.name}</div>
+      </td>
       <td>{it.cardsCount}</td>
       <td>{it.updated}</td>
       <td>{it.author.name}</td>
@@ -137,11 +156,12 @@ export const Decks = () => {
           callback={onChangeTextCallbackWithDebounce}
           label={' '}
           placeholder={'Input search'}
+          style={{ justifyContent: 'center' }}
           type={'search'}
           value={search}
         ></Input>
         <div style={{ flexShrink: '0' }}>
-          <Tabs defaultValue={'All-cards'} onValueChange={changeTabMyCardsOrAllCards}>
+          <Tabs onValueChange={changeTabMyCardsOrAllCards} value={authorCards}>
             <TabsList>
               <TabsTrigger value={'My-cards'}>My Cards</TabsTrigger>
               <TabsTrigger value={'All-cards'}>All Cards</TabsTrigger>

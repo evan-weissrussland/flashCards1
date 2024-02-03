@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
 import { useController, useForm } from 'react-hook-form'
 
 import { Button } from '@/common/components/button'
@@ -28,6 +28,8 @@ export const ModalAddNewDeck = forwardRef<
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
   const [open, setOpen] = useState(false)
 
+  const [formData, setFormData] = useState<any>('')
+
   //хук из RTK Query для выполнения запроса POST создания новой колоды
   const [createDeck] = useCreateDeckMutation()
 
@@ -44,12 +46,22 @@ export const ModalAddNewDeck = forwardRef<
 
   //обработчик передачи данных из формы на сервер
   const onSubmit = async (data: FormValues) => {
-    try {
-      await createDeck({ cover: undefined, isPrivate: data.privatePack, name: data.namePack })
-      setOpen(false)
-      reset()
-    } catch (e: any) {
-      console.error('error to add deck')
+    console.log(data.image)
+    // try {
+    //   await createDeck({ cover: formData, isPrivate: data.privatePack, name: data.namePack })
+    //   setOpen(false)
+    //   reset()
+    // } catch (e: any) {
+    //   console.error('error to add deck')
+    // }
+  }
+  const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
+      const formData = new FormData()
+
+      formData.append('cover', file)
+      setFormData(formData)
     }
   }
 
@@ -86,7 +98,19 @@ export const ModalAddNewDeck = forwardRef<
                 placeholder={'Name'}
               />
             </div>
-            <div>Upload Image</div>
+            <div>
+              <label>
+                <input
+                  {...register('image')}
+                  onChange={uploadImageHandler}
+                  style={{ display: 'none' }}
+                  type={'file'}
+                />
+                <Button as={'span'} fullWidth icon={'uploadImage'} variant={'secondary'}>
+                  Upload image
+                </Button>
+              </label>
+            </div>
             <div>
               <CheckboxComponent
                 checked={value}

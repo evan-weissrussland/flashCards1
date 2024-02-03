@@ -70,7 +70,7 @@ export const baseApi = createApi({
 export const { useCreateDeckMutation, useGetDecksQuery, useGetMinMaxAmoundCardsQuery } = baseApi
 
 type CreateDeckRequestType = {
-  cover?: string
+  cover?: any
   isPrivate?: boolean
   name: string
 }
