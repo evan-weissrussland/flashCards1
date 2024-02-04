@@ -12,7 +12,7 @@ import {
 } from '@/common/components/modal'
 import { Typography } from '@/common/components/typography'
 import { CloseModal } from '@/common/icons/icons'
-import { useCreateDeckMutation } from '@/features/Auth/api/getDecks'
+import { useUpdateDeckMutation } from '@/features/Auth/api/getDecks'
 import { modalSchema } from '@/features/Decks/ui/ModalAddNewDeck/modal-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -32,22 +32,19 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
   const [open, setOpen] = useState(false)
 
   //хук из RTK Query для выполнения запроса POST создания новой колоды
-  const [createDeck] = useCreateDeckMutation()
-
+  const [updateDeck] = useUpdateDeckMutation()
   //обработка форм
   const {
     control,
     formState: { errors },
     handleSubmit,
     register,
-    reset,
   } = useForm<FormValues>({
     resolver: zodResolver(modalSchema),
   })
 
   //обработчик передачи данных из формы на сервер. Обязательно через formData (у Андрея на серваке так сделано)
   const onSubmit = async (data: FormValues) => {
-    console.log(Object.keys(data.image).length)
     const formData = new FormData()
 
     formData.append('name', data.namePack)
@@ -55,11 +52,12 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
 
     if (Object.keys(data.image).length) {
       formData.append('cover', data.image[0])
+    } else {
+      formData.append('cover', deckCover)
     }
     try {
-      await createDeck(formData)
+      await updateDeck({ args: formData, id: deckId })
       setOpen(false)
-      reset()
     } catch (e: any) {
       console.error('error to add deck')
     }
@@ -67,10 +65,9 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
 
   //для связи между кастомным чекбоксом и хукщм useForm
   const {
-    field: { name, onChange, value },
+    field: { name, onChange, value = deckIsPrivate },
   } = useController({
     control,
-    defaultValue: deckIsPrivate,
     name: 'privatePack',
   })
 

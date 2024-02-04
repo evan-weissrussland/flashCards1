@@ -45,7 +45,7 @@ export const Decks = () => {
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
 
   //хук RTK Query. Передаёт параметры в baseApi для запрсоа на сервер и получает назад Response от сервера
-  const { data } = useGetDecksQuery({
+  const { data, isLoading } = useGetDecksQuery({
     authorId: myId,
     currentPage: currentPage ? currentPage : undefined,
     itemsPerPage: itemsPerPage ? itemsPerPage : undefined,
@@ -59,7 +59,7 @@ export const Decks = () => {
   })
   const result = useGetMinMaxAmoundCardsQuery()
 
-  if (result.isLoading) {
+  if (result.isLoading || isLoading) {
     return (
       <div
         style={{
@@ -70,10 +70,11 @@ export const Decks = () => {
           width: '100%',
         }}
       >
-        ...Loading
+        ...Read
       </div>
     )
   }
+
   /**
    * функция задержки посыла текста из инпута на сервер (debounce)
    * @param inputData - текст из инпута
