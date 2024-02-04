@@ -125,13 +125,17 @@ export const Decks = () => {
             <td style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
               <img
                 alt={'image'}
+                onClick={() => {
+                  navigateToDeckHandler(it.id)
+                }}
                 src={it.cover}
-                style={{ borderRadius: '2px', height: '48px', width: '118px' }}
+                style={{ borderRadius: '2px', cursor: 'pointer', height: '48px', width: '118px' }}
               />
               <div
                 onClick={() => {
                   navigateToDeckHandler(it.id)
                 }}
+                style={{ cursor: 'pointer' }}
               >
                 {it.name}
               </div>
@@ -153,7 +157,7 @@ export const Decks = () => {
           </tr>
         )
       }),
-    [data?.items, resultIdAuthMe]
+    [data?.items, navigateToDeckHandler, resultIdAuthMe]
   )
 
   if (result.isLoading || isLoading) {
