@@ -12,7 +12,7 @@ import {
 } from '@/common/components/modal'
 import { Typography } from '@/common/components/typography'
 import { CloseModal } from '@/common/icons/icons'
-import { useCreateDeckMutation } from '@/features/Auth/api/getDecks'
+import { useCreateDeckMutation } from '@/features/Decks/api/getDecks'
 import { modalSchema } from '@/features/Decks/ui/ModalAddNewDeck/modal-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as AlertDialog from '@radix-ui/react-alert-dialog'

@@ -7,6 +7,7 @@ import { CreateNewPass } from '@/features/Auth/ui/CreateNewPass/ui'
 import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
 import { SignIn } from '@/features/Auth/ui/SignIn/ui'
 import { SignUp } from '@/features/Auth/ui/SignUp/ui'
+import { Deck } from '@/features/Decks/ui/Deck/Deck'
 import { Decks } from '@/features/Decks/ui/Decks'
 
 type Props = {
@@ -43,6 +44,10 @@ export const router = createBrowserRouter([
       {
         element: <Decks />,
         path: 'decks',
+      },
+      {
+        element: <Deck />,
+        path: 'decks/:id',
       },
     ],
     element: <App />,

@@ -47,7 +47,7 @@ export const baseApi = createApi({
   endpoints: builder => {
     return {
       createDeck: builder.mutation<Deck, FormData>({
-        invalidatesTags: ['Deck'],
+        invalidatesTags: ['Decks'],
         query: args => ({
           body: args,
           method: 'POST',
@@ -55,15 +55,22 @@ export const baseApi = createApi({
         }),
       }),
       deleteDeck: builder.mutation<Omit<Deck, 'author'>, string>({
-        invalidatesTags: ['Deck'],
+        invalidatesTags: ['Decks'],
         query: id => ({
           method: 'DELETE',
           url: `v1/decks/${id}`,
         }),
       }),
-      getDecks: builder.query<Response, GetDecksRequestType>({
+      getDeck: builder.query<Deck, string>({
         keepUnusedDataFor: 1,
         providesTags: ['Deck'],
+        query: id => ({
+          url: `v1/decks/${id}`,
+        }),
+      }),
+      getDecks: builder.query<Response, GetDecksRequestType>({
+        keepUnusedDataFor: 1,
+        providesTags: ['Decks'],
         query: args => ({
           params: args ? args : undefined,
           url: `v2/decks`,
@@ -73,7 +80,7 @@ export const baseApi = createApi({
         query: () => `v2/decks/min-max-cards`,
       }),
       updateDeck: builder.mutation<Deck, { args: FormData; id: string }>({
-        invalidatesTags: ['Deck'],
+        invalidatesTags: ['Decks'],
         query: body => ({
           body: body.args,
           method: 'PATCH',
@@ -83,12 +90,13 @@ export const baseApi = createApi({
     }
   },
   reducerPath: 'baseApi',
-  tagTypes: ['Deck'],
+  tagTypes: ['Decks'],
 })
 
 export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
+  useGetDeckQuery,
   useGetDecksQuery,
   useGetMinMaxAmoundCardsQuery,
   useUpdateDeckMutation,

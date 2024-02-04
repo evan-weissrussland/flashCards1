@@ -9,7 +9,7 @@ import {
 } from '@/common/components/modal'
 import { Typography } from '@/common/components/typography'
 import { CloseModal } from '@/common/icons/icons'
-import { useDeleteDeckMutation } from '@/features/Auth/api/getDecks'
+import { useDeleteDeckMutation } from '@/features/Decks/api/getDecks'
 
 import s from './modalDeleteDeck.module.scss'
 

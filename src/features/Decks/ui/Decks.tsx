@@ -1,4 +1,5 @@
 import { useCallback, useContext, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { Context } from '@/app/ui/App'
 import { Button } from '@/common/components/button'
@@ -7,14 +8,14 @@ import { PageSizeType, Paginator } from '@/common/components/paginator/paginator
 import { RangeSlider } from '@/common/components/slider'
 import { Tabs, TabsList, TabsTrigger } from '@/common/components/tabSwitcher'
 import { Typography } from '@/common/components/typography'
-import { useGetDecksQuery, useGetMinMaxAmoundCardsQuery } from '@/features/Auth/api/getDecks'
+import { useGetDecksQuery, useGetMinMaxAmoundCardsQuery } from '@/features/Decks/api/getDecks'
 import { ModalAddNewDeck } from '@/features/Decks/ui/ModalAddNewDeck'
 import { ModalDeleteDeck } from '@/features/Decks/ui/ModalDeleteDeck'
 import { ModalEditDeck } from '@/features/Decks/ui/ModalEditDeck'
 
 export const Decks = () => {
   const resultIdAuthMe = useContext(Context)
-
+  const navigate = useNavigate()
   //для изменения value инпута
   const [search, setSearch] = useState('')
 
@@ -58,6 +59,10 @@ export const Decks = () => {
     name: textFromDebounceInput,
   })
   const result = useGetMinMaxAmoundCardsQuery()
+
+  const navigateToDeckHandler = (id: string) => {
+    navigate(`/decks/${id}`)
+  }
 
   //зачистка фильтра
   const clearFilterHandler = useCallback(() => {
@@ -114,32 +119,40 @@ export const Decks = () => {
   //отрисовываем таблицу из карт с сервера
   const table = useMemo(
     () =>
-      data?.items.map(it => (
-        <tr key={it.id} style={{ padding: '6px 24px' }}>
-          <td style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
-            <img
-              alt={'image'}
-              src={it.cover}
-              style={{ borderRadius: '2px', height: '48px', width: '118px' }}
-            />
-            <div>{it.name}</div>
-          </td>
-          <td>{it.cardsCount}</td>
-          <td>{new Date(it.updated).toLocaleString('ru-RU')}</td>
-          <td>{it.author.name}</td>
-          {it.userId === resultIdAuthMe && (
-            <td>
-              <ModalEditDeck
-                deckCover={it.cover}
-                deckId={it.id}
-                deckIsPrivate={it.isPrivate}
-                deckName={it.name}
+      data?.items.map(it => {
+        return (
+          <tr key={it.id} style={{ padding: '6px 24px' }}>
+            <td style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
+              <img
+                alt={'image'}
+                src={it.cover}
+                style={{ borderRadius: '2px', height: '48px', width: '118px' }}
               />
-              <ModalDeleteDeck deckName={it.name} idDeck={it.id} />
+              <div
+                onClick={() => {
+                  navigateToDeckHandler(it.id)
+                }}
+              >
+                {it.name}
+              </div>
             </td>
-          )}
-        </tr>
-      )),
+            <td>{it.cardsCount}</td>
+            <td>{new Date(it.updated).toLocaleString('ru-RU')}</td>
+            <td>{it.author.name}</td>
+            {it.userId === resultIdAuthMe && (
+              <td>
+                <ModalEditDeck
+                  deckCover={it.cover}
+                  deckId={it.id}
+                  deckIsPrivate={it.isPrivate}
+                  deckName={it.name}
+                />
+                <ModalDeleteDeck deckName={it.name} idDeck={it.id} />
+              </td>
+            )}
+          </tr>
+        )
+      }),
     [data?.items, resultIdAuthMe]
   )
 

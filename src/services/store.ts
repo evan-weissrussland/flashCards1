@@ -1,5 +1,5 @@
 import { authMeApi } from '@/features/Auth/api/authMe-api'
-import { baseApi } from '@/features/Auth/api/getDecks'
+import { baseApi } from '@/features/Decks/api/getDecks'
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
