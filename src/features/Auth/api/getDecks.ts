@@ -62,6 +62,7 @@ export const baseApi = createApi({
         }),
       }),
       getDecks: builder.query<Response, GetDecksRequestType>({
+        keepUnusedDataFor: 1,
         providesTags: ['Deck'],
         query: args => ({
           params: args ? args : undefined,

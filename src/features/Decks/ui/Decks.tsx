@@ -89,24 +89,14 @@ export const Decks = () => {
     setTimerId(+idTimer)
   }
 
-  const onChangeValueFromSliderWithDebounce = (value: number | number[]) => {
-    setCardsCountFromSlider(value)
-    clearTimeout(timerId)
-    const idTimer = setTimeout(() => {
-      setValuesArrayFromDebounceSlider(value)
-    }, 3500)
-
-    setTimerId(+idTimer)
-  }
-
   //зачистка фильтра
   const clearFilterHandler = () => {
     setSearch('')
     setTextFromDebounceInput('')
     setItemsPerPage(null)
     setCurrentPage(null)
-    setCardsCountFromSlider([0, 10])
-    setValuesArrayFromDebounceSlider([0, 10])
+    setCardsCountFromSlider([0, 11])
+    setValuesArrayFromDebounceSlider([0, 11])
     setAuthorCards('All-cards')
     setMyId(undefined)
   }
@@ -185,7 +175,8 @@ export const Decks = () => {
         <RangeSlider
           max={result.data?.max}
           min={result.data?.min}
-          onChangeRange={onChangeValueFromSliderWithDebounce}
+          onChangeRange={setCardsCountFromSlider}
+          onChangeRangeCommit={setValuesArrayFromDebounceSlider}
           values={cardsCountFromSlider as number[]}
         />
         <Button icon={'delete'} onClick={clearFilterHandler} variant={'secondary'}>
@@ -217,4 +208,3 @@ export const Decks = () => {
     </div>
   )
 }
-//TODO: не получается сделать задержку на отправку запросов на сервер при изменении slider (onChangeValueFromSliderWithDebounce). Всё равно вместо  одного запроса идёт несколько

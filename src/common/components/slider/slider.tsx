@@ -14,6 +14,7 @@ type SuperDoubleRangePropsType = DefaultInputPropsType & {
   max?: number
   min?: number
   onChangeRange: (value: number | number[]) => void
+  onChangeRangeCommit: (value: number | number[]) => void
   step?: number
   values: number[]
 }
@@ -22,13 +23,10 @@ export const RangeSlider: FC<SuperDoubleRangePropsType> = ({
   max,
   min,
   onChangeRange,
+  onChangeRangeCommit,
   step = 1,
   values,
 }) => {
-  const onValueChangeHandler = (valuesArray: number[]) => {
-    onChangeRange(valuesArray)
-  }
-
   return (
     <div className={s.form}>
       <span className={s.minMax}>{values[0]}</span>
@@ -37,7 +35,8 @@ export const RangeSlider: FC<SuperDoubleRangePropsType> = ({
           className={s.SliderRoot}
           max={max}
           min={min}
-          onValueChange={onValueChangeHandler}
+          onValueChange={onChangeRange}
+          onValueCommit={onChangeRangeCommit}
           step={step}
           value={values}
         >
