@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useCallback, useContext, useMemo, useState } from 'react'
 
 import { Context } from '@/app/ui/App'
 import { Button } from '@/common/components/button'
@@ -59,6 +59,90 @@ export const Decks = () => {
   })
   const result = useGetMinMaxAmoundCardsQuery()
 
+  //зачистка фильтра
+  const clearFilterHandler = useCallback(() => {
+    setSearch('')
+    setTextFromDebounceInput('')
+    setItemsPerPage(null)
+    setCurrentPage(null)
+    setCardsCountFromSlider([0, 11])
+    setValuesArrayFromDebounceSlider([0, 11])
+    setAuthorCards('All-cards')
+    setMyId(undefined)
+  }, [])
+
+  /**
+   * функция задержки посыла текста из инпута на сервер (debounce)
+   * @param inputData - текст из инпута
+   */
+  const onChangeTextCallbackWithDebounce = useCallback(
+    (inputData: string) => {
+      setSearch(inputData)
+      clearTimeout(timerId)
+      const idTimer = setTimeout(() => {
+        setTextFromDebounceInput(inputData)
+      }, 1500)
+
+      setTimerId(+idTimer)
+    },
+    [timerId, setSearch, setTimerId, setTextFromDebounceInput]
+  )
+
+  //если мы зарегистрированы (есть resultAuthMe), и нажимаем на MyCards, то делаем запрос на сервер за моими колодами, если нажимаем на "All  Cards" - то делаем запрос за всеми колодами. Если мы не зарегистрированы, то делаем запрос за всеми колодами
+  const changeTabMyCardsOrAllCards = useCallback(
+    (v: string) => {
+      if (resultIdAuthMe) {
+        switch (v) {
+          case 'My-cards':
+            setMyId(resultIdAuthMe)
+            setAuthorCards('My-cards')
+            break
+          case 'All-cards':
+            setMyId(undefined)
+            setAuthorCards('All-cards')
+            break
+          default:
+            break
+        }
+      } else {
+        setMyId(undefined)
+      }
+    },
+    [resultIdAuthMe, setMyId, setAuthorCards]
+  )
+
+  //отрисовываем таблицу из карт с сервера
+  const table = useMemo(
+    () =>
+      data?.items.map(it => (
+        <tr key={it.id} style={{ padding: '6px 24px' }}>
+          <td style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
+            <img
+              alt={'image'}
+              src={it.cover}
+              style={{ borderRadius: '2px', height: '48px', width: '118px' }}
+            />
+            <div>{it.name}</div>
+          </td>
+          <td>{it.cardsCount}</td>
+          <td>{new Date(it.updated).toLocaleString('ru-RU')}</td>
+          <td>{it.author.name}</td>
+          {it.userId === resultIdAuthMe && (
+            <td>
+              <ModalEditDeck
+                deckCover={it.cover}
+                deckId={it.id}
+                deckIsPrivate={it.isPrivate}
+                deckName={it.name}
+              />
+              <ModalDeleteDeck deckName={it.name} idDeck={it.id} />
+            </td>
+          )}
+        </tr>
+      )),
+    [data?.items, resultIdAuthMe]
+  )
+
   if (result.isLoading || isLoading) {
     return (
       <div
@@ -75,80 +159,6 @@ export const Decks = () => {
     )
   }
 
-  /**
-   * функция задержки посыла текста из инпута на сервер (debounce)
-   * @param inputData - текст из инпута
-   */
-  const onChangeTextCallbackWithDebounce = (inputData: string) => {
-    setSearch(inputData)
-    clearTimeout(timerId)
-    const idTimer = setTimeout(() => {
-      setTextFromDebounceInput(inputData)
-    }, 1500)
-
-    setTimerId(+idTimer)
-  }
-
-  //зачистка фильтра
-  const clearFilterHandler = () => {
-    setSearch('')
-    setTextFromDebounceInput('')
-    setItemsPerPage(null)
-    setCurrentPage(null)
-    setCardsCountFromSlider([0, 11])
-    setValuesArrayFromDebounceSlider([0, 11])
-    setAuthorCards('All-cards')
-    setMyId(undefined)
-  }
-
-  //если мы зарегистрированы (есть resultAuthMe), и нажимаем на MyCards, то делаем запрос на сервер за моими колодами, если нажимаем на "All  Cards" - то делаем запрос за всеми колодами. Если мы не зарегистрированы, то делаем запрос за всеми колодами
-  const changeTabMyCardsOrAllCards = (v: string) => {
-    if (resultIdAuthMe) {
-      switch (v) {
-        case 'My-cards':
-          setMyId(resultIdAuthMe)
-          setAuthorCards('My-cards')
-          break
-        case 'All-cards':
-          setMyId(undefined)
-          setAuthorCards('All-cards')
-          break
-        default:
-          break
-      }
-    } else {
-      setMyId(undefined)
-    }
-  }
-
-  //отрисовываем таблицу из карт с сервера
-  const table = data?.items.map(it => (
-    <tr key={it.id} style={{ padding: '6px 24px' }}>
-      <td style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
-        <img
-          alt={'image'}
-          src={it.cover}
-          style={{ borderRadius: '2px', height: '48px', width: '118px' }}
-        />
-        <div>{it.name}</div>
-      </td>
-      <td>{it.cardsCount}</td>
-      <td>{new Date(it.updated).toLocaleString('ru-RU')}</td>
-      <td>{it.author.name}</td>
-      {it.userId === resultIdAuthMe && (
-        <td>
-          <ModalEditDeck
-            deckCover={it.cover}
-            deckId={it.id}
-            deckIsPrivate={it.isPrivate}
-            deckName={it.name}
-          />
-          <ModalDeleteDeck deckName={it.name} idDeck={it.id} />
-        </td>
-      )}
-    </tr>
-  ))
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '0 136px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -158,12 +168,12 @@ export const Decks = () => {
       <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
         <Input
           callback={onChangeTextCallbackWithDebounce}
+          className={'justifyContent-center'}
           label={' '}
           placeholder={'Input search'}
-          style={{ justifyContent: 'center' }}
           type={'search'}
           value={search}
-        ></Input>
+        />
         <div style={{ flexShrink: '0' }}>
           <Tabs onValueChange={changeTabMyCardsOrAllCards} value={authorCards}>
             <TabsList>

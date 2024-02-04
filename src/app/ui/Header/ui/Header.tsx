@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { FC, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Context } from '@/app/ui/App'
@@ -7,7 +7,12 @@ import { DropDown } from '@/common/components/dropDown'
 
 import s from './header.module.scss'
 
-export const Header = () => {
+type Props = {
+  email: string
+  name: string
+}
+
+export const Header: FC<Props> = ({ email, name }) => {
   const navigate = useNavigate()
   //вытягивам из контекста APP userIdЖ если он есть, то мы залогинены
   const resultIdAuthMe = useContext(Context)
@@ -27,7 +32,7 @@ export const Header = () => {
             Sign In
           </Button>
         ) : (
-          <DropDown />
+          <DropDown email={email} name={name} />
         )}
       </div>
     </div>

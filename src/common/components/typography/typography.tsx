@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementType } from 'react'
+import { ComponentPropsWithoutRef, ElementType, memo } from 'react'
 
 import s from './typography.module.scss'
 
@@ -25,28 +25,30 @@ export type TypographyProps<T extends ElementType = 'div'> = {
   variant?: VariantType
 } & ComponentPropsWithoutRef<T>
 
-export const Typography = <T extends ElementType = 'div'>(
-  props: TypographyProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TypographyProps<T>>
-) => {
-  const {
-    as: Component = 'div',
-    children,
-    className = '',
-    dataColor = false,
-    theme = 'dark',
-    variant = 'Body 2',
-    ...rest
-  } = props
-  const typeFromVariant = variant.replace(/\s/, '').toLowerCase()
+export const Typography = memo(
+  <T extends ElementType = 'div'>(
+    props: TypographyProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TypographyProps<T>>
+  ) => {
+    const {
+      as: Component = 'div',
+      children,
+      className = '',
+      dataColor = false,
+      theme = 'dark',
+      variant = 'Body 2',
+      ...rest
+    } = props
+    const typeFromVariant = variant.replace(/\s/, '').toLowerCase()
 
-  return (
-    <Component
-      className={`${s[className]} ${s[typeFromVariant]}`}
-      data-color={dataColor}
-      theme={theme}
-      {...rest}
-    >
-      {children}
-    </Component>
-  )
-}
+    return (
+      <Component
+        className={`${s[className]} ${s[typeFromVariant]}`}
+        data-color={dataColor}
+        theme={theme}
+        {...rest}
+      >
+        {children}
+      </Component>
+    )
+  }
+)

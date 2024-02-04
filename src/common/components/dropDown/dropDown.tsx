@@ -11,6 +11,8 @@ import s from './dropDown.module.scss'
  */
 export type DropDownProps = {
   className?: string
+  email: string
+  name: string
 }
 /**
  * обобщённая типизация с родительскими пропсами, а также с нативными пропсами, исключая из нативных пропсов те, которые есть в родительских
@@ -21,7 +23,7 @@ type DropDownWithRef = (props: OwnerDropDownProps, ref: ForwardedRef<any>) => Re
 
 export const DropDown: DropDownWithRef = forwardRef(
   (props: OwnerDropDownProps, ref: ForwardedRef<any>) => {
-    const { className = '' } = props
+    const { className = '', email, name } = props
 
     return (
       <DropdownMenu.Root>
@@ -61,10 +63,10 @@ export const DropDown: DropDownWithRef = forwardRef(
                 />
                 <div style={{ display: 'inline-flex', flexDirection: 'column' }}>
                   <Typography theme={'dark'} variant={'Subtitle 2'}>
-                    Ivan
+                    {name}
                   </Typography>
                   <Typography dataColor variant={'Caption'}>
-                    emai1111111111
+                    {email}
                   </Typography>
                 </div>
               </DropDownLabel>

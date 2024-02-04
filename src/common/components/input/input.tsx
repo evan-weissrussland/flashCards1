@@ -1,4 +1,13 @@
-import { ComponentPropsWithoutRef, ElementType, ForwardedRef, ReactNode, forwardRef } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementType,
+  ForwardedRef,
+  ReactNode,
+  forwardRef,
+  memo,
+} from 'react'
+
+import clsx from 'clsx'
 
 import s from './input.module.scss'
 
@@ -21,8 +30,8 @@ type InputWithRef = <T extends ElementType = 'input'>(
   ref: ForwardedRef<T>
 ) => ReactNode
 
-export const Input: InputWithRef = forwardRef(
-  <T extends ElementType = 'input'>(props: OwnerInputProps<T>, ref: ForwardedRef<T>) => {
+export const Input: InputWithRef = memo(
+  forwardRef(<T extends ElementType = 'input'>(props: OwnerInputProps<T>, ref: ForwardedRef<T>) => {
     const {
       as = 'input',
       callback,
@@ -35,10 +44,10 @@ export const Input: InputWithRef = forwardRef(
     const Component: ElementType = as || 'input'
 
     return (
-      <div className={s.inputWrapper} style={props.style}>
+      <div className={clsx(s.inputWrapper, s[className])} style={props.style}>
         <span className={`${s.label} ${rest.disabled && s.disabledLabel}`}>{label}</span>
         <Component
-          className={`${s[type]} ${s.input} ${s[className]} ${error && s.error}`}
+          className={`${s[type]} ${s.input} ${error && s.error}`}
           onChange={(e: { currentTarget: { value: any } }) => {
             callback && callback(e.currentTarget.value)
           }}
@@ -49,5 +58,5 @@ export const Input: InputWithRef = forwardRef(
         <span className={s.errorText}>{error && `${error}!`}</span>
       </div>
     )
-  }
+  })
 )

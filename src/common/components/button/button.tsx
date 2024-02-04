@@ -1,4 +1,11 @@
-import { ComponentPropsWithoutRef, ElementType, ForwardedRef, ReactNode, forwardRef } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementType,
+  ForwardedRef,
+  ReactNode,
+  forwardRef,
+  memo,
+} from 'react'
 
 import { DeleteIcon, EditIcon, LogOutIcon, UploadImageIcon } from '@/common/icons/icons'
 
@@ -26,8 +33,8 @@ type ButtonWithRef = <T extends ElementType = 'button'>(
   ref: ForwardedRef<T>
 ) => ReactNode
 
-export const Button: ButtonWithRef = forwardRef(
-  <T extends ElementType>(props: OwnerButtonProps<T>, ref: ForwardedRef<T>) => {
+export const Button: ButtonWithRef = memo(
+  forwardRef(<T extends ElementType>(props: OwnerButtonProps<T>, ref: ForwardedRef<T>) => {
     const {
       as = 'button',
       children,
@@ -58,5 +65,5 @@ export const Button: ButtonWithRef = forwardRef(
         {children}
       </Component>
     )
-  }
+  })
 )

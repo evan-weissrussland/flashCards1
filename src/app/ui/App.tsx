@@ -28,10 +28,10 @@ export function App() {
 
   return (
     <>
-      <Context.Provider value={result.data.id}>
-        <Header />
+      <Context.Provider value={result.data?.id as string}>
+        <Header email={result.data?.email as string} name={result.data?.name as string} />
         <Outlet />
-        <PrivateRouter data={result.data.name} />
+        <PrivateRouter data={result.data?.name as string} />
       </Context.Provider>
     </>
   )
