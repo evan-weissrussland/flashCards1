@@ -143,7 +143,6 @@ export const Decks = () => {
         <div>{it.name}</div>
       </td>
       <td>{it.cardsCount}</td>
-      {/*<td>{it.updated}</td>*/}
       <td>{new Date(it.updated).toLocaleString('ru-RU')}</td>
       <td>{it.author.name}</td>
       {it.userId === resultIdAuthMe && (
