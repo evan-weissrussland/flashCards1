@@ -11,7 +11,7 @@ type Response = {
     totalPages: number
   }
 }
-type Deck = {
+export type Deck = {
   author: {
     id: string
     name: string
@@ -34,6 +34,40 @@ type GetDecksRequestType = {
   minCardsCount?: number
   name?: string
   orderBy?: string
+}
+
+type GetCardsDecksRequestType = {
+  answer?: string
+  currentPage?: number
+  itemsPerPage?: PageSizeType
+  orderBy?: string
+  question?: string
+}
+
+type Cards = {
+  items: Card[]
+  pagination: {
+    currentPage: number
+    itemsPerPage: PageSizeType
+    totalItems: number
+    totalPages: number
+  }
+}
+
+type Card = {
+  answer: string
+  answerImg: string
+  answerVideo: string
+  created: string
+  deckId: string
+  grade: number
+  id: string
+  question: string
+  questionImg: string
+  questionVideo: string
+  shots: number
+  updated: string
+  userId: string
 }
 
 export const baseApi = createApi({
@@ -59,6 +93,14 @@ export const baseApi = createApi({
         query: id => ({
           method: 'DELETE',
           url: `v1/decks/${id}`,
+        }),
+      }),
+      getCardsDeck: builder.query<Cards, { args: GetCardsDecksRequestType; id: string }>({
+        keepUnusedDataFor: 1,
+        providesTags: ['CardsDeck'],
+        query: body => ({
+          params: body.args ? body.args : undefined,
+          url: `v1/decks/${body.id}/cards`,
         }),
       }),
       getDeck: builder.query<Deck, string>({
@@ -90,12 +132,13 @@ export const baseApi = createApi({
     }
   },
   reducerPath: 'baseApi',
-  tagTypes: ['Decks'],
+  tagTypes: ['Deck', 'Decks', 'CardsDeck'],
 })
 
 export const {
   useCreateDeckMutation,
   useDeleteDeckMutation,
+  useGetCardsDeckQuery,
   useGetDeckQuery,
   useGetDecksQuery,
   useGetMinMaxAmoundCardsQuery,

@@ -11,24 +11,23 @@ import { Typography } from '@/common/components/typography'
 import { CloseModal } from '@/common/icons/icons'
 import { useDeleteDeckMutation } from '@/features/Decks/api/getDecks'
 
-import s from './modalDeleteDeck.module.scss'
+import s from './modalDeleteCard.module.scss'
 
 type DeckProps = {
-  deckName: string
   idDeck: string
 }
 
-export const ModalDeleteDeck: FC<DeckProps> = ({ deckName, idDeck }) => {
+export const ModalDeleteCard: FC<DeckProps> = ({ idDeck }) => {
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
   const [open, setOpen] = useState(false)
 
   //хук из RTK Query для выполнения запроса DELETE удаления  колоды
-  const [deleteDeck] = useDeleteDeckMutation()
+  // const [deleteDeck] = useDeleteDeckMutation()
 
   const onClickDeleteHandler = () => {
-    deleteDeck(idDeck)
-      .unwrap()
-      .then(() => setOpen(false))
+    // deleteDeck(idDeck)
+    //   .unwrap()
+    //   .then(() => setOpen(false))
   }
 
   return (
@@ -46,13 +45,7 @@ export const ModalDeleteDeck: FC<DeckProps> = ({ deckName, idDeck }) => {
           </ModalkaButtonCancel>
         </div>
         <div className={s.descriptionText}>
-          <Typography variant={'Body 1'}>
-            Do you really want to remove{' '}
-            <Typography as={'span'} variant={'Subtitle 1'}>
-              {deckName}
-            </Typography>
-            .
-          </Typography>
+          <Typography variant={'Body 1'}>Do you really want to remove .</Typography>
           <Typography variant={'Body 1'}>All cards will be deleted</Typography>
         </div>
         <div className={s.buttonGroup}>

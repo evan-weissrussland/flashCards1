@@ -204,6 +204,7 @@ export const Decks = () => {
           min={result.data?.min}
           onChangeRange={setCardsCountFromSlider}
           onChangeRangeCommit={setValuesArrayFromDebounceSlider}
+          step={1}
           values={cardsCountFromSlider as number[]}
         />
         <Button icon={'delete'} onClick={clearFilterHandler} variant={'secondary'}>
