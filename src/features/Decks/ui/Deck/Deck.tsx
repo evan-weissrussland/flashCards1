@@ -3,7 +3,7 @@ import { NavLink, useParams } from 'react-router-dom'
 
 import { Context } from '@/app/ui/App'
 import { Typography } from '@/common/components/typography'
-import { ArrowBackIcon } from '@/common/icons/icons'
+import { ArrowBackIcon } from '@/common/icons/ArrowBackIcon'
 import { useGetDeckQuery } from '@/features/Decks/api/getDecks'
 import { FriendsDeck } from '@/features/Decks/ui/Deck/FriendsDeck/FriendsDeck'
 import { MyDeck } from '@/features/Decks/ui/Deck/MyDeck/MyDeck'

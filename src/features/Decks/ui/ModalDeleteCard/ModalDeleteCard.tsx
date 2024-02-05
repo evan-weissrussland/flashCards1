@@ -8,8 +8,8 @@ import {
   ModalkaTrigger,
 } from '@/common/components/modal'
 import { Typography } from '@/common/components/typography'
-import { CloseModal } from '@/common/icons/icons'
-import { useDeleteDeckMutation } from '@/features/Decks/api/getDecks'
+import { CloseModal } from '@/common/icons/CloseModal'
+import { useDeleteCardMutation } from '@/features/Decks/api/getDecks'
 
 import s from './modalDeleteCard.module.scss'
 
@@ -21,13 +21,13 @@ export const ModalDeleteCard: FC<DeckProps> = ({ idDeck }) => {
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
   const [open, setOpen] = useState(false)
 
-  //хук из RTK Query для выполнения запроса DELETE удаления  колоды
-  // const [deleteDeck] = useDeleteDeckMutation()
+  //хук из RTK Query для выполнения запроса DELETE удаления  карты
+  const [deleteCard] = useDeleteCardMutation()
 
   const onClickDeleteHandler = () => {
-    // deleteDeck(idDeck)
-    //   .unwrap()
-    //   .then(() => setOpen(false))
+    deleteCard(idDeck)
+      .unwrap()
+      .then(() => setOpen(false))
   }
 
   return (
@@ -37,7 +37,7 @@ export const ModalDeleteCard: FC<DeckProps> = ({ idDeck }) => {
       </ModalkaTrigger>
       <ModalkaContent>
         <div className={s.description}>
-          <Typography variant={'H3'}>Add new deck</Typography>
+          <Typography variant={'H3'}>Delete Card</Typography>
           <ModalkaButtonCancel asChild>
             <Button className={'padding4px'} variant={'secondary'}>
               <CloseModal />
@@ -45,14 +45,13 @@ export const ModalDeleteCard: FC<DeckProps> = ({ idDeck }) => {
           </ModalkaButtonCancel>
         </div>
         <div className={s.descriptionText}>
-          <Typography variant={'Body 1'}>Do you really want to remove .</Typography>
-          <Typography variant={'Body 1'}>All cards will be deleted</Typography>
+          <Typography variant={'Body 1'}>Do you really want to remove Card?.</Typography>
         </div>
         <div className={s.buttonGroup}>
           <ModalkaButtonCancel asChild>
             <Button variant={'secondary'}>Cancel</Button>
           </ModalkaButtonCancel>
-          <Button onClick={onClickDeleteHandler}>Delete Deck</Button>
+          <Button onClick={onClickDeleteHandler}>Delete Card</Button>
         </div>
       </ModalkaContent>
     </Modalka>

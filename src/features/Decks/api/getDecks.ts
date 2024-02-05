@@ -88,6 +88,13 @@ export const baseApi = createApi({
           url: `v1/decks`,
         }),
       }),
+      deleteCard: builder.mutation<any, string>({
+        invalidatesTags: ['CardsDeck'],
+        query: id => ({
+          method: 'DELETE',
+          url: `v1/cards/${id}`,
+        }),
+      }),
       deleteDeck: builder.mutation<Omit<Deck, 'author'>, string>({
         invalidatesTags: ['Decks'],
         query: id => ({
@@ -96,7 +103,7 @@ export const baseApi = createApi({
         }),
       }),
       getCardsDeck: builder.query<Cards, { args: GetCardsDecksRequestType; id: string }>({
-        keepUnusedDataFor: 1,
+        keepUnusedDataFor: 10,
         providesTags: ['CardsDeck'],
         query: body => ({
           params: body.args ? body.args : undefined,
@@ -137,6 +144,7 @@ export const baseApi = createApi({
 
 export const {
   useCreateDeckMutation,
+  useDeleteCardMutation,
   useDeleteDeckMutation,
   useGetCardsDeckQuery,
   useGetDeckQuery,

@@ -1,5 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
+import { Grade } from '@/common/components/grade'
 import { Input } from '@/common/components/input'
 import { PageSizeType, Paginator } from '@/common/components/paginator/paginator'
 import { useGetCardsDeckQuery } from '@/features/Decks/api/getDecks'
@@ -38,6 +39,9 @@ export const MyDeckMain: FC<Props> = props => {
             <td>{it.answer}</td>
             <td>{new Date(it.updated).toLocaleString('ru-RU')}</td>
             <td>
+              <Grade rating={it.grade} />
+            </td>
+            <td style={{ textAlign: 'center' }}>
               <ModalEditCard />
               <ModalDeleteCard idDeck={it.id} />
             </td>
@@ -62,6 +66,7 @@ export const MyDeckMain: FC<Props> = props => {
               <th style={{ color: 'red', textAlign: 'start' }}>Answer</th>
               <th style={{ color: 'red', textAlign: 'start' }}>Last Updated</th>
               <th style={{ color: 'red', textAlign: 'start' }}>Grade</th>
+              <th style={{ color: 'red', textAlign: 'start' }}></th>
             </tr>
           </thead>
           <tbody>{table}</tbody>

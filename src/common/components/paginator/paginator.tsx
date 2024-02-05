@@ -2,7 +2,8 @@ import { FC, memo, useEffect, useState } from 'react'
 
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/common/components/selectV2'
 import { Typography } from '@/common/components/typography'
-import { PaginationIconNext, PaginationIconPrev } from '@/common/icons/icons'
+import { PaginationIconNext } from '@/common/icons/PaginationIconNext'
+import { PaginationIconPrev } from '@/common/icons/PaginationIconPrev'
 
 import s from './Paginator.module.css'
 

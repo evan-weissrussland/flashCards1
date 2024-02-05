@@ -1,7 +1,7 @@
 import { Button } from '@/common/components/button'
 import { Card } from '@/common/components/card'
 import { Typography } from '@/common/components/typography'
-import { EditIcon } from '@/common/icons/icons'
+import { EditIcon } from '@/common/icons/EditIcon'
 
 export const EditProfileLogout = () => {
   //email из стэйта

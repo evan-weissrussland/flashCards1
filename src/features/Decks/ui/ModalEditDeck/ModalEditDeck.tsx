@@ -11,7 +11,7 @@ import {
   ModalkaTrigger,
 } from '@/common/components/modal'
 import { Typography } from '@/common/components/typography'
-import { CloseModal } from '@/common/icons/icons'
+import { CloseModal } from '@/common/icons/CloseModal'
 import { useUpdateDeckMutation } from '@/features/Decks/api/getDecks'
 import { modalSchema } from '@/features/Decks/ui/ModalAddNewDeck/modal-schema'
 import { zodResolver } from '@hookform/resolvers/zod'

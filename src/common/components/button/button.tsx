@@ -7,7 +7,10 @@ import {
   memo,
 } from 'react'
 
-import { DeleteIcon, EditIcon, LogOutIcon, UploadImageIcon } from '@/common/icons/icons'
+import { DeleteIcon } from '@/common/icons/DeleteIcon'
+import { EditIcon } from '@/common/icons/EditIcon'
+import { LogOutIcon } from '@/common/icons/LogOutIcon'
+import { UploadImageIcon } from '@/common/icons/UploadImageIcon'
 
 import s from './button.module.scss'
 

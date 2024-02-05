@@ -219,6 +219,7 @@ export const Decks = () => {
               <th style={{ color: 'red', textAlign: 'start' }}>Cards</th>
               <th style={{ color: 'red', textAlign: 'start' }}>Last Updated</th>
               <th style={{ color: 'red', textAlign: 'start' }}>Created by</th>
+              <th style={{ color: 'red', textAlign: 'start' }}></th>
             </tr>
           </thead>
           <tbody>{table}</tbody>

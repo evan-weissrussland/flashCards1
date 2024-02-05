@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { Button } from '@/common/components/button'
 import { Card } from '@/common/components/card'
 import { Typography } from '@/common/components/typography'
-import { CheckEmailIcon } from '@/common/icons/icons'
+import { CheckEmailIcon } from '@/common/icons/CheckEmailIcon'
 
 export const CheckEmail = () => {
   const navigate = useNavigate()

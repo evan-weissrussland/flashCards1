@@ -8,7 +8,7 @@ import {
   ModalkaTrigger,
 } from '@/common/components/modal'
 import { Typography } from '@/common/components/typography'
-import { CloseModal } from '@/common/icons/icons'
+import { CloseModal } from '@/common/icons/CloseModal'
 import { useDeleteDeckMutation } from '@/features/Decks/api/getDecks'
 
 import s from './modalDeleteDeck.module.scss'
@@ -38,7 +38,7 @@ export const ModalDeleteDeck: FC<DeckProps> = ({ deckName, idDeck }) => {
       </ModalkaTrigger>
       <ModalkaContent>
         <div className={s.description}>
-          <Typography variant={'H3'}>Add new deck</Typography>
+          <Typography variant={'H3'}>Delete Deck</Typography>
           <ModalkaButtonCancel asChild>
             <Button className={'padding4px'} variant={'secondary'}>
               <CloseModal />
