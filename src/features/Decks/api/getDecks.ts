@@ -80,6 +80,14 @@ export const baseApi = createApi({
   }),
   endpoints: builder => {
     return {
+      createCard: builder.mutation<Omit<Deck, 'grade'>, { args: FormData; id: string }>({
+        invalidatesTags: ['CardsDeck'],
+        query: body => ({
+          body: body.args,
+          method: 'POST',
+          url: `v1/decks/${body.id}/cards`,
+        }),
+      }),
       createDeck: builder.mutation<Deck, FormData>({
         invalidatesTags: ['Decks'],
         query: args => ({
@@ -103,7 +111,7 @@ export const baseApi = createApi({
         }),
       }),
       getCardsDeck: builder.query<Cards, { args: GetCardsDecksRequestType; id: string }>({
-        keepUnusedDataFor: 10,
+        keepUnusedDataFor: 1,
         providesTags: ['CardsDeck'],
         query: body => ({
           params: body.args ? body.args : undefined,
@@ -112,7 +120,7 @@ export const baseApi = createApi({
       }),
       getDeck: builder.query<Deck, string>({
         keepUnusedDataFor: 1,
-        providesTags: ['Deck'],
+        providesTags: ['Deck', 'CardsDeck'],
         query: id => ({
           url: `v1/decks/${id}`,
         }),
@@ -143,6 +151,7 @@ export const baseApi = createApi({
 })
 
 export const {
+  useCreateCardMutation,
   useCreateDeckMutation,
   useDeleteCardMutation,
   useDeleteDeckMutation,

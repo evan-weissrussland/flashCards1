@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
-import { Button } from '@/common/components/button'
 import { Card } from '@/common/components/card'
 import { Typography } from '@/common/components/typography'
 import { MyDeckMain } from '@/features/Decks/ui/Deck/MyDeck/MyDeckMain/MyDeckMain'
+import { ModalAddNewCard } from '@/features/Decks/ui/ModalAddNewCard'
 
 type Props = {
   cardsCount: number
@@ -17,7 +17,7 @@ export const MyDeck: FC<Props> = props => {
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <Typography variant={'H1'}>{name}</Typography>
-        {cardsCount ? <Button>Add New Card</Button> : <></>}
+        {cardsCount ? <ModalAddNewCard deckId={deckId} /> : <></>}
       </div>
       {cardsCount ? (
         <MyDeckMain deckId={deckId} />
@@ -27,7 +27,7 @@ export const MyDeck: FC<Props> = props => {
             <Typography variant={'Body 1'}>
               This pack is empty. Click add new card to fill this pack
             </Typography>
-            <Button>Add New Card</Button>
+            <ModalAddNewCard deckId={deckId} />
           </Card>
         </div>
       )}
