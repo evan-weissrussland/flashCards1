@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useCallback, useMemo, useState } from 'react'
 
 import { Grade } from '@/common/components/grade'
 import { Input } from '@/common/components/input'
@@ -6,6 +6,7 @@ import { PageSizeType, Paginator } from '@/common/components/paginator/paginator
 import { useGetCardsDeckQuery } from '@/features/Decks/api/getDecks'
 import { ModalDeleteCard } from '@/features/Decks/ui/ModalDeleteCard'
 import { ModalEditCard } from '@/features/Decks/ui/ModalEditCard'
+import { useDebounce } from '@uidotdev/usehooks'
 
 type Props = {
   deckId: string
@@ -17,7 +18,9 @@ export const MyDeckMain: FC<Props> = props => {
   const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(undefined)
   const [answer, setAnswer] = useState('')
   const [orderBy, setOrderBy] = useState('')
-  const [question, setQuestion] = useState('')
+  const [search, setSearch] = useState('')
+
+  const debouncedSearchTerm = useDebounce(search, 1000)
 
   const { data, isLoading } = useGetCardsDeckQuery({
     args: {
@@ -25,7 +28,7 @@ export const MyDeckMain: FC<Props> = props => {
       currentPage: currentPage as number,
       itemsPerPage: itemsPerPage as PageSizeType,
       orderBy,
-      question,
+      question: debouncedSearchTerm,
     },
     id: deckId,
   })
@@ -51,13 +54,20 @@ export const MyDeckMain: FC<Props> = props => {
     [data?.items]
   )
 
+  const onChangeText = useCallback(
+    (inputData: string) => {
+      setSearch(inputData)
+    },
+    [setSearch]
+  )
+
   if (isLoading) {
     return <>....read Data....</>
   }
 
   return (
     <>
-      <Input type={'search'} />
+      <Input callback={onChangeText} type={'search'} />
       <div>
         <table style={{ width: '100%' }}>
           <thead>
