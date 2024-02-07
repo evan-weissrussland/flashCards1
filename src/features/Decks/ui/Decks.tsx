@@ -60,9 +60,9 @@ export const Decks = () => {
   })
   const result = useGetMinMaxAmoundCardsQuery()
 
-  const navigateToDeckHandler = (id: string) => {
+  const navigateToDeckHandler = useCallback((id: string) => {
     navigate(`/decks/${id}`)
-  }
+  }, [])
 
   //зачистка фильтра
   const clearFilterHandler = useCallback(() => {

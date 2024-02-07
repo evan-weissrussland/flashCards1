@@ -80,7 +80,7 @@ export const baseApi = createApi({
   }),
   endpoints: builder => {
     return {
-      createCard: builder.mutation<Omit<Deck, 'grade'>, { args: FormData; id: string }>({
+      createCard: builder.mutation<Omit<Card, 'grade'>, { args: FormData; id: string }>({
         invalidatesTags: ['CardsDeck'],
         query: body => ({
           body: body.args,

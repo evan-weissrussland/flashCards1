@@ -38,8 +38,26 @@ export const MyDeckMain: FC<Props> = props => {
       data?.items.map(it => {
         return (
           <tr key={it.id} style={{ padding: '6px 24px' }}>
-            <td style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>{it.question}</td>
-            <td>{it.answer}</td>
+            <td>
+              <div style={{ alignItems: 'center', display: 'flex', gap: '5px' }}>
+                <img
+                  alt={'no image'}
+                  src={it.questionImg}
+                  style={{ borderRadius: '2px', cursor: 'pointer', height: '48px', width: '118px' }}
+                />
+                <div style={{ cursor: 'pointer' }}>{it.question}</div>
+              </div>
+            </td>
+            <td>
+              <div style={{ alignItems: 'center', display: 'flex', gap: '5px' }}>
+                <img
+                  alt={'no image'}
+                  src={it.answerImg}
+                  style={{ borderRadius: '2px', cursor: 'pointer', height: '48px', width: '118px' }}
+                />
+                <div style={{ cursor: 'pointer' }}>{it.answer}</div>
+              </div>
+            </td>
             <td>{new Date(it.updated).toLocaleString('ru-RU')}</td>
             <td>
               <Grade rating={it.grade} />
