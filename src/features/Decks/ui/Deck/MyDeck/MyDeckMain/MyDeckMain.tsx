@@ -9,10 +9,11 @@ import { ModalEditCard } from '@/features/Decks/ui/ModalEditCard'
 import { useDebounce } from '@uidotdev/usehooks'
 
 type Props = {
+  cover: string
   deckId: string
 }
 export const MyDeckMain: FC<Props> = props => {
-  const { deckId } = props
+  const { cover, deckId } = props
 
   const [currentPage, setCurrentPage] = useState<number | undefined>(undefined)
   const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(undefined)
@@ -43,7 +44,14 @@ export const MyDeckMain: FC<Props> = props => {
                 <img
                   alt={'no image'}
                   src={it.questionImg}
-                  style={{ borderRadius: '2px', cursor: 'pointer', height: '48px', width: '118px' }}
+                  style={{
+                    borderRadius: '2px',
+                    cursor: 'pointer',
+                    flexGrow: '0',
+                    flexShrink: '0',
+                    height: '48px',
+                    width: '118px',
+                  }}
                 />
                 <div style={{ cursor: 'pointer' }}>{it.question}</div>
               </div>
@@ -53,7 +61,14 @@ export const MyDeckMain: FC<Props> = props => {
                 <img
                   alt={'no image'}
                   src={it.answerImg}
-                  style={{ borderRadius: '2px', cursor: 'pointer', height: '48px', width: '118px' }}
+                  style={{
+                    borderRadius: '2px',
+                    cursor: 'pointer',
+                    flexGrow: '0',
+                    flexShrink: '0',
+                    height: '48px',
+                    width: '118px',
+                  }}
                 />
                 <div style={{ cursor: 'pointer' }}>{it.answer}</div>
               </div>
@@ -85,6 +100,9 @@ export const MyDeckMain: FC<Props> = props => {
 
   return (
     <>
+      <div>
+        <img alt={''} src={cover} />
+      </div>
       <Input callback={onChangeText} type={'search'} />
       <div>
         <table style={{ width: '100%' }}>

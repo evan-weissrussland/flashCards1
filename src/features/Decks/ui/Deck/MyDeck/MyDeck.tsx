@@ -7,11 +7,12 @@ import { ModalAddNewCard } from '@/features/Decks/ui/ModalAddNewCard'
 
 type Props = {
   cardsCount: number
+  cover: string
   deckId: string
   name: string
 }
 export const MyDeck: FC<Props> = props => {
-  const { cardsCount, deckId, name } = props
+  const { cardsCount, cover, deckId, name } = props
 
   return (
     <>
@@ -20,7 +21,7 @@ export const MyDeck: FC<Props> = props => {
         {cardsCount ? <ModalAddNewCard deckId={deckId} /> : <></>}
       </div>
       {cardsCount ? (
-        <MyDeckMain deckId={deckId} />
+        <MyDeckMain cover={cover} deckId={deckId} />
       ) : (
         <div style={{ paddingTop: '60px' }}>
           <Card className={'EmptyDeck'}>

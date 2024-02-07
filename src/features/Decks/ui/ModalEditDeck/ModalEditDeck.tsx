@@ -78,7 +78,7 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
       </ModalkaTrigger>
       <ModalkaContent>
         <div className={s.description}>
-          <Typography variant={'H3'}>Add new deck</Typography>
+          <Typography variant={'H3'}>Edit deck</Typography>
           <ModalkaButtonCancel asChild>
             <Button className={'padding4px'} variant={'secondary'}>
               <CloseModal />
@@ -121,7 +121,7 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
             <ModalkaButtonCancel asChild>
               <Button variant={'secondary'}>Cancel</Button>
             </ModalkaButtonCancel>
-            <Button type={'submit'}>Add New Pack</Button>
+            <Button type={'submit'}>Edit Pack</Button>
           </div>
         </form>
       </ModalkaContent>

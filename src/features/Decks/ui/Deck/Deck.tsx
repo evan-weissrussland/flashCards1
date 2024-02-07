@@ -28,7 +28,12 @@ export const Deck = () => {
       </div>
       <div>
         {resultIdAuthMe === data?.userId ? (
-          <MyDeck cardsCount={data?.cardsCount} deckId={data?.id} name={data?.name} />
+          <MyDeck
+            cardsCount={data?.cardsCount}
+            cover={data?.cover}
+            deckId={data?.id}
+            name={data?.name}
+          />
         ) : (
           <FriendsDeck />
         )}
