@@ -46,14 +46,13 @@ export const MyDeckMain: FC<Props> = props => {
                   src={it.questionImg}
                   style={{
                     borderRadius: '2px',
-                    cursor: 'pointer',
                     flexGrow: '0',
                     flexShrink: '0',
                     height: '48px',
                     width: '118px',
                   }}
                 />
-                <div style={{ cursor: 'pointer' }}>{it.question}</div>
+                <div>{it.question}</div>
               </div>
             </td>
             <td>
@@ -63,14 +62,13 @@ export const MyDeckMain: FC<Props> = props => {
                   src={it.answerImg}
                   style={{
                     borderRadius: '2px',
-                    cursor: 'pointer',
                     flexGrow: '0',
                     flexShrink: '0',
                     height: '48px',
                     width: '118px',
                   }}
                 />
-                <div style={{ cursor: 'pointer' }}>{it.answer}</div>
+                <div>{it.answer}</div>
               </div>
             </td>
             <td>{new Date(it.updated).toLocaleString('ru-RU')}</td>
