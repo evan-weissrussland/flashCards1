@@ -1,4 +1,5 @@
-import { FC, useState } from 'react'
+import { FC, ReactNode, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/common/components/button'
 import {
@@ -14,11 +15,14 @@ import { useDeleteDeckMutation } from '@/features/Decks/api/getDecks'
 import s from './modalDeleteDeck.module.scss'
 
 type DeckProps = {
+  children: ReactNode
   deckName: string
   idDeck: string
+  setOpenDropDown: (open: boolean) => void
 }
 
-export const ModalDeleteDeck: FC<DeckProps> = ({ deckName, idDeck }) => {
+export const ModalDeleteDeck: FC<DeckProps> = ({ children, deckName, idDeck, setOpenDropDown }) => {
+  const navigate = useNavigate()
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
   const [open, setOpen] = useState(false)
 
@@ -28,19 +32,24 @@ export const ModalDeleteDeck: FC<DeckProps> = ({ deckName, idDeck }) => {
   const onClickDeleteHandler = () => {
     deleteDeck(idDeck)
       .unwrap()
-      .then(() => setOpen(false))
+      .then(() => {
+        setOpen(false)
+        navigate('/decks')
+      })
   }
 
   return (
     <Modalka onOpenChange={setOpen} open={open}>
-      <ModalkaTrigger asChild>
-        <Button className={'padding4px'} icon={'delete'} variant={'secondary'} />
-      </ModalkaTrigger>
+      <ModalkaTrigger asChild>{children}</ModalkaTrigger>
       <ModalkaContent>
         <div className={s.description}>
           <Typography variant={'H3'}>Delete Deck</Typography>
           <ModalkaButtonCancel asChild>
-            <Button className={'padding4px'} variant={'secondary'}>
+            <Button
+              className={'padding4px'}
+              onClick={() => setOpenDropDown(false)}
+              variant={'secondary'}
+            >
               <CloseModal />
             </Button>
           </ModalkaButtonCancel>
@@ -57,7 +66,9 @@ export const ModalDeleteDeck: FC<DeckProps> = ({ deckName, idDeck }) => {
         </div>
         <div className={s.buttonGroup}>
           <ModalkaButtonCancel asChild>
-            <Button variant={'secondary'}>Cancel</Button>
+            <Button onClick={() => setOpenDropDown(false)} variant={'secondary'}>
+              Cancel
+            </Button>
           </ModalkaButtonCancel>
           <Button onClick={onClickDeleteHandler}>Delete Deck</Button>
         </div>

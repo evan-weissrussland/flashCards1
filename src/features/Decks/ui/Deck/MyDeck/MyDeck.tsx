@@ -4,6 +4,7 @@ import { Card } from '@/common/components/card'
 import { Typography } from '@/common/components/typography'
 import { MyDeckMain } from '@/features/Decks/ui/Deck/MyDeck/MyDeckMain/MyDeckMain'
 import { ModalAddNewCard } from '@/features/Decks/ui/ModalAddNewCard'
+import { DropDownMyDeck } from '@/features/DropDownMyDeck'
 
 type Props = {
   cardsCount: number
@@ -17,7 +18,10 @@ export const MyDeck: FC<Props> = props => {
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant={'H1'}>{name}</Typography>
+        <div style={{ display: 'flex', gap: '6px' }}>
+          <Typography variant={'H1'}>{name}</Typography>
+          {cardsCount ? <DropDownMyDeck deckId={deckId} name={name} /> : <></>}
+        </div>
         {cardsCount ? <ModalAddNewCard deckId={deckId} /> : <></>}
       </div>
       {cardsCount ? (

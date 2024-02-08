@@ -151,7 +151,9 @@ export const Decks = () => {
                   deckIsPrivate={it.isPrivate}
                   deckName={it.name}
                 />
-                <ModalDeleteDeck deckName={it.name} idDeck={it.id} />
+                <ModalDeleteDeck deckName={it.name} idDeck={it.id}>
+                  <Button className={'padding4px'} icon={'delete'} variant={'secondary'} />
+                </ModalDeleteDeck>
               </td>
             )}
           </tr>
