@@ -72,13 +72,19 @@ export const DropDown: DropDownWithRef = forwardRef(
               </DropDownLabel>
               <DropDownGroup>
                 <DropDownItem>
-                  <img alt={'icon'} src={'../../../../public/image/dropDown/myProfileIcon.png'} />
+                  <img
+                    alt={'icon'}
+                    src={'../../../../public/image/dropDownForHeader/myProfileIcon.png'}
+                  />
                   <Typography theme={'dark'} variant={'Caption'}>
                     My Profile
                   </Typography>
                 </DropDownItem>
                 <DropDownItem>
-                  <img alt={'icon'} src={'../../../../public/image/dropDown/log-out.png'} />
+                  <img
+                    alt={'icon'}
+                    src={'../../../../public/image/dropDownForHeader/log-out.png'}
+                  />
                   <Typography theme={'dark'} variant={'Caption'}>
                     Sign Out
                   </Typography>
@@ -87,19 +93,19 @@ export const DropDown: DropDownWithRef = forwardRef(
             </div>
             {/*<DropDownGroup>
               <DropDownItem>
-                <img alt={'icon'} src={'../../../../public/image/dropDown/learn.png'} />
+                <img alt={'icon'} src={'../../../../public/image/dropDownForHeader/learn.png'} />
                 <Typography theme={'dark'} variant={'Caption'}>
                   Learn
                 </Typography>
               </DropDownItem>
               <DropDownItem>
-                <img alt={'icon'} src={'../../../../public/image/dropDown/edit.png'} />
+                <img alt={'icon'} src={'../../../../public/image/dropDownForHeader/edit.png'} />
                 <Typography theme={'dark'} variant={'Caption'}>
                   Edit
                 </Typography>
               </DropDownItem>
               <DropDownItem>
-                <img alt={'icon'} src={'../../../../public/image/dropDown/delete.png'} />
+                <img alt={'icon'} src={'../../../../public/image/dropDownForHeader/delete.png'} />
                 <Typography theme={'dark'} variant={'Caption'}>
                   Delete
                 </Typography>

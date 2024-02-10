@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom'
 
 import { Context } from '@/app/ui/App'
 import { Button } from '@/common/components/button'
-import { DropDown } from '@/common/components/dropDown'
 
 import s from './header.module.scss'
+
+import { DropDown } from '../../../../common/components/dropDownForHeader'
 
 type Props = {
   email: string
