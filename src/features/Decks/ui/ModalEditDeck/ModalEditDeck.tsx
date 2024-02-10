@@ -31,6 +31,8 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
   const [open, setOpen] = useState(false)
 
+  const [imgCover, setImgCover] = useState(deckCover)
+
   //хук из RTK Query для выполнения запроса POST создания новой колоды
   const [updateDeck] = useUpdateDeckMutation()
   //обработка форм
@@ -71,6 +73,17 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
     name: 'privatePack',
   })
 
+  const uploadImageDeck = (file: File) => {
+    if (file) {
+      const reader = new FileReader()
+
+      reader.onloadend = () => {
+        setImgCover(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
   return (
     <Modalka onOpenChange={setOpen} open={open}>
       <ModalkaTrigger asChild>
@@ -95,9 +108,20 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
                 placeholder={'Name'}
               />
             </div>
+            <img alt={''} src={imgCover} width={'100px'} />
             <div>
               <label>
-                <input {...register('image')} style={{ display: 'none' }} type={'file'} />
+                <input
+                  {...register('image', {
+                    onChange: e => {
+                      if (e.target.files && e.target.files.length) {
+                        uploadImageDeck(e.target.files[0])
+                      }
+                    },
+                  })}
+                  style={{ display: 'none' }}
+                  type={'file'}
+                />
                 <Button as={'span'} fullWidth icon={'uploadImage'} variant={'secondary'}>
                   Upload image
                 </Button>
