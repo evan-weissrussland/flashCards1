@@ -145,7 +145,7 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
             <ModalkaButtonCancel asChild>
               <Button variant={'secondary'}>Cancel</Button>
             </ModalkaButtonCancel>
-            <Button type={'submit'}>Edit Pack</Button>
+            <Button type={'submit'}>Edit Deck</Button>
           </div>
         </form>
       </ModalkaContent>

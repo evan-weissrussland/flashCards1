@@ -11,6 +11,7 @@ import {
 } from '@/common/components/modal'
 import { Typography } from '@/common/components/typography'
 import { CloseModal } from '@/common/icons/CloseModal'
+import { useUpdateCardMutation } from '@/features/Decks/api/getDecks'
 import { modalSchema } from '@/features/Decks/ui/ModalEditCard/modal-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -19,17 +20,20 @@ import s from '@/features/Decks/ui/ModalAddNewCard/modalAddNewCard.module.scss'
 import { FormValues } from './types'
 
 type Props = {
+  answer: string
   answerImg: string
+  idCard: string
+  question: string
   questionImg: string
 }
 
-export const ModalEditCard: FC<Props> = ({ answerImg, questionImg }) => {
+export const ModalEditCard: FC<Props> = ({ answer, answerImg, idCard, question, questionImg }) => {
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
   const [open, setOpen] = useState(false)
-  const [avaQuestion, setAvaQuestion] = useState<string | undefined>(undefined)
-  const [avaAnswer, setAvaAnswer] = useState<string | undefined>(undefined)
+  const [avaQuestion, setAvaQuestion] = useState<string | undefined>(questionImg)
+  const [avaAnswer, setAvaAnswer] = useState<string | undefined>(answerImg)
 
-  //хук из RTK Query для выполнения запроса POST создания новой карты
+  //хук из RTK Query для выполнения запроса PATCH редактирования карты
   const [updateCard] = useUpdateCardMutation()
 
   //обработка форм
@@ -37,7 +41,6 @@ export const ModalEditCard: FC<Props> = ({ answerImg, questionImg }) => {
     formState: { errors },
     handleSubmit,
     register,
-    reset,
   } = useForm<FormValues>({
     resolver: zodResolver(modalSchema),
   })
@@ -60,10 +63,8 @@ export const ModalEditCard: FC<Props> = ({ answerImg, questionImg }) => {
       formData.append('answerImg', answerImg)
     }
     try {
-      await updateCard({ args: formData, id: deckId })
+      await updateCard({ args: formData, id: idCard })
       setOpen(false)
-      setAvaAnswer(undefined)
-      setAvaQuestion(undefined)
     } catch (e: any) {
       console.error('error to add deck')
     }
@@ -94,21 +95,13 @@ export const ModalEditCard: FC<Props> = ({ answerImg, questionImg }) => {
   return (
     <Modalka onOpenChange={setOpen} open={open}>
       <ModalkaTrigger asChild>
-        <Button>Add New Card</Button>
+        <Button className={'padding4px'} icon={'edit'} variant={'secondary'} />
       </ModalkaTrigger>
       <ModalkaContent>
         <div className={s.description}>
           <Typography variant={'H3'}>Add new Card</Typography>
           <ModalkaButtonCancel asChild>
-            <Button
-              className={'padding4px'}
-              onClick={() => {
-                reset()
-                setAvaAnswer(undefined)
-                setAvaQuestion(undefined)
-              }}
-              variant={'secondary'}
-            >
+            <Button className={'padding4px'} variant={'secondary'}>
               <CloseModal />
             </Button>
           </ModalkaButtonCancel>
@@ -117,7 +110,7 @@ export const ModalEditCard: FC<Props> = ({ answerImg, questionImg }) => {
           <div className={s.formDiv}>
             <div>
               <Input
-                {...register('question')}
+                {...register('question', { value: question })}
                 error={errors.question?.message}
                 label={'Question'}
                 placeholder={'Name'}
@@ -147,7 +140,7 @@ export const ModalEditCard: FC<Props> = ({ answerImg, questionImg }) => {
             </div>
             <div>
               <Input
-                {...register('answer')}
+                {...register('answer', { value: answer })}
                 error={errors.answer?.message}
                 label={'Answer'}
                 placeholder={'Name'}
@@ -177,18 +170,9 @@ export const ModalEditCard: FC<Props> = ({ answerImg, questionImg }) => {
           </div>
           <div className={s.buttonGroup}>
             <ModalkaButtonCancel asChild>
-              <Button
-                onClick={() => {
-                  reset()
-                  setAvaAnswer(undefined)
-                  setAvaQuestion(undefined)
-                }}
-                variant={'secondary'}
-              >
-                Cancel
-              </Button>
+              <Button variant={'secondary'}>Cancel</Button>
             </ModalkaButtonCancel>
-            <Button type={'submit'}>Add New Card</Button>
+            <Button type={'submit'}>Edit Card</Button>
           </div>
         </form>
       </ModalkaContent>

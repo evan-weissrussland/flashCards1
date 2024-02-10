@@ -136,6 +136,14 @@ export const baseApi = createApi({
       getMinMaxAmoundCards: builder.query<{ max: number; min: number }, void>({
         query: () => `v2/decks/min-max-cards`,
       }),
+      updateCard: builder.mutation<Omit<Card, 'grade'>, { args: FormData; id: string }>({
+        invalidatesTags: ['CardsDeck'],
+        query: body => ({
+          body: body.args,
+          method: 'PATCH',
+          url: `v1/cards/${body.id}`,
+        }),
+      }),
       updateDeck: builder.mutation<Deck, { args: FormData; id: string }>({
         invalidatesTags: ['Decks'],
         query: body => ({
@@ -159,5 +167,6 @@ export const {
   useGetDeckQuery,
   useGetDecksQuery,
   useGetMinMaxAmoundCardsQuery,
+  useUpdateCardMutation,
   useUpdateDeckMutation,
 } = baseApi

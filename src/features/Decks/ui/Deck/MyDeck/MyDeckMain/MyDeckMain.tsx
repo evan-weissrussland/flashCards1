@@ -17,18 +17,16 @@ export const MyDeckMain: FC<Props> = props => {
 
   const [currentPage, setCurrentPage] = useState<number | undefined>(undefined)
   const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(undefined)
-  const [answer, setAnswer] = useState('')
-  const [orderBy, setOrderBy] = useState('')
   const [search, setSearch] = useState('')
 
   const debouncedSearchTerm = useDebounce(search, 1000)
 
   const { data, isLoading } = useGetCardsDeckQuery({
     args: {
-      answer,
+      answer: '',
       currentPage: currentPage as number,
       itemsPerPage: itemsPerPage as PageSizeType,
-      orderBy,
+      orderBy: '',
       question: debouncedSearchTerm,
     },
     id: deckId,
@@ -75,9 +73,17 @@ export const MyDeckMain: FC<Props> = props => {
             <td>
               <Grade rating={it.grade} />
             </td>
-            <td style={{ textAlign: 'center' }}>
-              <ModalEditCard answerImg={it.answerImg} questionImg={it.questionImg} />
-              <ModalDeleteCard idDeck={it.id} />
+            <td>
+              <div style={{ alignItems: 'center', display: 'flex', gap: '2px' }}>
+                <ModalEditCard
+                  answer={it.answer}
+                  answerImg={it.answerImg}
+                  idCard={it.id}
+                  question={it.question}
+                  questionImg={it.questionImg}
+                />
+                <ModalDeleteCard idDeck={it.id} />
+              </div>
             </td>
           </tr>
         )
