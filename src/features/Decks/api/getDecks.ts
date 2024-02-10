@@ -120,7 +120,7 @@ export const baseApi = createApi({
       }),
       getDeck: builder.query<Deck, string>({
         keepUnusedDataFor: 1,
-        providesTags: ['Deck', 'CardsDeck'],
+        providesTags: ['Deck', 'CardsDeck', 'Decks'],
         query: id => ({
           url: `v1/decks/${id}`,
         }),

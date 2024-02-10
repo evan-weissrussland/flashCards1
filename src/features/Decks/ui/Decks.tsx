@@ -58,8 +58,10 @@ export const Decks = () => {
       : undefined,
     name: textFromDebounceInput,
   })
+  //хук RTK Query. Запрос на сервер за количеством min и max колод (Decks)
   const result = useGetMinMaxAmoundCardsQuery()
 
+  //переход на страницу выбранной колоды
   const navigateToDeckHandler = useCallback((id: string) => {
     navigate(`/decks/${id}`)
   }, [])
@@ -150,7 +152,9 @@ export const Decks = () => {
                   deckId={it.id}
                   deckIsPrivate={it.isPrivate}
                   deckName={it.name}
-                />
+                >
+                  <Button className={'padding4px'} icon={'edit'} variant={'secondary'} />
+                </ModalEditDeck>
                 <ModalDeleteDeck deckName={it.name} idDeck={it.id}>
                   <Button className={'padding4px'} icon={'delete'} variant={'secondary'} />
                 </ModalDeleteDeck>
@@ -162,6 +166,7 @@ export const Decks = () => {
     [data?.items, navigateToDeckHandler, resultIdAuthMe]
   )
 
+  // пока идёт запрос на сервер на списком колод или за максимальным и минимальным числом колод, показываем заглушку
   if (result.isLoading || isLoading) {
     return (
       <div

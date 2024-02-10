@@ -32,6 +32,7 @@ export const Deck = () => {
             cardsCount={data?.cardsCount}
             cover={data?.cover}
             deckId={data?.id}
+            isPrivate={data?.isPrivate}
             name={data?.name}
           />
         ) : (

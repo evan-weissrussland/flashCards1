@@ -15,16 +15,23 @@ import { useDeleteDeckMutation } from '@/features/Decks/api/getDecks'
 import s from './modalDeleteDeck.module.scss'
 
 type DeckProps = {
-  children: ReactNode
+  children?: ReactNode
   deckName: string
   idDeck: string
-  setOpenDropDown: (open: boolean) => void
+  isModeDelete?: boolean
+  setIsModeDelete?: (v: '' | 'delete' | 'edit' | 'learn') => void
 }
 
-export const ModalDeleteDeck: FC<DeckProps> = ({ children, deckName, idDeck, setOpenDropDown }) => {
+export const ModalDeleteDeck: FC<DeckProps> = ({
+  children,
+  deckName,
+  idDeck,
+  isModeDelete = false,
+  setIsModeDelete,
+}) => {
   const navigate = useNavigate()
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(isModeDelete)
 
   //хук из RTK Query для выполнения запроса DELETE удаления  колоды
   const [deleteDeck] = useDeleteDeckMutation()
@@ -47,7 +54,7 @@ export const ModalDeleteDeck: FC<DeckProps> = ({ children, deckName, idDeck, set
           <ModalkaButtonCancel asChild>
             <Button
               className={'padding4px'}
-              onClick={() => setOpenDropDown(false)}
+              onClick={() => setIsModeDelete && setIsModeDelete('')}
               variant={'secondary'}
             >
               <CloseModal />
@@ -66,7 +73,7 @@ export const ModalDeleteDeck: FC<DeckProps> = ({ children, deckName, idDeck, set
         </div>
         <div className={s.buttonGroup}>
           <ModalkaButtonCancel asChild>
-            <Button onClick={() => setOpenDropDown(false)} variant={'secondary'}>
+            <Button onClick={() => setIsModeDelete && setIsModeDelete('')} variant={'secondary'}>
               Cancel
             </Button>
           </ModalkaButtonCancel>

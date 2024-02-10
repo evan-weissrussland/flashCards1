@@ -10,17 +10,22 @@ type Props = {
   cardsCount: number
   cover: string
   deckId: string
+  isPrivate: boolean
   name: string
 }
 export const MyDeck: FC<Props> = props => {
-  const { cardsCount, cover, deckId, name } = props
+  const { cardsCount, cover, deckId, isPrivate, name } = props
 
   return (
     <>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', gap: '6px' }}>
           <Typography variant={'H1'}>{name}</Typography>
-          {cardsCount ? <DropDownMyDeck deckId={deckId} name={name} /> : <></>}
+          {cardsCount ? (
+            <DropDownMyDeck deckCover={cover} deckId={deckId} isPrivate={isPrivate} name={name} />
+          ) : (
+            <></>
+          )}
         </div>
         {cardsCount ? <ModalAddNewCard deckId={deckId} /> : <></>}
       </div>

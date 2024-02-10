@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, ReactNode, useState } from 'react'
 import { useController, useForm } from 'react-hook-form'
 
 import { Button } from '@/common/components/button'
@@ -21,15 +21,26 @@ import s from './modalEditDeck.module.scss'
 import { FormValues } from './types'
 
 type Props = {
+  children?: ReactNode
   deckCover: string
   deckId: string
   deckIsPrivate: boolean
   deckName: string
+  isModeEdit?: boolean
+  setIsModeEdit?: (v: '' | 'delete' | 'edit' | 'learn') => void
 }
 
-export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, deckName }) => {
+export const ModalEditDeck: FC<Props> = ({
+  children,
+  deckCover,
+  deckId,
+  deckIsPrivate,
+  deckName,
+  isModeEdit = false,
+  setIsModeEdit,
+}) => {
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(isModeEdit)
 
   const [imgCover, setImgCover] = useState(deckCover)
 
@@ -60,6 +71,7 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
     try {
       await updateDeck({ args: formData, id: deckId })
       setOpen(false)
+      setIsModeEdit && setIsModeEdit('')
     } catch (e: any) {
       console.error('error to add deck')
     }
@@ -86,14 +98,16 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
 
   return (
     <Modalka onOpenChange={setOpen} open={open}>
-      <ModalkaTrigger asChild>
-        <Button className={'padding4px'} icon={'edit'} variant={'secondary'} />
-      </ModalkaTrigger>
+      <ModalkaTrigger asChild>{children}</ModalkaTrigger>
       <ModalkaContent>
         <div className={s.description}>
           <Typography variant={'H3'}>Edit deck</Typography>
           <ModalkaButtonCancel asChild>
-            <Button className={'padding4px'} variant={'secondary'}>
+            <Button
+              className={'padding4px'}
+              onClick={() => setIsModeEdit && setIsModeEdit('')}
+              variant={'secondary'}
+            >
               <CloseModal />
             </Button>
           </ModalkaButtonCancel>
@@ -134,7 +148,7 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
                 name={name}
                 onCheckedChange={onChange}
                 theme={'dark'}
-                value={'on'}
+                // value={'on'}
                 variant={'Body 2'}
               >
                 Private pack
@@ -143,7 +157,9 @@ export const ModalEditDeck: FC<Props> = ({ deckCover, deckId, deckIsPrivate, dec
           </div>
           <div className={s.buttonGroup}>
             <ModalkaButtonCancel asChild>
-              <Button variant={'secondary'}>Cancel</Button>
+              <Button onClick={() => setIsModeEdit && setIsModeEdit('')} variant={'secondary'}>
+                Cancel
+              </Button>
             </ModalkaButtonCancel>
             <Button type={'submit'}>Edit Deck</Button>
           </div>
