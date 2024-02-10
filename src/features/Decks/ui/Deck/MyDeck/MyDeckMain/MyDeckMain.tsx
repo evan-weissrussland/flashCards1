@@ -76,7 +76,7 @@ export const MyDeckMain: FC<Props> = props => {
               <Grade rating={it.grade} />
             </td>
             <td style={{ textAlign: 'center' }}>
-              <ModalEditCard />
+              <ModalEditCard answerImg={it.answerImg} questionImg={it.questionImg} />
               <ModalDeleteCard idDeck={it.id} />
             </td>
           </tr>
