@@ -35,7 +35,12 @@ export const Deck = () => {
             name={data?.name}
           />
         ) : (
-          <FriendsDeck />
+          <FriendsDeck
+            cardsCount={data?.cardsCount as number}
+            cover={data?.cover as string}
+            deckId={data?.id as string}
+            name={data?.name as string}
+          />
         )}
       </div>
     </div>
