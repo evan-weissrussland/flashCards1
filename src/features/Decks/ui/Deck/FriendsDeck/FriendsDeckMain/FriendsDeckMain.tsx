@@ -12,26 +12,27 @@ type Props = {
 }
 export const FriendsDeckMain: FC<Props> = props => {
   const { cover, deckId } = props
-
+  //изменение текущей страниццы пагинации. Передаёт значение в хук запроса на сервер
   const [currentPage, setCurrentPage] = useState<number | undefined>(undefined)
+  //изменение числа колод на странице. Передаёт значение в хук запроса на сервер
   const [itemsPerPage, setItemsPerPage] = useState<number | undefined>(undefined)
-  const [answer, setAnswer] = useState('')
-  const [orderBy, setOrderBy] = useState('')
+  //вводимый текст из инпута. Используется для возврата в value инпута, а аткже передайтся в хук зажержки
   const [search, setSearch] = useState('')
-
+  //возвращаемый текст из хука задержки. испоьзуется для запрсоа на сервер.
   const debouncedSearchTerm = useDebounce(search, 1000)
 
+  //хук запроса на сервер за списком сарт выбранной колоды
   const { data, isLoading } = useGetCardsDeckQuery({
     args: {
-      answer,
+      answer: '',
       currentPage: currentPage as number,
       itemsPerPage: itemsPerPage as PageSizeType,
-      orderBy,
+      orderBy: '',
       question: debouncedSearchTerm,
     },
     id: deckId,
   })
-
+  //таблица с картами выбранной колоды
   const table = useMemo(
     () =>
       data?.items.map(it => {
@@ -78,7 +79,7 @@ export const FriendsDeckMain: FC<Props> = props => {
       }),
     [data?.items]
   )
-
+  //изменение текста инпута поиска
   const onChangeText = useCallback(
     (inputData: string) => {
       setSearch(inputData)
@@ -86,6 +87,7 @@ export const FriendsDeckMain: FC<Props> = props => {
     [setSearch]
   )
 
+  //пока идёт запроса на сервер, включаем заглушку
   if (isLoading) {
     return <>....read Data....</>
   }

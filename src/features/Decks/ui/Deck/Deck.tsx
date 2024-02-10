@@ -11,10 +11,14 @@ import { MyDeck } from '@/features/Decks/ui/Deck/MyDeck/MyDeck'
 import s from './deck.module.scss'
 
 export const Deck = () => {
+  //мой id юзера из контекста (Арр)
   const resultIdAuthMe = useContext(Context)
+  //вытягиваем id выбраннйо колоды из строки URL
   const params = useParams()
+  //делаем запрос на сервер за выбранной колодой
   const { data, isLoading } = useGetDeckQuery(params.id ?? '')
 
+  // пока идёт запрос на сервер показываем заглушку
   if (isLoading) {
     return <>....read Data....</>
   }

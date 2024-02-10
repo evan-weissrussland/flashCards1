@@ -24,6 +24,7 @@ export const ModalDeleteCard: FC<DeckProps> = ({ idDeck }) => {
   //хук из RTK Query для выполнения запроса DELETE удаления  карты
   const [deleteCard] = useDeleteCardMutation()
 
+  //обработчик удаления карты из колоды. При успешном удалении закрывам модалку
   const onClickDeleteHandler = () => {
     deleteCard(idDeck)
       .unwrap()

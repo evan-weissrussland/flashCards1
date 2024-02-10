@@ -26,7 +26,9 @@ type Props = {
 export const ModalAddNewCard: FC<Props> = memo(({ deckId }) => {
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
   const [open, setOpen] = useState(false)
+  //стэйт для сохранения картинки вопроса (question). Нужен для отображения картинки в модалке при её загрузке с диска ПК.
   const [avaQuestion, setAvaQuestion] = useState<string | undefined>(undefined)
+  //стэйт для сохранения картинки ответа (answer). Нужен для отображения картинки в модалке при её загрузке с диска ПК.
   const [avaAnswer, setAvaAnswer] = useState<string | undefined>(undefined)
 
   //хук из RTK Query для выполнения запроса POST создания новой карты
@@ -42,7 +44,7 @@ export const ModalAddNewCard: FC<Props> = memo(({ deckId }) => {
     resolver: zodResolver(modalSchema),
   })
 
-  //обработчик передачи данных из формы на сервер. Обязательно через formData (у Андрея на серваке так сделано)
+  //обработчик передачи данных из формы на сервер. Обязательно через formData (у Андрея на серваке так сделано). При успешном запросе на сервер закрываем окно модалки, зачищаем поля формы, сбрысываем стэйт картинок вопрсоа и ответа
   const onSubmit = async (data: FormValues) => {
     const formData = new FormData()
 
@@ -65,7 +67,7 @@ export const ModalAddNewCard: FC<Props> = memo(({ deckId }) => {
       console.error('error to add deck')
     }
   }
-
+  //обработчик загрузки картинки вопроса
   const uploadImageQuestion = (file: File) => {
     if (file) {
       const reader = new FileReader()
@@ -76,7 +78,7 @@ export const ModalAddNewCard: FC<Props> = memo(({ deckId }) => {
       reader.readAsDataURL(file)
     }
   }
-
+  //обработчик загрузки картинки ответа
   const uploadImageAnswer = (file: File) => {
     if (file) {
       const reader = new FileReader()

@@ -36,6 +36,7 @@ export const ModalDeleteDeck: FC<DeckProps> = ({
   //хук из RTK Query для выполнения запроса DELETE удаления  колоды
   const [deleteDeck] = useDeleteDeckMutation()
 
+  //запрос на сервер на удаление колоды. Если успешно, то закрывем модалку и переходим на страницу колод
   const onClickDeleteHandler = () => {
     deleteDeck(idDeck)
       .unwrap()

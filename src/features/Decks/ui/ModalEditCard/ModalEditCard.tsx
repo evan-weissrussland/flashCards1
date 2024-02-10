@@ -30,7 +30,11 @@ type Props = {
 export const ModalEditCard: FC<Props> = ({ answer, answerImg, idCard, question, questionImg }) => {
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
   const [open, setOpen] = useState(false)
+
+  //стэйт для сохранения картинки вопроса (question). Нужен для отображения картинки из пропсов или при загрузке с ПК.
   const [avaQuestion, setAvaQuestion] = useState<string | undefined>(questionImg)
+
+  //стэйт для сохранения картинки ответа (answer). Нужен для отображения картинки  из пропсов или при загрузке с ПК.
   const [avaAnswer, setAvaAnswer] = useState<string | undefined>(answerImg)
 
   //хук из RTK Query для выполнения запроса PATCH редактирования карты
@@ -44,8 +48,11 @@ export const ModalEditCard: FC<Props> = ({ answer, answerImg, idCard, question, 
   } = useForm<FormValues>({
     resolver: zodResolver(modalSchema),
   })
-
-  //обработчик передачи данных из формы на сервер. Обязательно через formData (у Андрея на серваке так сделано)
+  /**
+   * обработчик передачи данных из формы на сервер. Обязательно через formData (у Андрея на серваке так сделано). При успешном запросе на сервер закрываем окно модалки.
+   * Если картинка загружена с ПК, то она для отправки на сервер берётся из data, если же оставляем картинку старую, то она берётся из стэйта
+   * @param data - объект данных из полей формы: инпут вопроса, инпут ответа, картинки вопрсоаи ответа
+   */
   const onSubmit = async (data: FormValues) => {
     const formData = new FormData()
 
@@ -69,7 +76,7 @@ export const ModalEditCard: FC<Props> = ({ answer, answerImg, idCard, question, 
       console.error('error to add deck')
     }
   }
-
+  //обработчик загрузки картинки вопроса
   const uploadImageQuestion = (file: File) => {
     if (file) {
       const reader = new FileReader()
@@ -80,7 +87,7 @@ export const ModalEditCard: FC<Props> = ({ answer, answerImg, idCard, question, 
       reader.readAsDataURL(file)
     }
   }
-
+  //обработчик загрузки картинки ответа
   const uploadImageAnswer = (file: File) => {
     if (file) {
       const reader = new FileReader()

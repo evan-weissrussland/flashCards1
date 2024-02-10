@@ -43,7 +43,7 @@ export const ModalAddNewDeck = memo(
       resolver: zodResolver(modalSchema),
     })
 
-    //обработчик передачи данных из формы на сервер. Обязательно через formData (у Андрея на серваке так сделано)
+    //обработчик передачи данных из формы на сервер. Обязательно через formData (у Андрея на серваке так сделано). При успешном запросе на сервер закрываем окно модалки, зачищаем поля формы
     const onSubmit = async (data: FormValues) => {
       const formData = new FormData()
 

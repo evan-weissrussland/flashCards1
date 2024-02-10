@@ -14,8 +14,12 @@ import { ModalDeleteDeck } from '@/features/Decks/ui/ModalDeleteDeck'
 import { ModalEditDeck } from '@/features/Decks/ui/ModalEditDeck'
 
 export const Decks = () => {
+  //получаем мой ID юзера из контекста (Арр)
   const resultIdAuthMe = useContext(Context)
+
+  //функция для изменения URL
   const navigate = useNavigate()
+
   //для изменения value инпута
   const [search, setSearch] = useState('')
 
@@ -62,9 +66,12 @@ export const Decks = () => {
   const result = useGetMinMaxAmoundCardsQuery()
 
   //переход на страницу выбранной колоды
-  const navigateToDeckHandler = useCallback((id: string) => {
-    navigate(`/decks/${id}`)
-  }, [])
+  const navigateToDeckHandler = useCallback(
+    (id: string) => {
+      navigate(`/decks/${id}`)
+    },
+    [navigate]
+  )
 
   //зачистка фильтра
   const clearFilterHandler = useCallback(() => {

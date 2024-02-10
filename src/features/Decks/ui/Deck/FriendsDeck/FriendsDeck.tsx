@@ -12,7 +12,7 @@ type Props = {
 }
 
 export const FriendsDeck: FC<Props> = props => {
-  const { cardsCount, cover, deckId, name } = props
+  const { cover, deckId, name } = props
 
   return (
     <>

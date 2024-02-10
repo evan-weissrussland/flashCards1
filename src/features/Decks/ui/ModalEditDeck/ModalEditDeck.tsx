@@ -42,10 +42,12 @@ export const ModalEditDeck: FC<Props> = ({
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
   const [open, setOpen] = useState(isModeEdit)
 
+  //стэйт для сохранения картинки колоды. Нужен для отображения картинки из пропсов или при загрузке с ПК.
   const [imgCover, setImgCover] = useState(deckCover)
 
-  //хук из RTK Query для выполнения запроса POST создания новой колоды
+  //хук из RTK Query для выполнения запроса PATCH изменения колоды
   const [updateDeck] = useUpdateDeckMutation()
+
   //обработка форм
   const {
     control,
@@ -56,7 +58,11 @@ export const ModalEditDeck: FC<Props> = ({
     resolver: zodResolver(modalSchema),
   })
 
-  //обработчик передачи данных из формы на сервер. Обязательно через formData (у Андрея на серваке так сделано)
+  /**
+   * обработчик передачи данных из формы на сервер. Обязательно через formData (у Андрея на серваке так сделано). При успешном запросе на сервер закрываем окно модалки и измененияем флаг отображения данной компоненты в родителе (setIsModeEdit)
+   * Если картинка загружена с ПК, то она для отправки на сервер берётся из data, если же оставляем картинку старую, то она берётся из стэйта
+   * @param data - объект данных из полей формы: инпут вопроса, инпут ответа, картинки вопрсоаи ответа
+   */
   const onSubmit = async (data: FormValues) => {
     const formData = new FormData()
 
@@ -85,6 +91,7 @@ export const ModalEditDeck: FC<Props> = ({
     name: 'privatePack',
   })
 
+  //обработчик загрузки картинки колоды
   const uploadImageDeck = (file: File) => {
     if (file) {
       const reader = new FileReader()
