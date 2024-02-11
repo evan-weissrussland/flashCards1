@@ -48,12 +48,6 @@ export const authMeApi = baseApi.injectEndpoints({
           url: `v1/auth/logout`,
         }),
       }),
-      refreshToken: builder.mutation<void, void>({
-        query: () => ({
-          method: 'POST',
-          url: `v1/auth/refresh-token`,
-        }),
-      }),
       signUp: builder.mutation<Responce, SignUpBody>({
         query: arg => ({
           body: arg,

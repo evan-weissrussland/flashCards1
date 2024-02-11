@@ -124,6 +124,7 @@ export const DeckService = baseApi.injectEndpoints({
         }),
       }),
       getMinMaxAmoundCards: builder.query<{ max: number; min: number }, void>({
+        providesTags: ['Decks'],
         query: () => `v2/decks/min-max-cards`,
       }),
       updateCard: builder.mutation<Omit<Card, 'grade'>, { args: FormData; id: string }>({
