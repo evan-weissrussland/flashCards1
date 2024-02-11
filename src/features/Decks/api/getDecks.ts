@@ -113,7 +113,7 @@ export const DeckService = baseApi.injectEndpoints({
       }),
       getDeck: builder.query<Deck, string>({
         keepUnusedDataFor: 1,
-        providesTags: ['Deck', 'CardsDeck', 'Decks'],
+        providesTags: ['Deck', 'CardsDeck'],
         query: id => ({
           url: `v1/decks/${id}`,
         }),
