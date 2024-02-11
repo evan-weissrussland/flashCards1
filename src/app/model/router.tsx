@@ -11,11 +11,11 @@ import { Deck } from '@/features/Decks/ui/Deck/Deck'
 import { Decks } from '@/features/Decks/ui/Decks'
 
 type Props = {
-  data: string
+  data: boolean
 }
 
 export const PrivateRouter = ({ data }: Props) => {
-  return data !== 'kukus' ? <Navigate to={'/signIn'} /> : <Navigate to={'/decks'} />
+  return !data ? <Navigate to={'/signIn'} /> : <Navigate to={'/decks'} />
 }
 
 export const router = createBrowserRouter([

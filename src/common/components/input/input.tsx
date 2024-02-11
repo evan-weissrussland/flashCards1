@@ -47,6 +47,7 @@ export const Input: InputWithRef = memo(
       <div className={clsx(s.inputWrapper, s[className])} style={props.style}>
         <span className={`${s.label} ${rest.disabled && s.disabledLabel}`}>{label}</span>
         <Component
+          autoComplete={'a'}
           className={`${s[type]} ${s.input} ${error && s.error}`}
           onChange={(e: { currentTarget: { value: any } }) => {
             callback && callback(e.currentTarget.value)

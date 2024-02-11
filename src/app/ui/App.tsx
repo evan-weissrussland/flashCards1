@@ -8,9 +8,9 @@ import { useAuthMeQuery } from '@/features/Auth/api/authMe-api'
 export const Context = createContext('')
 
 export function App() {
-  const result = useAuthMeQuery()
+  const { data, isLoading } = useAuthMeQuery()
 
-  if (result.isLoading) {
+  if (isLoading) {
     return (
       <div
         style={{
@@ -28,10 +28,10 @@ export function App() {
 
   return (
     <>
-      <Context.Provider value={result.data?.id as string}>
-        <Header email={result.data?.email as string} name={result.data?.name as string} />
+      <Context.Provider value={data?.id as string}>
+        <Header email={data?.email as string} name={data?.name as string} />
         <Outlet />
-        <PrivateRouter data={result.data?.name as string} />
+        <PrivateRouter data={data?.isEmailVerified as boolean} />
       </Context.Provider>
     </>
   )
