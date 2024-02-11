@@ -44,7 +44,7 @@ export const MyDeckMain: FC<Props> = props => {
             <td>
               <div style={{ alignItems: 'center', display: 'flex', gap: '5px' }}>
                 <img
-                  alt={'no image'}
+                  alt={' '}
                   src={it.questionImg}
                   style={{
                     borderRadius: '2px',
@@ -60,7 +60,7 @@ export const MyDeckMain: FC<Props> = props => {
             <td>
               <div style={{ alignItems: 'center', display: 'flex', gap: '5px' }}>
                 <img
-                  alt={'no image'}
+                  alt={' '}
                   src={it.answerImg}
                   style={{
                     borderRadius: '2px',

@@ -5,10 +5,10 @@ export const baseApi = createApi({
     baseUrl: 'https://api.flashcards.andrii.es',
     credentials: 'include',
     prepareHeaders: headers => {
-      headers.append('x-auth-skip', 'true')
+      headers.append('x-auth-skip', 'false')
     },
   }),
   endpoints: () => ({}),
   reducerPath: 'baseApi',
-  tagTypes: ['Decks', 'Deck', 'CardsDeck'],
+  tagTypes: ['Decks', 'Deck', 'CardsDeck', 'login'],
 })

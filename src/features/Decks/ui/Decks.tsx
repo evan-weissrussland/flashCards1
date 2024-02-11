@@ -1,7 +1,7 @@
 import { useCallback, useContext, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Context } from '@/app/ui/App'
+import { UserIdContext } from '@/app/ui/App'
 import { Button } from '@/common/components/button'
 import { Input } from '@/common/components/input'
 import { PageSizeType, Paginator } from '@/common/components/paginator/paginator'
@@ -15,7 +15,7 @@ import { ModalEditDeck } from '@/features/Decks/ui/ModalEditDeck'
 
 export const Decks = () => {
   //получаем мой ID юзера из контекста (Арр)
-  const resultIdAuthMe = useContext(Context)
+  const resultIdAuthMe = useContext(UserIdContext)
 
   //функция для изменения URL
   const navigate = useNavigate()
@@ -133,7 +133,7 @@ export const Decks = () => {
           <tr key={it.id} style={{ padding: '6px 24px' }}>
             <td style={{ alignItems: 'center', display: 'flex', gap: '10px' }}>
               <img
-                alt={'image'}
+                alt={' '}
                 onClick={() => {
                   navigateToDeckHandler(it.id)
                 }}

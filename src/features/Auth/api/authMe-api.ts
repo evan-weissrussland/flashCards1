@@ -18,37 +18,51 @@ type LoginBody = {
   password: string
   rememberMe: boolean
 }
+
+type SignUpBody = {
+  email: string
+  html?: string
+  name?: string
+  password: string
+  sendConfirmationEmail?: boolean
+  subject?: string
+}
 export const authMeApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       authMe: builder.query<Responce, void>({
-        query: () => `/v1/auth/me`,
+        providesTags: ['login'],
+        query: () => `v1/auth/me`,
       }),
       logIn: builder.mutation<Token, LoginBody>({
-        invalidatesTags: ['Decks'],
-        query: () => ({
+        invalidatesTags: ['login'],
+        query: arg => ({
+          body: arg,
           method: 'POST',
           url: `v1/auth/login`,
         }),
       }),
       logOut: builder.mutation<void, void>({
-        invalidatesTags: ['Decks'],
-        query: arg => ({
-          body: arg,
+        query: () => ({
           method: 'POST',
           url: `v1/auth/logout`,
         }),
       }),
-      signUp: builder.mutation<Responce, void>({
-        invalidatesTags: ['Decks'],
+      refreshToken: builder.mutation<void, void>({
+        query: () => ({
+          method: 'POST',
+          url: `v1/auth/refresh-token`,
+        }),
+      }),
+      signUp: builder.mutation<Responce, SignUpBody>({
         query: arg => ({
           body: arg,
           method: 'POST',
-          url: `v1/auth/sign-in`,
+          url: `v1/auth/sign-up`,
         }),
       }),
     }
   },
 })
 
-export const { useAuthMeQuery, useLogInMutation, useLogOutMutation } = authMeApi
+export const { useAuthMeQuery, useLogInMutation, useLogOutMutation, useSignUpMutation } = authMeApi

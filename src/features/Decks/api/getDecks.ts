@@ -104,7 +104,6 @@ export const DeckService = baseApi.injectEndpoints({
         }),
       }),
       getCardsDeck: builder.query<Cards, { args: GetCardsDecksRequestType; id: string }>({
-        keepUnusedDataFor: 1,
         providesTags: ['CardsDeck'],
         query: body => ({
           params: body.args ? body.args : undefined,
@@ -112,7 +111,6 @@ export const DeckService = baseApi.injectEndpoints({
         }),
       }),
       getDeck: builder.query<Deck, string>({
-        keepUnusedDataFor: 1,
         providesTags: ['Deck', 'CardsDeck'],
         query: id => ({
           url: `v1/decks/${id}`,

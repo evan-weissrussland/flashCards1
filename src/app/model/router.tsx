@@ -11,7 +11,7 @@ import { Deck } from '@/features/Decks/ui/Deck/Deck'
 import { Decks } from '@/features/Decks/ui/Decks'
 
 type Props = {
-  data: boolean
+  data: string
 }
 
 export const PrivateRouter = ({ data }: Props) => {

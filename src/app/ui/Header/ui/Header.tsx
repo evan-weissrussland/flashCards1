@@ -1,7 +1,7 @@
 import { FC, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Context } from '@/app/ui/App'
+import { UserIdContext } from '@/app/ui/App'
 import { Button } from '@/common/components/button'
 import { DropDownHeader } from '@/features/DropDownHeader'
 
@@ -14,8 +14,7 @@ type Props = {
 
 export const Header: FC<Props> = ({ email, name }) => {
   const navigate = useNavigate()
-  //вытягивам из контекста APP userIdЖ если он есть, то мы залогинены
-  const resultIdAuthMe = useContext(Context)
+  const userId = useContext(UserIdContext)
   //перенаправляем на страницу создания аккаунта
   const signInHandler = () => {
     navigate('/signIn')
@@ -27,7 +26,7 @@ export const Header: FC<Props> = ({ email, name }) => {
         <img alt={'logo'} src={'../../../../public/LogoITIncub.svg'} />
       </div>
       <div>
-        {!resultIdAuthMe ? (
+        {!userId ? (
           <Button onClick={signInHandler} variant={'primary'}>
             Sign In
           </Button>

@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 
-import { Context } from '@/app/ui/App'
+import { UserIdContext } from '@/app/ui/App'
 import { Typography } from '@/common/components/typography'
 import { ArrowBackIcon } from '@/common/icons/ArrowBackIcon'
 import { useGetDeckQuery } from '@/features/Decks/api/getDecks'
@@ -12,7 +12,7 @@ import s from './deck.module.scss'
 
 export const Deck = () => {
   //мой id юзера из контекста (Арр)
-  const resultIdAuthMe = useContext(Context)
+  const resultIdAuthMe = useContext(UserIdContext)
   //вытягиваем id выбраннйо колоды из строки URL
   const params = useParams()
   //делаем запрос на сервер за выбранной колодой

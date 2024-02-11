@@ -5,7 +5,9 @@ import { PrivateRouter } from '@/app/model/router'
 import { Header } from '@/app/ui/Header/ui'
 import { useAuthMeQuery } from '@/features/Auth/api/authMe-api'
 
-export const Context = createContext('')
+export const UserIdContext = createContext('')
+//TODO: я хотел сделать переход на страницу колод по проверке верификации эмейла, если он true, то мы залогинены. Для этого передаю контекст в HEader. (запрос auth/me возвращает свойство isEmailVerified. Но оно всегда false. Это связано с тем, что нужно верифицирвоать емэйл? Но как сделать этот flow я не знаю). Поэтому заогиненность проверяю по id (смотри контекст UserIdContext)
+export const UserEmailContext = createContext(false)
 
 export function App() {
   const { data, isLoading } = useAuthMeQuery()
@@ -28,11 +30,13 @@ export function App() {
 
   return (
     <>
-      <Context.Provider value={data?.id as string}>
-        <Header email={data?.email as string} name={data?.name as string} />
-        <Outlet />
-        <PrivateRouter data={data?.isEmailVerified as boolean} />
-      </Context.Provider>
+      <UserIdContext.Provider value={data?.id as string}>
+        <UserEmailContext.Provider value={data?.isEmailVerified as boolean}>
+          <Header email={data?.email as string} name={data?.name as string} />
+          <Outlet />
+          <PrivateRouter data={data?.id as string} />
+        </UserEmailContext.Provider>
+      </UserIdContext.Provider>
     </>
   )
 }
