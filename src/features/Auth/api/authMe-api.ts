@@ -1,5 +1,4 @@
 import { baseApi } from '@/app/api/base-api'
-import { Deck } from '@/features/Decks/api/getDecks'
 
 type Responce = {
   avatar: string
@@ -17,16 +16,15 @@ export const authMeApi = baseApi.injectEndpoints({
       authMe: builder.query<Responce, void>({
         query: () => `/v1/auth/me`,
       }),
-      logOut: builder.mutation<Deck, FormData>({
+      logOut: builder.mutation<void, void>({
         invalidatesTags: ['Decks'],
-        query: args => ({
-          body: args,
+        query: () => ({
           method: 'POST',
-          url: `v1/decks`,
+          url: `v1/auth/logout`,
         }),
       }),
     }
   },
 })
 
-export const { useAuthMeQuery } = authMeApi
+export const { useAuthMeQuery, useLogOutMutation } = authMeApi
