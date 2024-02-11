@@ -11,11 +11,12 @@ import { useLogInMutation } from '@/features/Auth/api/authMe-api'
 import { signInSchema } from '@/features/Auth/ui/SignIn/ui/signIn-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { FormValues } from './types'
+import s from './signIn.module.scss'
 
+import { FormValues } from './types'
 export const SignIn = () => {
   //хук из RTKQ для логинизации в приложении
-  const [logIn, { error }] = useLogInMutation()
+  const [logIn, { error, isLoading }] = useLogInMutation()
 
   const navigate = useNavigate()
 
@@ -63,6 +64,7 @@ export const SignIn = () => {
 
   return (
     <>
+      {isLoading ? <div className={s.loading}>LOADING...</div> : <></>}
       <Card className={'border'} style={{ padding: '33px 36px 25px 27px' }}>
         <Typography
           style={{ marginBottom: '27px', textAlign: 'center' }}

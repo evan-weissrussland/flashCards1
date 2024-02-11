@@ -43,6 +43,7 @@ export const authMeApi = baseApi.injectEndpoints({
         }),
       }),
       logOut: builder.mutation<void, void>({
+        invalidatesTags: ['login'],
         query: () => ({
           method: 'POST',
           url: `v1/auth/logout`,
