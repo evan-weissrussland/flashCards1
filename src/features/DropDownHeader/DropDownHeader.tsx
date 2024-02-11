@@ -11,6 +11,7 @@ import {
 import { Typography } from '@/common/components/typography'
 import { LogOutIcon } from '@/common/icons/LogOutIcon'
 import { MyProfileIcon } from '@/common/icons/MyProfileIcon'
+import { useLogOutMutation } from '@/features/Auth/api/authMe-api'
 
 type Props = {
   className?: string
@@ -21,6 +22,15 @@ type Props = {
 export const DropDownHeader = ({ email, name }: Props) => {
   //открыть/закрыть модальнео окно DropDown
   const [open, setOpen] = useState(false)
+  const [logOut] = useLogOutMutation()
+
+  const logOutHandler = () => {
+    logOut()
+      .unwrap()
+      .finally(() => {
+        setOpen(false)
+      })
+  }
 
   return (
     <>
@@ -81,11 +91,7 @@ export const DropDownHeader = ({ email, name }: Props) => {
                   My Profile
                 </Typography>
               </DropDownItem>
-              <DropDownItem
-                onclick={() => {
-                  setOpen(false)
-                }}
-              >
+              <DropDownItem onclick={logOutHandler}>
                 <LogOutIcon />
                 <Typography theme={'dark'} variant={'Caption'}>
                   Sign Out
