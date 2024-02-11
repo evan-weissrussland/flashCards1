@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import {
   DropDown,
@@ -20,6 +21,7 @@ type Props = {
 }
 
 export const DropDownHeader = ({ email, name }: Props) => {
+  const navigate = useNavigate()
   //открыть/закрыть модальнео окно DropDown
   const [open, setOpen] = useState(false)
   const [logOut] = useLogOutMutation()
@@ -27,6 +29,9 @@ export const DropDownHeader = ({ email, name }: Props) => {
   const logOutHandler = () => {
     logOut()
       .unwrap()
+      .then(() => {
+        navigate('/signIn')
+      })
       .finally(() => {
         setOpen(false)
       })
