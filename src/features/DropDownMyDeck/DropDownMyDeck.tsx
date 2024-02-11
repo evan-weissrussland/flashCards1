@@ -14,7 +14,7 @@ import {
   DropDownGroup,
   DropDownItem,
   DropDownTrigger,
-} from '../../common/components/dropDownDeck'
+} from '../../common/components/dropDown'
 
 type Props = {
   deckCover: string

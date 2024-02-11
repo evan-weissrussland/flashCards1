@@ -3,10 +3,9 @@ import { useNavigate } from 'react-router-dom'
 
 import { Context } from '@/app/ui/App'
 import { Button } from '@/common/components/button'
+import { DropDownHeader } from '@/features/DropDownHeader'
 
 import s from './header.module.scss'
-
-import { DropDown } from '../../../../common/components/dropDownForHeader'
 
 type Props = {
   email: string
@@ -33,7 +32,7 @@ export const Header: FC<Props> = ({ email, name }) => {
             Sign In
           </Button>
         ) : (
-          <DropDown email={email} name={name} />
+          <DropDownHeader email={email} name={name} />
         )}
       </div>
     </div>
