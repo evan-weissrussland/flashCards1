@@ -1,4 +1,5 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { baseApi } from '@/app/api/base-api'
+import { Deck } from '@/features/Decks/api/getDecks'
 
 type Responce = {
   avatar: string
@@ -10,22 +11,22 @@ type Responce = {
   updated: string
 }
 
-export const authMeApi = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://api.flashcards.andrii.es',
-    credentials: 'include',
-    prepareHeaders: headers => {
-      headers.append('x-auth-skip', 'true')
-    },
-  }),
+export const authMeApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       authMe: builder.query<Responce, void>({
         query: () => `/v1/auth/me`,
       }),
+      logOut: builder.mutation<Deck, FormData>({
+        invalidatesTags: ['Decks'],
+        query: args => ({
+          body: args,
+          method: 'POST',
+          url: `v1/decks`,
+        }),
+      }),
     }
   },
-  reducerPath: 'authMeApi',
 })
 
 export const { useAuthMeQuery } = authMeApi

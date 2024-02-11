@@ -1,5 +1,5 @@
+import { baseApi } from '@/app/api/base-api'
 import { PageSizeType } from '@/common/components/paginator/paginator'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 type Response = {
   items: Deck[]
@@ -70,14 +70,7 @@ type Card = {
   userId: string
 }
 
-export const baseApi = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://api.flashcards.andrii.es',
-    credentials: 'include',
-    prepareHeaders: headers => {
-      headers.append('x-auth-skip', 'true')
-    },
-  }),
+export const DeckService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       createCard: builder.mutation<Omit<Card, 'grade'>, { args: FormData; id: string }>({
@@ -154,8 +147,6 @@ export const baseApi = createApi({
       }),
     }
   },
-  reducerPath: 'baseApi',
-  tagTypes: ['Deck', 'Decks', 'CardsDeck'],
 })
 
 export const {
@@ -169,4 +160,4 @@ export const {
   useGetMinMaxAmoundCardsQuery,
   useUpdateCardMutation,
   useUpdateDeckMutation,
-} = baseApi
+} = DeckService

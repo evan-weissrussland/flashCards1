@@ -18,13 +18,9 @@ type Props = {
   name: string
 }
 
-export const DropDownHeader = ({ className, email, name }: Props) => {
+export const DropDownHeader = ({ email, name }: Props) => {
   //открыть/закрыть модальнео окно DropDown
   const [open, setOpen] = useState(false)
-  //показать/скрыть модальные окна Delete Deck, Edit Deck, Learn Deck
-  const [isModalEditOrModalDeleteShow, setIsModalEditOrModalDeleteOrModalLearnShow] = useState<
-    '' | 'delete' | 'edit' | 'learn'
-  >('')
 
   return (
     <>
@@ -87,7 +83,6 @@ export const DropDownHeader = ({ className, email, name }: Props) => {
               </DropDownItem>
               <DropDownItem
                 onclick={() => {
-                  setIsModalEditOrModalDeleteOrModalLearnShow('edit')
                   setOpen(false)
                 }}
               >
