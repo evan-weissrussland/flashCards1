@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
+import { ErrorData } from '@/app/model/types'
 import { Button } from '@/common/components/button'
 import { Card } from '@/common/components/card'
 import { Input } from '@/common/components/input'
@@ -10,13 +11,6 @@ import { signUpSchema } from '@/features/Auth/ui/SignUp/ui/signUp-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { FormValues } from './types'
-
-type ErrorData = {
-  message: string
-  path: string
-  statusCode: number
-  timestamp: string
-}
 export const SignUp = () => {
   const navigate = useNavigate()
   const {

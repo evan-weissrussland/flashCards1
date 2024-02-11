@@ -1,6 +1,7 @@
 import { useCallback, useContext, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import { ErrorData } from '@/app/model/types'
 import { UserIdContext } from '@/app/ui/App'
 import { Button } from '@/common/components/button'
 import { Input } from '@/common/components/input'
@@ -50,7 +51,7 @@ export const Decks = () => {
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
 
   //хук RTK Query. Передаёт параметры в baseApi для запрсоа на сервер и получает назад Response от сервера
-  const { data, isLoading } = useGetDecksQuery({
+  const { data, error, isLoading } = useGetDecksQuery({
     authorId: myId,
     currentPage: currentPage ? currentPage : undefined,
     itemsPerPage: itemsPerPage ? itemsPerPage : undefined,
@@ -190,64 +191,81 @@ export const Decks = () => {
     )
   }
 
+  //переменная, которой будет присвоена ошибка из хука RTKQ. Выводим её паользователю
+  let narrowingError
+
+  //определение типа ошибки из RTKQ: если есть свойство status в объекте error, то тип error - FetchBaseQueryError, иначе тип - SerializedError. Дополнительно протипизировал объект data, иначе при обращении к свойству data.message появляется ошибка
+  if (error) {
+    if ('status' in error) {
+      const errorDate = error.data as ErrorData
+
+      narrowingError = errorDate.message
+    } else {
+      narrowingError = error.message
+    }
+  }
+
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '0 136px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Typography variant={'Large'}>Decks list</Typography>
-        <ModalAddNewDeck />
-      </div>
-      <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
-        <Input
-          callback={onChangeTextCallbackWithDebounce}
-          className={'justifyContent-center'}
-          label={' '}
-          placeholder={'Input search'}
-          type={'search'}
-          value={search}
-        />
-        <div style={{ flexShrink: '0' }}>
-          <Tabs onValueChange={changeTabMyCardsOrAllCards} value={authorCards}>
-            <TabsList>
-              <TabsTrigger value={'My-cards'}>My Cards</TabsTrigger>
-              <TabsTrigger value={'All-cards'}>All Cards</TabsTrigger>
-            </TabsList>
-          </Tabs>
+    <>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '0 136px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography variant={'Large'}>Decks list</Typography>
+          <ModalAddNewDeck />
         </div>
-        <RangeSlider
-          max={result.data?.max}
-          min={result.data?.min}
-          onChangeRange={setCardsCountFromSlider}
-          onChangeRangeCommit={setValuesArrayFromDebounceSlider}
-          step={1}
-          values={cardsCountFromSlider as number[]}
-        />
-        <Button icon={'delete'} onClick={clearFilterHandler} variant={'secondary'}>
-          Clear filter
-        </Button>
+        <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
+          <Input
+            callback={onChangeTextCallbackWithDebounce}
+            className={'justifyContent-center'}
+            label={' '}
+            placeholder={'Input search'}
+            type={'search'}
+            value={search}
+          />
+          <div style={{ flexShrink: '0' }}>
+            <Tabs onValueChange={changeTabMyCardsOrAllCards} value={authorCards}>
+              <TabsList>
+                <TabsTrigger value={'My-cards'}>My Cards</TabsTrigger>
+                <TabsTrigger value={'All-cards'}>All Cards</TabsTrigger>
+              </TabsList>
+            </Tabs>
+          </div>
+          <RangeSlider
+            max={result.data?.max}
+            min={result.data?.min}
+            onChangeRange={setCardsCountFromSlider}
+            onChangeRangeCommit={setValuesArrayFromDebounceSlider}
+            step={1}
+            values={cardsCountFromSlider as number[]}
+          />
+          <Button icon={'delete'} onClick={clearFilterHandler} variant={'secondary'}>
+            Clear filter
+          </Button>
+        </div>
+        <div>
+          <table style={{ width: '100%' }}>
+            <thead>
+              <tr>
+                <th style={{ color: 'red', textAlign: 'start' }}>Name</th>
+                <th style={{ color: 'red', textAlign: 'start' }}>Cards</th>
+                <th style={{ color: 'red', textAlign: 'start' }}>Last Updated</th>
+                <th style={{ color: 'red', textAlign: 'start' }}>Created by</th>
+                <th style={{ color: 'red', textAlign: 'start' }}></th>
+              </tr>
+            </thead>
+            <tbody>{table}</tbody>
+          </table>
+        </div>
+        <div>
+          <Paginator
+            currentPage={data?.pagination.currentPage}
+            onPageChanged={setCurrentPage}
+            onPageSizeChanged={setItemsPerPage}
+            pageSize={data ? data.pagination.itemsPerPage : 10}
+            totalItemsCount={data?.pagination.totalItems}
+          />
+        </div>
       </div>
-      <div>
-        <table style={{ width: '100%' }}>
-          <thead>
-            <tr>
-              <th style={{ color: 'red', textAlign: 'start' }}>Name</th>
-              <th style={{ color: 'red', textAlign: 'start' }}>Cards</th>
-              <th style={{ color: 'red', textAlign: 'start' }}>Last Updated</th>
-              <th style={{ color: 'red', textAlign: 'start' }}>Created by</th>
-              <th style={{ color: 'red', textAlign: 'start' }}></th>
-            </tr>
-          </thead>
-          <tbody>{table}</tbody>
-        </table>
-      </div>
-      <div>
-        <Paginator
-          currentPage={data?.pagination.currentPage}
-          onPageChanged={setCurrentPage}
-          onPageSizeChanged={setItemsPerPage}
-          pageSize={data ? data.pagination.itemsPerPage : 10}
-          totalItemsCount={data?.pagination.totalItems}
-        />
-      </div>
-    </div>
+      <span>{narrowingError}</span>
+    </>
   )
 }

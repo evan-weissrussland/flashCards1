@@ -1,6 +1,7 @@
 import { useController, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
+import { ErrorData } from '@/app/model/types'
 import { Button } from '@/common/components/button'
 import { Card } from '@/common/components/card'
 import { CheckboxComponent } from '@/common/components/checkbox'
@@ -11,12 +12,6 @@ import { signInSchema } from '@/features/Auth/ui/SignIn/ui/signIn-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { FormValues } from './types'
-type ErrorData = {
-  message: string
-  path: string
-  statusCode: number
-  timestamp: string
-}
 
 export const SignIn = () => {
   //хук из RTKQ для логинизации в приложении

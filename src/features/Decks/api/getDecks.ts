@@ -117,7 +117,6 @@ export const DeckService = baseApi.injectEndpoints({
         }),
       }),
       getDecks: builder.query<Response, GetDecksRequestType>({
-        keepUnusedDataFor: 1,
         providesTags: ['Decks'],
         query: args => ({
           params: args ? args : undefined,
