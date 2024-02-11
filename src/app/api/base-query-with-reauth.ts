@@ -38,6 +38,9 @@ export const baseQueryWithReauth: BaseQueryFn<
       }
       release()
     }
+  } else {
+    await mutex.waitForUnlock()
+    result = await baseQuery(args, api, extraOptions)
   }
 
   return result
