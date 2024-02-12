@@ -31,6 +31,7 @@ export const authMeApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       authMe: builder.query<Responce, void>({
+        keepUnusedDataFor: 1,
         providesTags: ['login'],
         query: () => `v1/auth/me`,
       }),

@@ -41,6 +41,7 @@ export const ModalDeleteDeck: FC<DeckProps> = ({
     deleteDeck(idDeck)
       .unwrap()
       .then(() => {
+        setIsModeDelete && setIsModeDelete('')
         setOpen(false)
         navigate('/decks')
       })
