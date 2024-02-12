@@ -12,25 +12,9 @@ import { Deck } from '@/features/Decks/ui/Deck/Deck'
 import { Decks } from '@/features/Decks/ui/Decks'
 
 export const PrivateRouter = () => {
-  const { data, isLoading } = useAuthMeQuery()
+  const { data } = useAuthMeQuery()
 
-  if (isLoading) {
-    return (
-      <div
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          height: '100vh',
-          justifyContent: 'center',
-          width: '100%',
-        }}
-      >
-        ...Loading
-      </div>
-    )
-  }
-
-  return !data?.id ? <Navigate to={'/signIn'} /> : <Navigate to={'/decks'} />
+  return !data ? <Navigate to={'/signIn'} /> : <Navigate to={'/decks'} />
 }
 
 export const router = createBrowserRouter([

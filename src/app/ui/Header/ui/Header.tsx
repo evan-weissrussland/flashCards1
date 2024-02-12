@@ -13,20 +13,18 @@ export const Header = () => {
     navigate('/signIn')
   }
 
-  const { email, id, name } = data || {}
-
   return (
     <div className={s.header}>
       <div>
         <img alt={'logo'} src={'../../../../public/LogoITIncub.svg'} />
       </div>
       <div>
-        {!id ? (
+        {!data ? (
           <Button onClick={signInHandler} variant={'primary'}>
             Sign In
           </Button>
         ) : (
-          <DropDownHeader email={email || ''} name={name || ''} />
+          <DropDownHeader email={data?.email} name={data?.name} />
         )}
       </div>
     </div>
