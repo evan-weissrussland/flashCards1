@@ -1,14 +1,14 @@
-import { useCallback, useContext, useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ErrorData } from '@/app/model/types'
-import { UserIdContext } from '@/app/ui/App'
 import { Button } from '@/common/components/button'
 import { Input } from '@/common/components/input'
 import { PageSizeType, Paginator } from '@/common/components/paginator/paginator'
 import { RangeSlider } from '@/common/components/slider'
 import { Tabs, TabsList, TabsTrigger } from '@/common/components/tabSwitcher'
 import { Typography } from '@/common/components/typography'
+import { useAuthMeQuery } from '@/features/Auth/api/authMe-api'
 import { useGetDecksQuery, useGetMinMaxAmoundCardsQuery } from '@/features/Decks/api/getDecks'
 import { ModalAddNewDeck } from '@/features/Decks/ui/ModalAddNewDeck'
 import { ModalDeleteDeck } from '@/features/Decks/ui/ModalDeleteDeck'
@@ -16,8 +16,7 @@ import { ModalEditDeck } from '@/features/Decks/ui/ModalEditDeck'
 
 export const Decks = () => {
   //получаем мой ID юзера из контекста (Арр)
-  const resultIdAuthMe = useContext(UserIdContext)
-
+  const { data: meData } = useAuthMeQuery()
   //функция для изменения URL
   const navigate = useNavigate()
 
@@ -106,10 +105,10 @@ export const Decks = () => {
   //если мы зарегистрированы (есть resultAuthMe), и нажимаем на MyCards, то делаем запрос на сервер за моими колодами, если нажимаем на "All  Cards" - то делаем запрос за всеми колодами. Если мы не зарегистрированы, то делаем запрос за всеми колодами
   const changeTabMyCardsOrAllCards = useCallback(
     (v: string) => {
-      if (resultIdAuthMe) {
+      if (meData?.id) {
         switch (v) {
           case 'My-cards':
-            setMyId(resultIdAuthMe)
+            setMyId(meData.id)
             setAuthorCards('My-cards')
             break
           case 'All-cards':
@@ -123,7 +122,7 @@ export const Decks = () => {
         setMyId(undefined)
       }
     },
-    [resultIdAuthMe, setMyId, setAuthorCards]
+    [meData, setMyId, setAuthorCards]
   )
 
   //отрисовываем таблицу из карт с сервера
@@ -153,7 +152,7 @@ export const Decks = () => {
             <td>{it.cardsCount}</td>
             <td>{new Date(it.updated).toLocaleString('ru-RU')}</td>
             <td>{it.author.name}</td>
-            {it.userId === resultIdAuthMe && (
+            {it.userId === meData?.id && (
               <td>
                 <ModalEditDeck
                   deckCover={it.cover}
@@ -171,7 +170,7 @@ export const Decks = () => {
           </tr>
         )
       }),
-    [data?.items, navigateToDeckHandler, resultIdAuthMe]
+    [data?.items, navigateToDeckHandler, meData]
   )
 
   // пока идёт запрос на сервер на списком колод или за максимальным и минимальным числом колод, показываем заглушку

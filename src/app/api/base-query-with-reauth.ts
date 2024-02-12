@@ -1,6 +1,9 @@
-import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query'
-
-import { fetchBaseQuery } from '@reduxjs/toolkit/query'
+import {
+  BaseQueryFn,
+  FetchArgs,
+  FetchBaseQueryError,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react'
 import { Mutex } from 'async-mutex'
 
 const mutex = new Mutex()
@@ -37,10 +40,10 @@ export const baseQueryWithReauth: BaseQueryFn<
         result = await baseQuery(args, api, extraOptions)
       }
       release()
+    } else {
+      await mutex.waitForUnlock()
+      result = await baseQuery(args, api, extraOptions)
     }
-  } else {
-    await mutex.waitForUnlock()
-    result = await baseQuery(args, api, extraOptions)
   }
 
   return result

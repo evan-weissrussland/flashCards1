@@ -31,12 +31,11 @@ export const authMeApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
       authMe: builder.query<Responce, void>({
-        keepUnusedDataFor: 1,
-        providesTags: ['login'],
+        providesTags: ['authMe'],
         query: () => `v1/auth/me`,
       }),
       logIn: builder.mutation<Token, LoginBody>({
-        invalidatesTags: ['login'],
+        invalidatesTags: ['authMe'],
         query: arg => ({
           body: arg,
           method: 'POST',
@@ -44,7 +43,19 @@ export const authMeApi = baseApi.injectEndpoints({
         }),
       }),
       logOut: builder.mutation<void, void>({
-        invalidatesTags: ['login'],
+        async onQueryStarted(_, { dispatch, queryFulfilled }) {
+          const patchResult = dispatch(
+            baseApi.util.updateQueryData('authMe' as never, undefined as never, () => {
+              return null
+            })
+          )
+
+          try {
+            await queryFulfilled
+          } catch {
+            patchResult.undo()
+          }
+        },
         query: () => ({
           method: 'POST',
           url: `v1/auth/logout`,

@@ -2,6 +2,7 @@ import { Navigate, createBrowserRouter } from 'react-router-dom'
 
 import { App } from '@/app/ui/App'
 import { Error404 } from '@/app/ui/Error404/Error404'
+import { useAuthMeQuery } from '@/features/Auth/api/authMe-api'
 import { CheckEmail } from '@/features/Auth/ui/CheckEmail/ui'
 import { CreateNewPass } from '@/features/Auth/ui/CreateNewPass/ui'
 import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
@@ -10,12 +11,26 @@ import { SignUp } from '@/features/Auth/ui/SignUp/ui'
 import { Deck } from '@/features/Decks/ui/Deck/Deck'
 import { Decks } from '@/features/Decks/ui/Decks'
 
-type Props = {
-  data: string
-}
+export const PrivateRouter = () => {
+  const { data, isLoading } = useAuthMeQuery()
 
-export const PrivateRouter = ({ data }: Props) => {
-  return !data ? <Navigate to={'/signIn'} /> : <Navigate to={'/decks'} />
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          alignItems: 'center',
+          display: 'flex',
+          height: '100vh',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        ...Loading
+      </div>
+    )
+  }
+
+  return !data?.id ? <Navigate to={'/signIn'} /> : <Navigate to={'/decks'} />
 }
 
 export const router = createBrowserRouter([
