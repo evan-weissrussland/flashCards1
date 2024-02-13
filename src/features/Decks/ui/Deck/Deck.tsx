@@ -17,11 +17,23 @@ export const Deck = () => {
   const params = useParams()
 
   //делаем запрос на сервер за выбранной колодой
-  const { data, error, isLoading } = useGetDeckQuery(params.id ?? '')
+  const { data, error, isFetching } = useGetDeckQuery(params.id ?? '')
 
   // пока идёт запрос на сервер показываем заглушку
-  if (isLoading) {
-    return <>....read Data....</>
+  if (isFetching) {
+    return (
+      <div
+        style={{
+          alignItems: 'center',
+          display: 'flex',
+          height: '100vh',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        ...Read Deck
+      </div>
+    )
   }
 
   //переменная, которой будет присвоена ошибка из хука RTKQ. Выводим её паользователю

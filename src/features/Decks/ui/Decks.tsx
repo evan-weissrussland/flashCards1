@@ -50,7 +50,7 @@ export const Decks = () => {
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
 
   //хук RTK Query. Передаёт параметры в baseApi для запрсоа на сервер и получает назад Response от сервера
-  const { data, error, isLoading } = useGetDecksQuery({
+  const { data, error, isFetching } = useGetDecksQuery({
     authorId: myId,
     currentPage: currentPage ? currentPage : undefined,
     itemsPerPage: itemsPerPage ? itemsPerPage : undefined,
@@ -174,7 +174,7 @@ export const Decks = () => {
   )
 
   // пока идёт запрос на сервер на списком колод или за максимальным и минимальным числом колод, показываем заглушку
-  if (result.isLoading || isLoading) {
+  if (result.isFetching || isFetching) {
     return (
       <div
         style={{
@@ -185,7 +185,7 @@ export const Decks = () => {
           width: '100%',
         }}
       >
-        ...Read
+        ...Read Decks
       </div>
     )
   }

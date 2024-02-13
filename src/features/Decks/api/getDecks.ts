@@ -70,6 +70,11 @@ type Card = {
   userId: string
 }
 
+type SaveGradeCard = {
+  cardId: string
+  grade: GradeRating
+}
+export type GradeRating = 1 | 2 | 3 | 4 | 5
 export const DeckService = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
@@ -116,6 +121,7 @@ export const DeckService = baseApi.injectEndpoints({
           url: `v1/decks/${id}`,
         }),
       }),
+
       getDecks: builder.query<Response, GetDecksRequestType>({
         providesTags: ['Decks'],
         query: args => ({
@@ -123,9 +129,24 @@ export const DeckService = baseApi.injectEndpoints({
           url: `v2/decks`,
         }),
       }),
+      getLearnCard: builder.query<Card, { args: { previousCardId: string }; id: string }>({
+        providesTags: ['saveGrade'],
+        query: body => ({
+          params: body.args ? body.args : undefined,
+          url: `v1/decks/${body.id}/learn`,
+        }),
+      }),
       getMinMaxAmoundCards: builder.query<{ max: number; min: number }, void>({
         providesTags: ['Decks'],
         query: () => `v2/decks/min-max-cards`,
+      }),
+      saveGradeCard: builder.mutation<Card, { args: SaveGradeCard; id: string }>({
+        invalidatesTags: ['saveGrade'],
+        query: body => ({
+          body: body.args,
+          method: 'POST',
+          url: `v1/decks/${body.id}/learn`,
+        }),
       }),
       updateCard: builder.mutation<Omit<Card, 'grade'>, { args: FormData; id: string }>({
         invalidatesTags: ['CardsDeck'],
@@ -155,7 +176,9 @@ export const {
   useGetCardsDeckQuery,
   useGetDeckQuery,
   useGetDecksQuery,
+  useGetLearnCardQuery,
   useGetMinMaxAmoundCardsQuery,
+  useSaveGradeCardMutation,
   useUpdateCardMutation,
   useUpdateDeckMutation,
 } = DeckService
