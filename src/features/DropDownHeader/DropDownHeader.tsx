@@ -62,7 +62,13 @@ export const DropDownHeader = ({ avatar, email, name }: Props) => {
             <img
               alt={'ava'}
               src={avatar ? avatar : defaultAva}
-              style={{ height: '36px', width: '36px' }}
+              style={{
+                borderRadius: '50%',
+                flexShrink: '0',
+                height: '36px',
+                objectFit: 'cover',
+                width: '36px',
+              }}
             />
           </div>
         </DropDownTrigger>
@@ -81,7 +87,12 @@ export const DropDownHeader = ({ avatar, email, name }: Props) => {
             <img
               alt={'ava'}
               src={avatar ? avatar : defaultAva}
-              style={{ height: '36px', width: '36px' }}
+              style={{
+                borderRadius: '50%',
+                height: '36px',
+                objectFit: 'cover',
+                width: '36px',
+              }}
             />
             <div style={{ display: 'inline-flex', flexDirection: 'column' }}>
               <Typography theme={'dark'} variant={'Subtitle 2'}>

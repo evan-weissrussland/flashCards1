@@ -64,7 +64,11 @@ export const EditProfileLogout = () => {
       </Typography>
       <div style={{ marginBottom: '19px', textAlign: 'center' }}>
         <div style={{ display: 'inline-flex', position: 'relative' }}>
-          <img alt={'ava'} src={data?.avatar ? data.avatar : defaultAva} />
+          <img
+            alt={'ava'}
+            src={data?.avatar ? data.avatar : defaultAva}
+            style={{ borderRadius: '100%', height: '96px', objectFit: 'cover', width: '96px' }}
+          />
           <div style={{ bottom: '0', position: 'absolute', right: '0' }}>
             <label>
               <input onChange={uploadAvaHandler} style={{ display: 'none' }} type={'file'} />
