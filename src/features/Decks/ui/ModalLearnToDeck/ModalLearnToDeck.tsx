@@ -15,7 +15,6 @@ import s from './modalLearnToDeck.module.scss'
 type Props = {
   deckId: string
   name: string
-  setIsLearn: (v: boolean) => void
 }
 
 export const ModalLearnToDeck: FC<Props> = memo(props => {

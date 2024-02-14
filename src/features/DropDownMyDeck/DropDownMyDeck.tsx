@@ -1,5 +1,12 @@
 import { useState } from 'react'
 
+import {
+  DropDown,
+  DropDownContent,
+  DropDownGroup,
+  DropDownItem,
+  DropDownTrigger,
+} from '@/common/components/dropDown'
 import { Typography } from '@/common/components/typography'
 import { DeleteIcon } from '@/common/icons/DeleteIcon'
 import { DropDownMyDeckIcon } from '@/common/icons/DropDownMyDeck'
@@ -7,14 +14,6 @@ import { EditIcon } from '@/common/icons/EditIcon'
 import { PlayIcon } from '@/common/icons/PlayIcon'
 import { ModalDeleteDeck } from '@/features/Decks/ui/ModalDeleteDeck'
 import { ModalEditDeck } from '@/features/Decks/ui/ModalEditDeck'
-
-import {
-  DropDown,
-  DropDownContent,
-  DropDownGroup,
-  DropDownItem,
-  DropDownTrigger,
-} from '../../common/components/dropDown'
 
 type Props = {
   deckCover: string

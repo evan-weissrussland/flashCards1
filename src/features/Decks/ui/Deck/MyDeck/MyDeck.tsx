@@ -53,7 +53,7 @@ export const MyDeck: FC<Props> = props => {
           )}
         </>
       ) : (
-        <ModalLearnToDeck deckId={deckId} name={name} setIsLearn={setIsLearn} />
+        <ModalLearnToDeck deckId={deckId} name={name} />
       )}
     </>
   )

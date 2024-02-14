@@ -1,15 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { ModalAddNewCard } from './ModalLearnToDeck'
+import { ModalLearnToDeck } from './ModalLearnToDeck'
 
 const meta = {
   argTypes: {},
-  component: ModalAddNewCard,
+  component: ModalLearnToDeck,
   tags: ['autodocs'],
   title: 'Components/ModalAddNewCard',
-} satisfies Meta<typeof ModalAddNewCard>
+} satisfies Meta<typeof ModalLearnToDeck>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Primary: Story = {}
+export const Primary: Story = {
+  args: {
+    deckId: 'string',
+    name: 'string',
+  },
+}

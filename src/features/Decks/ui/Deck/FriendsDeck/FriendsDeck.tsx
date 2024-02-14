@@ -36,7 +36,7 @@ export const FriendsDeck: FC<Props> = props => {
           <FriendsDeckMain cover={cover} deckId={deckId} />
         </>
       ) : (
-        <ModalLearnToDeck deckId={deckId} name={name} setIsLearn={setIsLearn} />
+        <ModalLearnToDeck deckId={deckId} name={name} />
       )}
     </div>
   )
