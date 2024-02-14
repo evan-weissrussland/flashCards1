@@ -24,7 +24,7 @@ export const Header = () => {
             Sign In
           </Button>
         ) : (
-          <DropDownHeader email={data?.email} name={data?.name} />
+          <DropDownHeader avatar={data?.avatar} email={data?.email} name={data?.name} />
         )}
       </div>
     </div>

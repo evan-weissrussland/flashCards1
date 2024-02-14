@@ -14,13 +14,16 @@ import { LogOutIcon } from '@/common/icons/LogOutIcon'
 import { MyProfileIcon } from '@/common/icons/MyProfileIcon'
 import { useLogOutMutation } from '@/features/Auth/api/authMe-api'
 
+import defaultAva from '../../../public/Ellipse 1.png'
+
 type Props = {
+  avatar: string
   className?: string
   email: string
   name: string
 }
 
-export const DropDownHeader = ({ email, name }: Props) => {
+export const DropDownHeader = ({ avatar, email, name }: Props) => {
   const navigate = useNavigate()
   //открыть/закрыть модальнео окно DropDown
   const [open, setOpen] = useState(false)
@@ -58,7 +61,7 @@ export const DropDownHeader = ({ email, name }: Props) => {
             </Typography>
             <img
               alt={'ava'}
-              src={'../../../../public/Ellipse%201.png'}
+              src={avatar ? avatar : defaultAva}
               style={{ height: '36px', width: '36px' }}
             />
           </div>
@@ -77,7 +80,7 @@ export const DropDownHeader = ({ email, name }: Props) => {
           <DropDownLabel>
             <img
               alt={'ava'}
-              src={'../../../../public/Ellipse%201.png'}
+              src={avatar ? avatar : defaultAva}
               style={{ height: '36px', width: '36px' }}
             />
             <div style={{ display: 'inline-flex', flexDirection: 'column' }}>

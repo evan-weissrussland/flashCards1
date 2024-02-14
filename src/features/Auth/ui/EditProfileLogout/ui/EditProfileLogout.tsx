@@ -1,15 +1,21 @@
+import { ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import defaultAva from '@/../public/Ellipse 1.png'
 import { Button } from '@/common/components/button'
 import { Card } from '@/common/components/card'
 import { Typography } from '@/common/components/typography'
 import { EditIcon } from '@/common/icons/EditIcon'
-import { useAuthMeQuery, useLogOutMutation } from '@/features/Auth/api/authMe-api'
+import {
+  useAuthMeQuery,
+  useLogOutMutation,
+  useUpdateUserDataMutation,
+} from '@/features/Auth/api/authMe-api'
 
 export const EditProfileLogout = () => {
   const { data, isFetching } = useAuthMeQuery()
   const navigate = useNavigate()
-
+  const [updateUserData] = useUpdateUserDataMutation()
   const [logOut] = useLogOutMutation()
 
   const logOutHandler = () => {
@@ -18,6 +24,17 @@ export const EditProfileLogout = () => {
       .then(() => {
         navigate('/signIn')
       })
+  }
+
+  const uploadAvaHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) {
+      const formData = new FormData()
+
+      formData.append('name', data?.name as string)
+      formData.append('avatar', e.target.files[0])
+
+      updateUserData(formData)
+    }
   }
 
   if (isFetching) {
@@ -47,14 +64,14 @@ export const EditProfileLogout = () => {
       </Typography>
       <div style={{ marginBottom: '19px', textAlign: 'center' }}>
         <div style={{ display: 'inline-flex', position: 'relative' }}>
-          <img
-            alt={'ava'}
-            src={data?.avatar ? data.avatar : '../../../../public/Ellipse%201.png'}
-          />
+          <img alt={'ava'} src={data?.avatar ? data.avatar : defaultAva} />
           <div style={{ bottom: '0', position: 'absolute', right: '0' }}>
-            <Button className={'padding4px'} variant={'secondary'}>
-              <EditIcon />
-            </Button>
+            <label>
+              <input onChange={uploadAvaHandler} style={{ display: 'none' }} type={'file'} />
+              <Button as={'span'} className={'padding4px'} variant={'secondary'}>
+                <EditIcon />
+              </Button>
+            </label>
           </div>
         </div>
       </div>
