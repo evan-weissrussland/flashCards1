@@ -21,9 +21,10 @@ type Props = {
   deckId: string
   isPrivate: boolean
   name: string
+  setIsLearn: (v: boolean) => void
 }
 
-export const DropDownMyDeck = ({ deckCover, deckId, isPrivate, name }: Props) => {
+export const DropDownMyDeck = ({ deckCover, deckId, isPrivate, name, setIsLearn }: Props) => {
   //открыть/закрыть модальнео окно DropDown
   const [open, setOpen] = useState(false)
   //показать/скрыть модальные окна Delete Deck, Edit Deck, Learn Deck
@@ -45,6 +46,7 @@ export const DropDownMyDeck = ({ deckCover, deckId, isPrivate, name }: Props) =>
               <DropDownItem
                 onclick={() => {
                   setOpen(false)
+                  setIsLearn(true)
                 }}
               >
                 <PlayIcon />
