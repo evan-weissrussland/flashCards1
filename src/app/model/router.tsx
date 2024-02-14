@@ -6,6 +6,7 @@ import { useAuthMeQuery } from '@/features/Auth/api/authMe-api'
 import { CheckEmail } from '@/features/Auth/ui/CheckEmail/ui'
 import { CreateNewPass } from '@/features/Auth/ui/CreateNewPass/ui'
 import { EditProfileLogout } from '@/features/Auth/ui/EditProfileLogout/ui'
+import { EditProfileSaveChange } from '@/features/Auth/ui/EditProfileSaveChange/ui'
 import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
 import { SignIn } from '@/features/Auth/ui/SignIn/ui'
 import { SignUp } from '@/features/Auth/ui/SignUp/ui'
@@ -52,6 +53,10 @@ export const router = createBrowserRouter([
       {
         element: <EditProfileLogout />,
         path: 'myProfile',
+      },
+      {
+        element: <EditProfileSaveChange />,
+        path: 'saveChangeMyProfile',
       },
     ],
     element: <App />,

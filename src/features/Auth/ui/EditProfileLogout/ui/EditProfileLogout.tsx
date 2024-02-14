@@ -26,6 +26,10 @@ export const EditProfileLogout = () => {
       })
   }
 
+  const getToChangeNameHandler = () => {
+    navigate('/saveChangeMyProfile')
+  }
+
   const uploadAvaHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.length) {
       const formData = new FormData()
@@ -91,7 +95,7 @@ export const EditProfileLogout = () => {
         <Typography style={{}} theme={'dark'} variant={'H1'}>
           {data?.name}
         </Typography>
-        <Button className={'padding4px'} variant={'secondary'}>
+        <Button className={'padding4px'} onClick={getToChangeNameHandler} variant={'secondary'}>
           <EditIcon />
         </Button>
       </div>

@@ -113,7 +113,7 @@ export const SignIn = () => {
           theme={'dark'}
           variant={'Body 2'}
         >
-          Don`&apos;`t have an account?
+          Don&apos;t have an account?
         </Typography>
         <div style={{ textAlign: 'center' }}>
           <Button
