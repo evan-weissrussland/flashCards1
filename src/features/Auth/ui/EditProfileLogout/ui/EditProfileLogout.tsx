@@ -1,11 +1,40 @@
+import { useNavigate } from 'react-router-dom'
+
 import { Button } from '@/common/components/button'
 import { Card } from '@/common/components/card'
 import { Typography } from '@/common/components/typography'
 import { EditIcon } from '@/common/icons/EditIcon'
+import { useAuthMeQuery, useLogOutMutation } from '@/features/Auth/api/authMe-api'
 
 export const EditProfileLogout = () => {
-  //email из стэйта
-  const email = 'example@mail.com'
+  const { data, isFetching } = useAuthMeQuery()
+  const navigate = useNavigate()
+
+  const [logOut] = useLogOutMutation()
+
+  const logOutHandler = () => {
+    logOut()
+      .unwrap()
+      .then(() => {
+        navigate('/signIn')
+      })
+  }
+
+  if (isFetching) {
+    return (
+      <div
+        style={{
+          alignItems: 'center',
+          display: 'flex',
+          height: '100vh',
+          justifyContent: 'center',
+          width: '100%',
+        }}
+      >
+        ...Read Card
+      </div>
+    )
+  }
 
   return (
     <Card className={'border'} style={{ padding: '33px 36px 25px 27px' }}>
@@ -18,7 +47,10 @@ export const EditProfileLogout = () => {
       </Typography>
       <div style={{ marginBottom: '19px', textAlign: 'center' }}>
         <div style={{ display: 'inline-flex', position: 'relative' }}>
-          <img alt={'ava'} src={'../../../../public/Ellipse%201.png'} />
+          <img
+            alt={'ava'}
+            src={data?.avatar ? data.avatar : '../../../../public/Ellipse%201.png'}
+          />
           <div style={{ bottom: '0', position: 'absolute', right: '0' }}>
             <Button className={'padding4px'} variant={'secondary'}>
               <EditIcon />
@@ -36,19 +68,26 @@ export const EditProfileLogout = () => {
         }}
       >
         <Typography style={{}} theme={'dark'} variant={'H1'}>
-          Ivan
+          {data?.name}
         </Typography>
-        <EditIcon />
+        <Button className={'padding4px'} variant={'secondary'}>
+          <EditIcon />
+        </Button>
       </div>
       <Typography
         style={{ marginBottom: '13px', textAlign: 'center' }}
         theme={'dark'}
         variant={'Body 2'}
       >
-        {email}
+        {data?.email}
       </Typography>
       <div style={{ textAlign: 'center' }}>
-        <Button icon={'logout'} style={{ textAlign: 'center' }} variant={'secondary'}>
+        <Button
+          icon={'logout'}
+          onClick={logOutHandler}
+          style={{ textAlign: 'center' }}
+          variant={'secondary'}
+        >
           Logout
         </Button>
       </div>

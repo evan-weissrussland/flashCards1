@@ -3,10 +3,8 @@ import { Outlet } from 'react-router-dom'
 import { PrivateRouter } from '@/app/model/router'
 import { Header } from '@/app/ui/Header/ui'
 import { useAuthMeQuery } from '@/features/Auth/api/authMe-api'
-
 export function App() {
   const { isLoading } = useAuthMeQuery()
-
   const loadingHTML = isLoading ? (
     <div
       style={{

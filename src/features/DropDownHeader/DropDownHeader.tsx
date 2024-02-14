@@ -37,6 +37,11 @@ export const DropDownHeader = ({ email, name }: Props) => {
       })
   }
 
+  const getToMyProfileHandler = () => {
+    navigate('/myProfile')
+    setOpen(false)
+  }
+
   return (
     <>
       <DropDown onOpenChange={setOpen} open={open}>
@@ -86,11 +91,7 @@ export const DropDownHeader = ({ email, name }: Props) => {
           </DropDownLabel>
           <div>
             <DropDownGroup>
-              <DropDownItem
-                onclick={() => {
-                  setOpen(false)
-                }}
-              >
+              <DropDownItem onclick={getToMyProfileHandler}>
                 <MyProfileIcon />
                 <Typography theme={'dark'} variant={'Caption'}>
                   My Profile
