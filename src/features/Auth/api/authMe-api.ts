@@ -27,6 +27,12 @@ type SignUpBody = {
   sendConfirmationEmail?: boolean
   subject?: string
 }
+
+type RecoverPass = {
+  email: string
+  html?: string
+  subject?: string
+}
 export const authMeApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
@@ -61,6 +67,20 @@ export const authMeApi = baseApi.injectEndpoints({
           url: `v1/auth/logout`,
         }),
       }),
+      recoverPass: builder.mutation<void, RecoverPass>({
+        query: arg => ({
+          body: arg,
+          method: 'POST',
+          url: `/v1/auth/recover-password`,
+        }),
+      }),
+      resetPass: builder.mutation<void, { args: { password: string }; token: string }>({
+        query: body => ({
+          body: body.args,
+          method: 'POST',
+          url: `/v1/auth/reset-password/${body.token}`,
+        }),
+      }),
       signUp: builder.mutation<Responce, SignUpBody>({
         query: arg => ({
           body: arg,
@@ -84,6 +104,8 @@ export const {
   useAuthMeQuery,
   useLogInMutation,
   useLogOutMutation,
+  useRecoverPassMutation,
+  useResetPassMutation,
   useSignUpMutation,
   useUpdateUserDataMutation,
 } = authMeApi
