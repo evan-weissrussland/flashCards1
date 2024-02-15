@@ -2,9 +2,11 @@ import { Outlet } from 'react-router-dom'
 
 import { PrivateRouter } from '@/app/model/router'
 import { Header } from '@/app/ui/Header/ui'
+import { Responce } from '@/features/Auth/api/authMe-api'
 import { useAuthMeQuery } from '@/features/Auth/api/authMe-api'
+
 export function App() {
-  const { isLoading } = useAuthMeQuery()
+  const { data, isLoading } = useAuthMeQuery()
   const loadingHTML = isLoading ? (
     <div
       style={{
@@ -27,9 +29,9 @@ export function App() {
   return (
     <div style={{ position: 'relative' }}>
       {loadingHTML}
-      <Header />
+      <Header data={data as Responce} />
       <Outlet />
-      <PrivateRouter />
+      <PrivateRouter data={data as Responce} />
     </div>
   )
 }

@@ -1,14 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/common/components/button'
-import { useAuthMeQuery } from '@/features/Auth/api/authMe-api'
+import { Responce } from '@/features/Auth/api/authMe-api'
 import { DropDownHeader } from '@/features/DropDownHeader'
 
 import s from './header.module.scss'
 
-export const Header = () => {
+type Props = {
+  data: Responce
+}
+export const Header = ({ data }: Props) => {
   const navigate = useNavigate()
-  const { data } = useAuthMeQuery() //перенаправляем на страницу создания аккаунта
+  //перенаправляем на страницу создания аккаунта
   const signInHandler = () => {
     navigate('/signIn')
   }

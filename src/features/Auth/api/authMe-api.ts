@@ -1,6 +1,6 @@
 import { baseApi } from '@/app/api/base-api'
 
-type Responce = {
+export type Responce = {
   avatar: string
   created: string
   email: string
@@ -49,6 +49,7 @@ export const authMeApi = baseApi.injectEndpoints({
         }),
       }),
       logOut: builder.mutation<void, void>({
+        invalidatesTags: ['authMe'],
         async onQueryStarted(_, { dispatch, queryFulfilled }) {
           const patchResult = dispatch(
             baseApi.util.updateQueryData('authMe' as never, undefined as never, () => {
