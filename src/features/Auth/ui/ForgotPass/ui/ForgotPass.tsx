@@ -5,24 +5,29 @@ import { Button } from '@/common/components/button'
 import { Card } from '@/common/components/card'
 import { Input } from '@/common/components/input'
 import { Typography } from '@/common/components/typography'
-import { signUpSchema } from '@/features/Auth/ui/SignUp/ui/signUp-schema'
-import { FormValues } from '@/features/Auth/ui/SignUp/ui/types'
+import { useRecoverPassMutation } from '@/features/Auth/api/authMe-api'
+import { forgotPassSchema } from '@/features/Auth/ui/ForgotPass/ui/forgotPass-schema'
+import { FormValues } from '@/features/Auth/ui/ForgotPass/ui/types'
 import { zodResolver } from '@hookform/resolvers/zod'
+
+import s from './forgotPass.module.scss'
 
 export const ForgotPass = () => {
   const navigate = useNavigate()
+
+  const [recoverPass] = useRecoverPassMutation()
+
   const {
     formState: { errors },
     handleSubmit,
     register,
   } = useForm<FormValues>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(forgotPassSchema),
   })
 
-  console.log('errors: ', errors)
-
-  const onSubmit = (data: FormValues) => {
-    console.log(data)
+  const onSubmit = async (data: FormValues) => {
+    await recoverPass({ email: data.email }).unwrap()
+    navigate('/checkEmail')
   }
   const toSignInHandler = () => {
     navigate('/signIn')
@@ -39,12 +44,14 @@ export const ForgotPass = () => {
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <Input {...register('password')} error={errors.password?.message} label={'Email'} />
+          <Input {...register('email')} error={errors.email?.message} label={'Email'} />
         </div>
         <Typography style={{ marginBottom: '65px' }} theme={'dark'} variant={'Body 2'}>
-          Enter your email address and we will send you further instructions
+          <span className={s.colorLight900}>
+            Enter your email address and we will send you further instructions
+          </span>
         </Typography>
-        <Button style={{ marginBottom: '20px' }} type={'submit'}>
+        <Button fullWidth style={{ marginBottom: '20px' }} type={'submit'}>
           Send Instructions
         </Button>
       </form>
@@ -53,7 +60,7 @@ export const ForgotPass = () => {
         theme={'dark'}
         variant={'Body 2'}
       >
-        Did you remember your password?
+        <span className={s.colorLight900}>Did you remember your password?</span>
       </Typography>
       <div style={{ textAlign: 'center' }}>
         <Button onClick={toSignInHandler} style={{ textDecoration: 'underline' }} variant={'link'}>

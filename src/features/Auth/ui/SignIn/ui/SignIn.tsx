@@ -14,6 +14,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import s from './signIn.module.scss'
 
 import { FormValues } from './types'
+
 export const SignIn = () => {
   //хук из RTKQ для логинизации в приложении
   const [logIn, { error, isLoading }] = useLogInMutation()
@@ -102,9 +103,16 @@ export const SignIn = () => {
             theme={'dark'}
             variant={'Body 2'}
           >
-            Forgot Password?
+            <Button
+              onClick={() => {
+                navigate('/forgotPass')
+              }}
+              variant={'link'}
+            >
+              <span className={s.forgotPass}>Forgot Password?</span>
+            </Button>
           </Typography>
-          <Button style={{ marginBottom: '20px' }} type={'submit'}>
+          <Button fullWidth style={{ marginBottom: '20px' }} type={'submit'}>
             Sign In
           </Button>
         </form>
