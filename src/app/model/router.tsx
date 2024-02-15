@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter } from 'react-router-dom'
+import { Navigate, createBrowserRouter, useLocation } from 'react-router-dom'
 
 import { App } from '@/app/ui/App'
 import { Error404 } from '@/app/ui/Error404/Error404'
@@ -14,7 +14,12 @@ import { Deck } from '@/features/Decks/ui/Deck/Deck'
 import { Decks } from '@/features/Decks/ui/Decks'
 
 export const PrivateRouter = () => {
+  const { pathname } = useLocation()
   const { data } = useAuthMeQuery()
+
+  if (pathname.includes('recover-password')) {
+    return null
+  }
 
   return !data ? <Navigate to={'/signIn'} /> : <Navigate to={'/decks'} />
 }
@@ -36,7 +41,7 @@ export const router = createBrowserRouter([
       },
       {
         element: <CreateNewPass />,
-        path: 'createNewPass',
+        path: 'recover-password/:token',
       },
       {
         element: <ForgotPass />,
