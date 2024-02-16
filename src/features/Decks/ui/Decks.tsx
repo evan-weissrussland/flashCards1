@@ -2,21 +2,23 @@ import { useCallback, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { ErrorData } from '@/app/model/types'
+import { Spinner } from '@/app/ui/Spinner/Spinner'
 import { Button } from '@/common/components/button'
 import { Input } from '@/common/components/input'
 import { PageSizeType, Paginator } from '@/common/components/paginator/paginator'
 import { RangeSlider } from '@/common/components/slider'
 import { Tabs, TabsList, TabsTrigger } from '@/common/components/tabSwitcher'
 import { Typography } from '@/common/components/typography'
-import { useAuthMeQuery } from '@/features/Auth/api/authMe-api'
 import { useGetDecksQuery, useGetMinMaxAmoundCardsQuery } from '@/features/Decks/api/getDecks'
 import { ModalAddNewDeck } from '@/features/Decks/ui/ModalAddNewDeck'
 import { ModalDeleteDeck } from '@/features/Decks/ui/ModalDeleteDeck'
 import { ModalEditDeck } from '@/features/Decks/ui/ModalEditDeck'
+import { useAuthContext } from '@/hooks/hooks'
 
 export const Decks = () => {
   //получаем мой ID юзера из контекста (Арр)
-  const { data: meData } = useAuthMeQuery()
+  // const { data: meData } = useAuthMeQuery()
+  const { myId: authMeId } = useAuthContext()
   //функция для изменения URL
   const navigate = useNavigate()
 
@@ -105,10 +107,10 @@ export const Decks = () => {
   //если мы зарегистрированы (есть resultAuthMe), и нажимаем на MyCards, то делаем запрос на сервер за моими колодами, если нажимаем на "All  Cards" - то делаем запрос за всеми колодами. Если мы не зарегистрированы, то делаем запрос за всеми колодами
   const changeTabMyCardsOrAllCards = useCallback(
     (v: string) => {
-      if (meData?.id) {
+      if (authMeId) {
         switch (v) {
           case 'My-cards':
-            setMyId(meData.id)
+            setMyId(authMeId)
             setAuthorCards('My-cards')
             break
           case 'All-cards':
@@ -122,7 +124,7 @@ export const Decks = () => {
         setMyId(undefined)
       }
     },
-    [meData, setMyId, setAuthorCards]
+    [authMeId, setMyId, setAuthorCards]
   )
 
   //отрисовываем таблицу из карт с сервера
@@ -152,7 +154,7 @@ export const Decks = () => {
             <td>{it.cardsCount}</td>
             <td>{new Date(it.updated).toLocaleString('ru-RU')}</td>
             <td>{it.author.name}</td>
-            {it.userId === meData?.id && (
+            {it.userId === authMeId && (
               <td>
                 <ModalEditDeck
                   deckCover={it.cover}
@@ -170,25 +172,8 @@ export const Decks = () => {
           </tr>
         )
       }),
-    [data?.items, navigateToDeckHandler, meData]
+    [data?.items, navigateToDeckHandler, authMeId]
   )
-
-  // пока идёт запрос на сервер на списком колод или за максимальным и минимальным числом колод, показываем заглушку
-  if (result.isFetching || isFetching) {
-    return (
-      <div
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          height: '100vh',
-          justifyContent: 'center',
-          width: '100%',
-        }}
-      >
-        ...Read Decks
-      </div>
-    )
-  }
 
   //переменная, которой будет присвоена ошибка из хука RTKQ. Выводим её юзеру
   let narrowingError
@@ -206,6 +191,7 @@ export const Decks = () => {
 
   return (
     <>
+      {result.isFetching || isFetching ? <Spinner /> : <></>}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '0 136px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <Typography variant={'Large'}>Decks list</Typography>
