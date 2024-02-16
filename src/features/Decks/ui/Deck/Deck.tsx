@@ -1,40 +1,24 @@
 import { NavLink, useParams } from 'react-router-dom'
 
 import { ErrorData } from '@/app/model/types'
+import { Spinner } from '@/app/ui/Spinner/Spinner'
 import { Typography } from '@/common/components/typography'
 import { ArrowBackIcon } from '@/common/icons/ArrowBackIcon'
-import { useAuthMeQuery } from '@/features/Auth/api/authMe-api'
 import { useGetDeckQuery } from '@/features/Decks/api/getDecks'
 import { FriendsDeck } from '@/features/Decks/ui/Deck/FriendsDeck/FriendsDeck'
 import { MyDeck } from '@/features/Decks/ui/Deck/MyDeck/MyDeck'
+import { useAuthContext } from '@/hooks/hooks'
 
 import s from './deck.module.scss'
 
 export const Deck = () => {
   //мой id юзера из контекста (Арр)
-  const { data: meData } = useAuthMeQuery()
+  const { myId } = useAuthContext()
   //вытягиваем id выбраннйо колоды из строки URL
   const params = useParams()
 
   //делаем запрос на сервер за выбранной колодой
   const { data, error, isFetching } = useGetDeckQuery(params.id ?? '')
-
-  // пока идёт запрос на сервер показываем заглушку
-  if (isFetching) {
-    return (
-      <div
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          height: '100vh',
-          justifyContent: 'center',
-          width: '100%',
-        }}
-      >
-        ...Read Deck
-      </div>
-    )
-  }
 
   //переменная, которой будет присвоена ошибка из хука RTKQ. Выводим её паользователю
   let narrowingError
@@ -50,8 +34,8 @@ export const Deck = () => {
     }
   }
 
-  if (!meData || !data) {
-    return null
+  if (!data || isFetching) {
+    return <Spinner />
   }
 
   return (
@@ -63,7 +47,7 @@ export const Deck = () => {
           </NavLink>
         </div>
         <div>
-          {meData.id === data.userId ? (
+          {myId === data.userId ? (
             <MyDeck
               cardsCount={data.cardsCount}
               cover={data.cover}
