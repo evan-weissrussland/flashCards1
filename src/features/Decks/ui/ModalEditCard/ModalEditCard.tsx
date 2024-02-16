@@ -62,12 +62,12 @@ export const ModalEditCard: FC<Props> = ({ answer, answerImg, idCard, question, 
     if (Object.keys(data.imageQuestion).length) {
       formData.append('questionImg', data.imageQuestion[0])
     } else {
-      formData.append('questionImg', questionImg)
+      formData.append('questionImg', '')
     }
     if (Object.keys(data.imageAnswer).length) {
       formData.append('answerImg', data.imageAnswer[0])
     } else {
-      formData.append('answerImg', answerImg)
+      formData.append('answerImg', '')
     }
     try {
       await updateCard({ args: formData, id: idCard })
