@@ -2,6 +2,7 @@ import { Navigate, createBrowserRouter, useLocation } from 'react-router-dom'
 
 import { App } from '@/app/ui/App'
 import { Error404 } from '@/app/ui/Error404/Error404'
+import { Spinner } from '@/app/ui/Spinner/Spinner'
 import { Responce } from '@/features/Auth/api/authMe-api'
 import { CheckEmail } from '@/features/Auth/ui/CheckEmail/ui'
 import { CreateNewPass } from '@/features/Auth/ui/CreateNewPass/ui'
@@ -15,14 +16,19 @@ import { Decks } from '@/features/Decks/ui/Decks'
 
 type Props = {
   data: Responce
+  isLoading: boolean
 }
-export const PrivateRouter = ({ data }: Props) => {
+export const PrivateRouter = ({ data, isLoading }: Props) => {
   //хук react-router. в pathname сидит строка браузера после /
   const { pathname } = useLocation()
 
   //если в строке браузера есть подстрока "recover-password" (это значит, что пользователь ввёл адрес из email'a для сброса пароля входа), то возвращаем null. В этом случае код пойдёт в router и подтянет компонент  CreateNewPass. Если так не делать, то всегда при вставке в URL адреса сброса будет перенаправление на страницу логина.
   if (pathname.includes('recover-password')) {
     return null
+  }
+
+  if (isLoading) {
+    return <Spinner />
   }
 
   return !data ? <Navigate to={'/signIn'} /> : <Navigate to={'/decks'} />
