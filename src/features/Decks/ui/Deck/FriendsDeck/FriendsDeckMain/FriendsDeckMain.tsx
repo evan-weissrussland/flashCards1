@@ -1,5 +1,6 @@
 import { FC, useCallback, useMemo, useState } from 'react'
 
+import { Spinner } from '@/app/ui/Spinner/Spinner'
 import { Grade } from '@/common/components/grade'
 import { Input } from '@/common/components/input'
 import { PageSizeType, Paginator } from '@/common/components/paginator/paginator'
@@ -22,7 +23,7 @@ export const FriendsDeckMain: FC<Props> = props => {
   const debouncedSearchTerm = useDebounce(search, 1000)
 
   //хук запроса на сервер за списком сарт выбранной колоды
-  const { data, isLoading } = useGetCardsDeckQuery({
+  const { data, isFetching } = useGetCardsDeckQuery({
     args: {
       answer: '',
       currentPage: currentPage as number,
@@ -87,13 +88,9 @@ export const FriendsDeckMain: FC<Props> = props => {
     [setSearch]
   )
 
-  //пока идёт запроса на сервер, включаем заглушку
-  if (isLoading) {
-    return <>....read Data....</>
-  }
-
   return (
     <>
+      {isFetching && <Spinner />}
       <div>
         <img alt={''} src={cover} />
       </div>
