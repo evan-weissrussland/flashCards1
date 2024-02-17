@@ -34,10 +34,6 @@ export const Deck = () => {
     }
   }
 
-  if (!data || isFetching) {
-    return <Spinner />
-  }
-
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '33px', padding: '0 136px' }}>
@@ -46,24 +42,28 @@ export const Deck = () => {
             <ArrowBackIcon /> <Typography variant={'Body 2'}>Back to Deck List</Typography>
           </NavLink>
         </div>
-        <div>
-          {myId === data?.userId ? (
-            <MyDeck
-              cardsCount={data.cardsCount}
-              cover={data.cover}
-              deckId={data.id}
-              isPrivate={data.isPrivate}
-              name={data.name}
-            />
-          ) : (
-            <FriendsDeck
-              cardsCount={data?.cardsCount as number}
-              cover={data?.cover as string}
-              deckId={data?.id as string}
-              name={data?.name as string}
-            />
-          )}
-        </div>
+        {!data || isFetching ? (
+          <Spinner />
+        ) : (
+          <div>
+            {myId === data?.userId ? (
+              <MyDeck
+                cardsCount={data.cardsCount}
+                cover={data.cover}
+                deckId={data.id}
+                isPrivate={data.isPrivate}
+                name={data.name}
+              />
+            ) : (
+              <FriendsDeck
+                cardsCount={data?.cardsCount as number}
+                cover={data?.cover as string}
+                deckId={data?.id as string}
+                name={data?.name as string}
+              />
+            )}
+          </div>
+        )}
       </div>
       <span>{narrowingError}</span>
     </>
