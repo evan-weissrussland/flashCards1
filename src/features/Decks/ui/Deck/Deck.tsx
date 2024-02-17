@@ -47,7 +47,7 @@ export const Deck = () => {
           </NavLink>
         </div>
         <div>
-          {myId === data.userId ? (
+          {myId === data?.userId ? (
             <MyDeck
               cardsCount={data.cardsCount}
               cover={data.cover}
@@ -57,10 +57,10 @@ export const Deck = () => {
             />
           ) : (
             <FriendsDeck
-              cardsCount={data.cardsCount}
-              cover={data.cover}
-              deckId={data.id}
-              name={data.name}
+              cardsCount={data?.cardsCount as number}
+              cover={data?.cover as string}
+              deckId={data?.id as string}
+              name={data?.name as string}
             />
           )}
         </div>
