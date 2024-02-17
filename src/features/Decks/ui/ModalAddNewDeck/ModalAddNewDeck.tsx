@@ -29,6 +29,9 @@ export const ModalAddNewDeck = memo(
     //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
     const [open, setOpen] = useState(false)
 
+    //стэйт для сохранения картинки колоды. Нужен для отображения картинки в модалке при её загрузке с диска ПК.
+    const [deckCover, setDeckCover] = useState<string | undefined>(undefined)
+
     //хук из RTK Query для выполнения запроса POST создания новой колоды
     const [createDeck] = useCreateDeckMutation()
 
@@ -56,6 +59,7 @@ export const ModalAddNewDeck = memo(
       try {
         await createDeck(formData)
         setOpen(false)
+        setDeckCover(undefined)
         reset()
       } catch (e: any) {
         console.error('error to add deck')
@@ -71,6 +75,18 @@ export const ModalAddNewDeck = memo(
       name: 'privatePack',
     })
 
+    //обработчик загрузки картинки колоды
+    const uploadDeckImage = (file: File) => {
+      if (file) {
+        const reader = new FileReader()
+
+        reader.onloadend = () => {
+          setDeckCover(reader.result as string)
+        }
+        reader.readAsDataURL(file)
+      }
+    }
+
     return (
       <Modalka onOpenChange={setOpen} open={open}>
         <ModalkaTrigger asChild>
@@ -80,7 +96,14 @@ export const ModalAddNewDeck = memo(
           <div className={s.description}>
             <Typography variant={'H3'}>Add new deck</Typography>
             <ModalkaButtonCancel asChild>
-              <Button className={'padding4px'} variant={'secondary'}>
+              <Button
+                className={'padding4px'}
+                onClick={() => {
+                  reset()
+                  setDeckCover(undefined)
+                }}
+                variant={'secondary'}
+              >
                 <CloseModal />
               </Button>
             </ModalkaButtonCancel>
@@ -96,8 +119,21 @@ export const ModalAddNewDeck = memo(
                 />
               </div>
               <div>
+                <img alt={''} src={deckCover} />
+              </div>
+              <div>
                 <label>
-                  <input {...register('image')} style={{ display: 'none' }} type={'file'} />
+                  <input
+                    {...register('image', {
+                      onChange: e => {
+                        if (e.target.files && e.target.files.length) {
+                          uploadDeckImage(e.target.files[0])
+                        }
+                      },
+                    })}
+                    style={{ display: 'none' }}
+                    type={'file'}
+                  />
                   <Button as={'span'} fullWidth icon={'uploadImage'} variant={'secondary'}>
                     Upload image
                   </Button>
@@ -119,7 +155,15 @@ export const ModalAddNewDeck = memo(
             </div>
             <div className={s.buttonGroup}>
               <ModalkaButtonCancel asChild>
-                <Button variant={'secondary'}>Cancel</Button>
+                <Button
+                  onClick={() => {
+                    reset()
+                    setDeckCover(undefined)
+                  }}
+                  variant={'secondary'}
+                >
+                  Cancel
+                </Button>
               </ModalkaButtonCancel>
               <Button type={'submit'}>Add New Pack</Button>
             </div>
