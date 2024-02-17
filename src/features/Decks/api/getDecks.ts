@@ -33,7 +33,7 @@ type GetDecksRequestType = {
   maxCardsCount?: number
   minCardsCount?: number
   name?: string
-  orderBy?: string
+  orderBy?: OrderBy
 }
 
 type GetCardsDecksRequestType = {
@@ -74,6 +74,20 @@ type SaveGradeCard = {
   cardId: string
   grade: GradeRating
 }
+
+export type OrderBy =
+  | 'author.name-asc'
+  | 'author.name-desc'
+  | 'cardsCount-asc'
+  | 'cardsCount-desc'
+  | 'created-asc'
+  | 'created-desc'
+  | 'name-asc'
+  | 'name-desc'
+  | 'updated-asc'
+  | 'updated-desc'
+  | null
+
 export type GradeRating = 1 | 2 | 3 | 4 | 5
 export const DeckService = baseApi.injectEndpoints({
   endpoints: builder => {

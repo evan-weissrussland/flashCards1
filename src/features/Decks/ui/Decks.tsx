@@ -1,7 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { ErrorData } from '@/app/model/types'
 import { Spinner } from '@/app/ui/Spinner/Spinner'
 import { Button } from '@/common/components/button'
 import { Input } from '@/common/components/input'
@@ -9,6 +8,7 @@ import { PageSizeType, Paginator } from '@/common/components/paginator/paginator
 import { RangeSlider } from '@/common/components/slider'
 import { Tabs, TabsList, TabsTrigger } from '@/common/components/tabSwitcher'
 import { Typography } from '@/common/components/typography'
+import { SortAscIcon, SortDescIcon } from '@/common/icons/SortAsc'
 import { useGetDecksQuery, useGetMinMaxAmoundCardsQuery } from '@/features/Decks/api/getDecks'
 import { ModalAddNewDeck } from '@/features/Decks/ui/ModalAddNewDeck'
 import { ModalDeleteDeck } from '@/features/Decks/ui/ModalDeleteDeck'
@@ -51,6 +51,12 @@ export const Decks = () => {
   //номер таймера из функции задержки посыла текста из инпута на сервер
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
 
+  const [sortBy, setSortBy] = useState<
+    'author.name' | 'cardsCount' | 'created' | 'name' | 'updated' | null
+  >('cardsCount')
+
+  const [directionSort, setDirectionSort] = useState<'asc' | 'desc'>('asc')
+
   //хук RTK Query. Передаёт параметры в baseApi для запрсоа на сервер и получает назад Response от сервера
   const { data, error, isFetching } = useGetDecksQuery({
     authorId: myId,
@@ -63,6 +69,7 @@ export const Decks = () => {
       ? valuesArrayFromDebounceSlider[0]
       : undefined,
     name: textFromDebounceInput,
+    orderBy: sortBy !== null ? `${sortBy}-${directionSort}` : null,
   })
   //хук RTK Query. Запрос на сервер за количеством min и max колод (Decks)
   const result = useGetMinMaxAmoundCardsQuery()
@@ -181,11 +188,25 @@ export const Decks = () => {
   //определение типа ошибки из RTKQ: если есть свойство status в объекте error, то тип error - FetchBaseQueryError, иначе тип - SerializedError. Дополнительно протипизировал объект data, иначе при обращении к свойству data.message появляется ошибка
   if (error) {
     if ('status' in error) {
-      const errorDate = error.data as ErrorData
+      const errorDate = error.data as {} | any
 
-      narrowingError = errorDate.message
+      if (typeof errorDate === 'object') {
+        narrowingError = errorDate.errorMessages[0].message
+      } else {
+        narrowingError = errorDate.message
+      }
     } else {
       narrowingError = error.message
+    }
+  }
+  const sortByHandler = (v: 'author.name' | 'cardsCount' | 'created' | 'name' | 'updated') => {
+    if (v === sortBy) {
+      setDirectionSort(directionSort === 'asc' ? 'desc' : 'asc')
+    }
+
+    if (v !== sortBy) {
+      setSortBy(v)
+      setDirectionSort('desc')
     }
   }
 
@@ -230,10 +251,45 @@ export const Decks = () => {
           <table style={{ width: '100%' }}>
             <thead>
               <tr>
-                <th style={{ color: 'red', textAlign: 'start' }}>Name</th>
-                <th style={{ color: 'red', textAlign: 'start' }}>Cards</th>
-                <th style={{ color: 'red', textAlign: 'start' }}>Last Updated</th>
-                <th style={{ color: 'red', textAlign: 'start' }}>Created by</th>
+                <th
+                  onClick={() => {
+                    sortByHandler('name')
+                  }}
+                  style={{ color: 'red', textAlign: 'start' }}
+                >
+                  Name {'name' === sortBy && directionSort === 'asc' && <SortAscIcon />}
+                  {'name' === sortBy && directionSort === 'desc' && <SortDescIcon />}
+                </th>
+                <th
+                  onClick={() => {
+                    sortByHandler('cardsCount')
+                  }}
+                  style={{
+                    color: 'red',
+                    textAlign: 'start',
+                  }}
+                >
+                  Cards {'cardsCount' === sortBy && directionSort === 'asc' && <SortAscIcon />}
+                  {'cardsCount' === sortBy && directionSort === 'desc' && <SortDescIcon />}
+                </th>
+                <th
+                  onClick={() => {
+                    sortByHandler('updated')
+                  }}
+                  style={{ color: 'red', textAlign: 'start' }}
+                >
+                  Last Updated {'updated' === sortBy && directionSort === 'asc' && <SortAscIcon />}
+                  {'updated' === sortBy && directionSort === 'desc' && <SortDescIcon />}
+                </th>
+                <th
+                  onClick={() => {
+                    sortByHandler('created')
+                  }}
+                  style={{ color: 'red', textAlign: 'start' }}
+                >
+                  Created by {'created' === sortBy && directionSort === 'asc' && <SortAscIcon />}
+                  {'created' === sortBy && directionSort === 'desc' && <SortDescIcon />}
+                </th>
                 <th style={{ color: 'red', textAlign: 'start' }}></th>
               </tr>
             </thead>

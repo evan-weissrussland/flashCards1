@@ -3,7 +3,7 @@ export const Spinner = () => {
     <div
       style={{
         alignItems: 'center',
-        background: 'rgba(0, 0, 0, 0.7)',
+        background: 'rgba(0, 0, 0, 0.35)',
         display: 'flex',
         height: '100%',
         justifyContent: 'center',
