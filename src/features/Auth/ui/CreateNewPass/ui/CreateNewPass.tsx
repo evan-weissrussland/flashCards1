@@ -14,10 +14,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import s from './createNewPass.module.scss'
 
 export const CreateNewPass = () => {
+  //хук считывает данные из URL после двоеточия (endpoint/:ххх)
   const params = useParams()
+  //хук изменения URL
   const navigate = useNavigate()
+  //хук RTKQ для сброса пароля
   const [resetPass, { error }] = useResetPassMutation()
-
+  //обработка формы react-hook-form
   const {
     formState: { errors },
     handleSubmit,
@@ -25,7 +28,10 @@ export const CreateNewPass = () => {
   } = useForm<FormValues>({
     resolver: zodResolver(createNewPassSchema),
   })
-
+  /**
+   * функция обработки формы
+   * @param data - объект с данными из полей формы
+   */
   const onSubmit = async (data: FormValues) => {
     if (params.token) {
       await resetPass({

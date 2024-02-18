@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, memo, useState } from 'react'
 
 import { Button } from '@/common/components/button'
 import { Typography } from '@/common/components/typography'
@@ -12,8 +12,9 @@ type Props = {
   name: string
 }
 
-export const FriendsDeck: FC<Props> = props => {
+export const FriendsDeck: FC<Props> = memo(props => {
   const { cover, deckId, name } = props
+  //стэйт отображения или сокрытия модалки LearnDeck
   const [isLearn, setIsLearn] = useState(false)
 
   return (
@@ -40,4 +41,4 @@ export const FriendsDeck: FC<Props> = props => {
       )}
     </div>
   )
-}
+})

@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useState } from 'react'
+import { FC, memo, useCallback, useMemo, useState } from 'react'
 
 import { Spinner } from '@/app/ui/Spinner/Spinner'
 import { Grade } from '@/common/components/grade'
@@ -11,7 +11,7 @@ type Props = {
   cover: string
   deckId: string
 }
-export const FriendsDeckMain: FC<Props> = props => {
+export const FriendsDeckMain: FC<Props> = memo(props => {
   const { cover, deckId } = props
   //изменение текущей страниццы пагинации. Передаёт значение в хук запроса на сервер
   const [currentPage, setCurrentPage] = useState<number | undefined>(undefined)
@@ -22,7 +22,7 @@ export const FriendsDeckMain: FC<Props> = props => {
   //возвращаемый текст из хука задержки. испоьзуется для запрсоа на сервер.
   const debouncedSearchTerm = useDebounce(search, 1000)
 
-  //хук запроса на сервер за списком сарт выбранной колоды
+  //хук RTKQ запроса на сервер за списком сарт выбранной колоды
   const { data, isFetching } = useGetCardsDeckQuery({
     args: {
       answer: '',
@@ -119,4 +119,4 @@ export const FriendsDeckMain: FC<Props> = props => {
       </div>
     </>
   )
-}
+})

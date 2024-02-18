@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
@@ -11,8 +12,11 @@ import { signUpSchema } from '@/features/Auth/ui/SignUp/ui/signUp-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { FormValues } from './types'
+
 export const SignUp = () => {
+  //хук изменения URL
   const navigate = useNavigate()
+  //хук обработки и валидации формы
   const {
     formState: { errors },
     handleSubmit,
@@ -22,9 +26,12 @@ export const SignUp = () => {
   })
   //переменная, которой будет присвоена ошибка из хука RTKQ. Выводим её паользователю
   let narrowingError
-
+  //хук RTKQ регистрация в приложении
   const [signUp, { error }] = useSignUpMutation()
-
+  /**
+   * обработчик формы
+   * @param data - объект с данными из полей формы
+   */
   const onSubmit = (data: FormValues) => {
     if (data.password === data.confirmPassword) {
       signUp({ email: data.email, password: data.password })
@@ -32,9 +39,10 @@ export const SignUp = () => {
       narrowingError = 'подтвердите пароль'
     }
   }
-  const toSignInHandler = () => {
+  //функция изменения URL
+  const toSignInHandler = useCallback(() => {
     navigate('/signIn')
-  }
+  }, [])
 
   //определение типа ошибки из RTKQ: если есть свойство status в объекте error, то тип error - FetchBaseQueryError, иначе тип - SerializedError. Дополнительно протипизировал объект data, иначе при обращении к свойству data.message появляется ошибка
   if (error) {

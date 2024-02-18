@@ -1,4 +1,4 @@
-import { FC, memo, useState } from 'react'
+import { FC, memo, useCallback, useState } from 'react'
 
 import { Spinner } from '@/app/ui/Spinner/Spinner'
 import { Button } from '@/common/components/button'
@@ -38,7 +38,7 @@ export const ModalLearnToDeck: FC<Props> = memo(props => {
   const [saveGradeCard, { data: dataFromSaveGrade, isLoading }] = useSaveGradeCardMutation()
 
   //функция-хендлер по нажатию на кнопку "Следующая карта". Отменяет GET-запрос за картой. Передаёт POST-запрос за картой. Закрывает код ответа на карту, чтобы при получении новой карты сразу не высвечился ответ.
-  const saveGradeCardHandker = async () => {
+  const saveGradeCardHandker = useCallback(async () => {
     setSkip(true)
     await saveGradeCard({
       args: {
@@ -48,7 +48,7 @@ export const ModalLearnToDeck: FC<Props> = memo(props => {
       id: deckId,
     })
     setIsShowAnswer(false)
-  }
+  }, [])
 
   return (
     <>

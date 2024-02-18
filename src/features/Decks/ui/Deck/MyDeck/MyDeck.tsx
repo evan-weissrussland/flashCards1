@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, memo, useState } from 'react'
 
 import { Card } from '@/common/components/card'
 import { Typography } from '@/common/components/typography'
@@ -14,8 +14,9 @@ type Props = {
   isPrivate: boolean
   name: string
 }
-export const MyDeck: FC<Props> = props => {
+export const MyDeck: FC<Props> = memo(props => {
   const { cardsCount, cover, deckId, isPrivate, name } = props
+  //стэйт отображения или сокрытия модалки LearnDeck
   const [isLearn, setIsLearn] = useState(false)
 
   return (
@@ -57,4 +58,4 @@ export const MyDeck: FC<Props> = props => {
       )}
     </>
   )
-}
+})

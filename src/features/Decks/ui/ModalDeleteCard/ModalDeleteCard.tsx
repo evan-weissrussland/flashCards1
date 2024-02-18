@@ -1,4 +1,4 @@
-import { FC, useState } from 'react'
+import { FC, memo, useCallback, useState } from 'react'
 
 import { Button } from '@/common/components/button'
 import {
@@ -17,7 +17,7 @@ type DeckProps = {
   idDeck: string
 }
 
-export const ModalDeleteCard: FC<DeckProps> = ({ idDeck }) => {
+export const ModalDeleteCard: FC<DeckProps> = memo(({ idDeck }) => {
   //хук useState для управления open/close AlertDialog.Root. Нужен для того, чтобы модалка закрывалась после передачи на сервер данных из формы, иначе она просто закрывается и данные не передаются
   const [open, setOpen] = useState(false)
 
@@ -25,11 +25,11 @@ export const ModalDeleteCard: FC<DeckProps> = ({ idDeck }) => {
   const [deleteCard] = useDeleteCardMutation()
 
   //обработчик удаления карты из колоды. При успешном удалении закрывам модалку
-  const onClickDeleteHandler = () => {
+  const onClickDeleteHandler = useCallback(() => {
     deleteCard(idDeck)
       .unwrap()
       .then(() => setOpen(false))
-  }
+  }, [])
 
   return (
     <Modalka onOpenChange={setOpen} open={open}>
@@ -57,4 +57,4 @@ export const ModalDeleteCard: FC<DeckProps> = ({ idDeck }) => {
       </ModalkaContent>
     </Modalka>
   )
-}
+})

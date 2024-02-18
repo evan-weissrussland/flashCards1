@@ -18,7 +18,7 @@ import { FormValues } from './types'
 export const SignIn = () => {
   //хук из RTKQ для логинизации в приложении
   const [logIn, { error, isLoading }] = useLogInMutation()
-
+  //хук изменения URL
   const navigate = useNavigate()
 
   //обработка и валидация формы

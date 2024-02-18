@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
@@ -13,10 +14,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import s from './forgotPass.module.scss'
 
 export const ForgotPass = () => {
+  //хук изменения URL
   const navigate = useNavigate()
-
+  //хук RTKQ запрос за изменением пароля
   const [recoverPass] = useRecoverPassMutation()
-
+  //хук для управления формой из react-hook-form
   const {
     formState: { errors },
     handleSubmit,
@@ -24,14 +26,18 @@ export const ForgotPass = () => {
   } = useForm<FormValues>({
     resolver: zodResolver(forgotPassSchema),
   })
-
+  /**
+   * обработчик формы
+   * @param data - объект с данными из полей формы
+   */
   const onSubmit = async (data: FormValues) => {
     await recoverPass({ email: data.email }).unwrap()
-    navigate('/checkEmail')
+    navigate(`/checkEmail?email=${data.email}`)
   }
-  const toSignInHandler = () => {
+  //функция изменения URL
+  const toSignInHandler = useCallback(() => {
     navigate('/signIn')
-  }
+  }, [])
 
   return (
     <Card className={'border'} style={{ padding: '33px 36px 25px 27px' }}>

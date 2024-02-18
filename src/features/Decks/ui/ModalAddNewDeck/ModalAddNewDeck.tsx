@@ -1,4 +1,11 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, memo, useState } from 'react'
+import {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  forwardRef,
+  memo,
+  useCallback,
+  useState,
+} from 'react'
 import { useController, useForm } from 'react-hook-form'
 
 import { Button } from '@/common/components/button'
@@ -35,7 +42,7 @@ export const ModalAddNewDeck = memo(
     //хук из RTK Query для выполнения запроса POST создания новой колоды
     const [createDeck] = useCreateDeckMutation()
 
-    //обработка форм
+    //обработка и валидация формы
     const {
       control,
       formState: { errors },
@@ -76,7 +83,7 @@ export const ModalAddNewDeck = memo(
     })
 
     //обработчик загрузки картинки колоды
-    const uploadDeckImage = (file: File) => {
+    const uploadDeckImage = useCallback((file: File) => {
       if (file) {
         const reader = new FileReader()
 
@@ -85,7 +92,7 @@ export const ModalAddNewDeck = memo(
         }
         reader.readAsDataURL(file)
       }
-    }
+    }, [])
 
     return (
       <Modalka onOpenChange={setOpen} open={open}>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { memo, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import {
@@ -22,13 +22,17 @@ type Props = {
   name: string
 }
 
-export const DropDownHeader = ({ avatar, email, name }: Props) => {
+export const DropDownHeader = memo(({ avatar, email, name }: Props) => {
   const navigate = useNavigate()
-  //открыть/закрыть модальнео окно DropDown
+
+  //открыть/закрыть модальное окно DropDown
   const [open, setOpen] = useState(false)
+
+  //хук RTKQ для вылогинивания
   const [logOut] = useLogOutMutation()
 
-  const logOutHandler = () => {
+  //обработчик вылогинивания
+  const logOutHandler = useCallback(() => {
     logOut()
       .unwrap()
       .then(() => {
@@ -37,12 +41,13 @@ export const DropDownHeader = ({ avatar, email, name }: Props) => {
       .finally(() => {
         setOpen(false)
       })
-  }
+  }, [])
 
-  const getToMyProfileHandler = () => {
+  //обработчик изменения URL и закрытия окна дропдауна в родительской компоненте
+  const getToMyProfileHandler = useCallback(() => {
     navigate('/myProfile')
     setOpen(false)
-  }
+  }, [])
 
   return (
     <>
@@ -122,4 +127,4 @@ export const DropDownHeader = ({ avatar, email, name }: Props) => {
       </DropDown>
     </>
   )
-}
+})

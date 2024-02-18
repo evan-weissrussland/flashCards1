@@ -51,10 +51,12 @@ export const Decks = () => {
   //номер таймера из функции задержки посыла текста из инпута на сервер
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
 
+  //поле сортировки
   const [sortBy, setSortBy] = useState<
     'author.name' | 'cardsCount' | 'created' | 'name' | 'updated' | null
   >('cardsCount')
 
+  //направление сортировки
   const [directionSort, setDirectionSort] = useState<'asc' | 'desc'>('asc')
 
   //хук RTK Query. Передаёт параметры в baseApi для запрсоа на сервер и получает назад Response от сервера
@@ -199,16 +201,21 @@ export const Decks = () => {
       narrowingError = error.message
     }
   }
-  const sortByHandler = (v: 'author.name' | 'cardsCount' | 'created' | 'name' | 'updated') => {
-    if (v === sortBy) {
-      setDirectionSort(directionSort === 'asc' ? 'desc' : 'asc')
-    }
 
-    if (v !== sortBy) {
-      setSortBy(v)
-      setDirectionSort('desc')
-    }
-  }
+  //обработчик изменения сортировки. Если по полю ранее кликали, то меняется направление сортировки, если по полю клюкнули впервые, то задаётся напрвление сортировки
+  const sortByHandler = useCallback(
+    (v: 'author.name' | 'cardsCount' | 'created' | 'name' | 'updated') => {
+      if (v === sortBy) {
+        setDirectionSort(directionSort === 'asc' ? 'desc' : 'asc')
+      }
+
+      if (v !== sortBy) {
+        setSortBy(v)
+        setDirectionSort('desc')
+      }
+    },
+    []
+  )
 
   return (
     <>

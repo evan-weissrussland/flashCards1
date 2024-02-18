@@ -1,4 +1,4 @@
-import { FC, memo, useState } from 'react'
+import { FC, memo, useCallback, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Button } from '@/common/components/button'
@@ -34,7 +34,7 @@ export const ModalAddNewCard: FC<Props> = memo(({ deckId }) => {
   //хук из RTK Query для выполнения запроса POST создания новой карты
   const [createCard] = useCreateCardMutation()
 
-  //обработка форм
+  //обработка и валидация форм
   const {
     formState: { errors },
     handleSubmit,
@@ -68,7 +68,7 @@ export const ModalAddNewCard: FC<Props> = memo(({ deckId }) => {
     }
   }
   //обработчик загрузки картинки вопроса
-  const uploadImageQuestion = (file: File) => {
+  const uploadImageQuestion = useCallback((file: File) => {
     if (file) {
       const reader = new FileReader()
 
@@ -77,9 +77,10 @@ export const ModalAddNewCard: FC<Props> = memo(({ deckId }) => {
       }
       reader.readAsDataURL(file)
     }
-  }
+  }, [])
+
   //обработчик загрузки картинки ответа
-  const uploadImageAnswer = (file: File) => {
+  const uploadImageAnswer = useCallback((file: File) => {
     if (file) {
       const reader = new FileReader()
 
@@ -88,7 +89,7 @@ export const ModalAddNewCard: FC<Props> = memo(({ deckId }) => {
       }
       reader.readAsDataURL(file)
     }
-  }
+  }, [])
 
   return (
     <Modalka onOpenChange={setOpen} open={open}>
