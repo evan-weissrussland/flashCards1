@@ -19,26 +19,31 @@ type Props = {
 
 export const ModalLearnToDeck: FC<Props> = memo(props => {
   const { deckId, name } = props
-  const { data, isFetching } = useGetLearnCardQuery({
-    args: { previousCardId: '' },
-    id: deckId,
-  })
+  const [skip, setSkip] = useState(false)
+  const { data, isFetching } = useGetLearnCardQuery(
+    {
+      args: { previousCardId: '' },
+      id: deckId,
+    },
+    { skip: skip }
+  )
   const [isShowAnswer, setIsShowAnswer] = useState(false)
   const [value, setValue] = useState('1')
-  const [saveGradeCard] = useSaveGradeCardMutation()
+  const [saveGradeCard, { data: dataFromSaveGrade, isLoading }] = useSaveGradeCardMutation()
 
-  const saveGradeCardHandker = () => {
-    setIsShowAnswer(false)
-    saveGradeCard({
+  const saveGradeCardHandker = async () => {
+    setSkip(true)
+    await saveGradeCard({
       args: {
-        cardId: data?.id as string,
+        cardId: !dataFromSaveGrade ? (data?.id as string) : dataFromSaveGrade.id,
         grade: +value as GradeRating,
       },
       id: deckId,
     })
+    setIsShowAnswer(false)
   }
 
-  if (isFetching) {
+  if (isLoading || isFetching) {
     return (
       <div
         style={{
@@ -68,14 +73,24 @@ export const ModalLearnToDeck: FC<Props> = memo(props => {
           Question:{' '}
         </Typography>
         <Typography as={'span'} theme={'dark'} variant={'Body 1'}>
-          {data?.question}
+          {!dataFromSaveGrade ? data?.question : dataFromSaveGrade.question}
         </Typography>
         <div className={s.colorTypographyShots}>
-          {data?.questionImg && (
-            <img alt={''} height={'120px'} src={data?.questionImg} width={'350px'} />
-          )}
+          {dataFromSaveGrade
+            ? dataFromSaveGrade?.questionImg && (
+                <img
+                  alt={''}
+                  height={'120px'}
+                  src={dataFromSaveGrade?.questionImg}
+                  width={'350px'}
+                />
+              )
+            : data?.questionImg && (
+                <img alt={''} height={'120px'} src={data?.questionImg} width={'350px'} />
+              )}
           <Typography dataColor theme={'dark'} variant={'Body 2'}>
-            Количество попыток ответов на вопрос: {data?.shots}
+            Количество попыток ответов на вопрос:{' '}
+            {!dataFromSaveGrade ? data?.shots : dataFromSaveGrade.shots}
           </Typography>
         </div>
       </div>
@@ -95,12 +110,21 @@ export const ModalLearnToDeck: FC<Props> = memo(props => {
             Answer:{' '}
           </Typography>
           <Typography as={'span'} theme={'dark'} variant={'Body 1'}>
-            {data?.answer}
+            {!dataFromSaveGrade ? data?.answer : dataFromSaveGrade.answer}
           </Typography>
           <div>
-            {data?.answerImg && (
-              <img alt={''} height={'120px'} src={data?.answerImg} width={'350px'} />
-            )}
+            {dataFromSaveGrade
+              ? dataFromSaveGrade?.answerImg && (
+                  <img
+                    alt={''}
+                    height={'120px'}
+                    src={dataFromSaveGrade?.answerImg}
+                    width={'350px'}
+                  />
+                )
+              : data?.answerImg && (
+                  <img alt={''} height={'120px'} src={data?.answerImg} width={'350px'} />
+                )}
           </div>
           <Typography theme={'dark'} variant={'Subtitle 1'}>
             Rate yourself:
