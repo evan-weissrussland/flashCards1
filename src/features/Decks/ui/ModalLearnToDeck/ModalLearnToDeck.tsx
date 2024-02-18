@@ -48,7 +48,7 @@ export const ModalLearnToDeck: FC<Props> = memo(props => {
       id: deckId,
     })
     setIsShowAnswer(false)
-  }, [])
+  }, [data?.id, dataFromSaveGrade, deckId, saveGradeCard, value])
 
   return (
     <>

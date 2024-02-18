@@ -40,7 +40,7 @@ export const ModalDeleteDeck: FC<DeckProps> = memo(
           setOpen(false)
           navigate('/decks')
         })
-    }, [])
+    }, [deleteDeck, idDeck, navigate, setIsModeDelete])
 
     return (
       <Modalka onOpenChange={setOpen} open={open}>

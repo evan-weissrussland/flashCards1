@@ -77,12 +77,9 @@ export const Decks = () => {
   const result = useGetMinMaxAmoundCardsQuery()
 
   //переход на страницу выбранной колоды
-  const navigateToDeckHandler = useCallback(
-    (id: string) => {
-      navigate(`/decks/${id}`)
-    },
-    [navigate]
-  )
+  const navigateToDeckHandler = useCallback((id: string) => {
+    navigate(`/decks/${id}`)
+  }, [])
 
   //зачистка фильтра
   const clearFilterHandler = useCallback(() => {
@@ -214,7 +211,7 @@ export const Decks = () => {
         setDirectionSort('desc')
       }
     },
-    []
+    [directionSort, sortBy]
   )
 
   return (

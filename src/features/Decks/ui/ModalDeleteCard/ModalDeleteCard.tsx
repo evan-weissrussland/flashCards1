@@ -29,7 +29,7 @@ export const ModalDeleteCard: FC<DeckProps> = memo(({ idDeck }) => {
     deleteCard(idDeck)
       .unwrap()
       .then(() => setOpen(false))
-  }, [])
+  }, [deleteCard, idDeck])
 
   return (
     <Modalka onOpenChange={setOpen} open={open}>

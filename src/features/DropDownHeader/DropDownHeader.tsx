@@ -41,7 +41,7 @@ export const DropDownHeader = memo(({ avatar, email, name }: Props) => {
       .finally(() => {
         setOpen(false)
       })
-  }, [])
+  }, [logOut])
 
   //обработчик изменения URL и закрытия окна дропдауна в родительской компоненте
   const getToMyProfileHandler = useCallback(() => {
