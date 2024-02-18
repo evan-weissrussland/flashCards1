@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, ElementRef, FC, ReactNode, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, FC, ReactNode, forwardRef, memo } from 'react'
 
 import * as AlertDialog from '@radix-ui/react-alert-dialog'
 
@@ -10,7 +10,7 @@ type OwnerModalProps = {
   open: boolean
 }
 
-export const Modalka: FC<OwnerModalProps> = props => {
+export const Modalka: FC<OwnerModalProps> = memo(props => {
   const { children, onOpenChange, open } = props
 
   return (
@@ -18,60 +18,66 @@ export const Modalka: FC<OwnerModalProps> = props => {
       {children}
     </AlertDialog.Root>
   )
-}
+})
 
 export type OwnerModalTriggerProps = {
   className?: string
 }
 
-export const ModalkaTrigger = forwardRef<
-  ElementRef<typeof AlertDialog.Trigger>,
-  ComponentPropsWithoutRef<typeof AlertDialog.Trigger> & OwnerModalTriggerProps
->((props, ref) => {
-  const { asChild, children } = props
+export const ModalkaTrigger = memo(
+  forwardRef<
+    ElementRef<typeof AlertDialog.Trigger>,
+    ComponentPropsWithoutRef<typeof AlertDialog.Trigger> & OwnerModalTriggerProps
+  >((props, ref) => {
+    const { asChild, children } = props
 
-  return (
-    <AlertDialog.Trigger asChild={asChild} ref={ref}>
-      {children}
-    </AlertDialog.Trigger>
-  )
-})
+    return (
+      <AlertDialog.Trigger asChild={asChild} ref={ref}>
+        {children}
+      </AlertDialog.Trigger>
+    )
+  })
+)
 
 export type OwnerModalContentProps = {
   cancelTitle?: string
   className?: string
 }
 
-export const ModalkaContent = forwardRef<
-  ElementRef<typeof AlertDialog.Content>,
-  ComponentPropsWithoutRef<typeof AlertDialog.Content> & OwnerModalContentProps
->((props, ref) => {
-  const { children } = props
+export const ModalkaContent = memo(
+  forwardRef<
+    ElementRef<typeof AlertDialog.Content>,
+    ComponentPropsWithoutRef<typeof AlertDialog.Content> & OwnerModalContentProps
+  >((props, ref) => {
+    const { children } = props
 
-  return (
-    <AlertDialog.Portal>
-      <AlertDialog.Overlay className={s.overlay} />
-      <AlertDialog.Content className={s.content} ref={ref}>
-        {children}
-      </AlertDialog.Content>
-    </AlertDialog.Portal>
-  )
-})
+    return (
+      <AlertDialog.Portal>
+        <AlertDialog.Overlay className={s.overlay} />
+        <AlertDialog.Content className={s.content} ref={ref}>
+          {children}
+        </AlertDialog.Content>
+      </AlertDialog.Portal>
+    )
+  })
+)
 
 export type OwnerModalButtonCancelProps = {
   cancelTitle?: string
   className?: string
 }
 
-export const ModalkaButtonCancel = forwardRef<
-  ElementRef<typeof AlertDialog.Cancel>,
-  ComponentPropsWithoutRef<typeof AlertDialog.Cancel> & OwnerModalButtonCancelProps
->((props, ref) => {
-  const { asChild, children } = props
+export const ModalkaButtonCancel = memo(
+  forwardRef<
+    ElementRef<typeof AlertDialog.Cancel>,
+    ComponentPropsWithoutRef<typeof AlertDialog.Cancel> & OwnerModalButtonCancelProps
+  >((props, ref) => {
+    const { asChild, children } = props
 
-  return (
-    <AlertDialog.Cancel asChild={asChild} ref={ref}>
-      {children}
-    </AlertDialog.Cancel>
-  )
-})
+    return (
+      <AlertDialog.Cancel asChild={asChild} ref={ref}>
+        {children}
+      </AlertDialog.Cancel>
+    )
+  })
+)

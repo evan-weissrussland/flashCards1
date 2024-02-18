@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { Navigate, createBrowserRouter, useLocation } from 'react-router-dom'
 
 import { App } from '@/app/ui/App'
@@ -18,7 +19,7 @@ type Props = {
   data: Responce
   isLoading: boolean
 }
-export const PrivateRouter = ({ data, isLoading }: Props) => {
+export const PrivateRouter = memo(({ data, isLoading }: Props) => {
   //хук react-router. в pathname сидит строка браузера после /
   const { pathname } = useLocation()
 
@@ -32,7 +33,7 @@ export const PrivateRouter = ({ data, isLoading }: Props) => {
   }
 
   return !data ? <Navigate to={'/signIn'} /> : <Navigate to={'/decks'} />
-}
+})
 
 export const router = createBrowserRouter([
   {

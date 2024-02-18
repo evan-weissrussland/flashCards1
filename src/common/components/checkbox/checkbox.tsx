@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, memo } from 'react'
 
 import { Typography, VariantType } from '@/common/components/typography'
 import * as Checkbox from '@radix-ui/react-checkbox'
@@ -19,7 +19,7 @@ export type CheckboxProps = {
   variant?: VariantType
 }
 
-export const CheckboxComponent: FC<CheckboxProps> = props => {
+export const CheckboxComponent: FC<CheckboxProps> = memo(props => {
   const {
     checked = false,
     children = '',
@@ -50,7 +50,7 @@ export const CheckboxComponent: FC<CheckboxProps> = props => {
       </Typography>
     </div>
   )
-}
+})
 //TODO почти заработало.
 // 1 Нужно было обернуть в тег form. Но теперь непонятно, как в сторибуке отразить все состояния, ведь для этого нужно будет задать атрибут checked. Но если мы его зададим, то чекбокс станет управляемым и переключаться в браузере не будет.
 // 2 Также не получилось сделать серый фон при нажатии на label, только при нажатии на сам чекбокс.

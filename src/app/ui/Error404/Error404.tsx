@@ -1,3 +1,4 @@
+import { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/common/components/button'
@@ -7,9 +8,9 @@ import s from './error404.module.scss'
 
 export const Error404 = () => {
   const navigate = useNavigate()
-  const returnToHomePageHandler = () => {
+  const returnToHomePageHandler = useCallback(() => {
     navigate('/decks')
-  }
+  }, [])
 
   return (
     <div className={s.errorWr}>

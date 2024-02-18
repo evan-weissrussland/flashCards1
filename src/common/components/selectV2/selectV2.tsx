@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react'
+import { FC, ReactNode, memo } from 'react'
 import * as React from 'react'
 
 import { Typography, VariantType } from '@/common/components/typography'
@@ -14,15 +14,14 @@ type OwnerProps = {
   onValueChange: (v: string) => void
   typography: VariantType
 }
-export const Select: FC<
-  OwnerProps & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>
-> = ({ disabled, label, onValueChange, typography, ...props }) => {
-  return (
-    <div className={s.div} style={{ display: 'inline-block' }}>
-      <Typography variant={typography}>
-        <span className={`${disabled && s.disabled} ${s.spanLabel}`}>{label}</span>
-      </Typography>
-      <SelectPrimitive.Root disabled={disabled} onValueChange={onValueChange} {...props} />
-    </div>
-  )
-}
+export const Select: FC<OwnerProps & React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>> =
+  memo(({ disabled, label, onValueChange, typography, ...props }) => {
+    return (
+      <div className={s.div} style={{ display: 'inline-block' }}>
+        <Typography variant={typography}>
+          <span className={`${disabled && s.disabled} ${s.spanLabel}`}>{label}</span>
+        </Typography>
+        <SelectPrimitive.Root disabled={disabled} onValueChange={onValueChange} {...props} />
+      </div>
+    )
+  })

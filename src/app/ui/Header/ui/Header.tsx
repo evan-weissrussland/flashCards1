@@ -1,22 +1,22 @@
+import { memo, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/common/components/button'
+import logo from '@/common/images/LogoITIncub.svg'
 import { Responce } from '@/features/Auth/api/authMe-api'
 import { DropDownHeader } from '@/features/DropDownHeader'
 
 import s from './header.module.scss'
 
-import logo from '../../../../common/images/LogoITIncub.svg'
-
 type Props = {
   data: Responce
 }
-export const Header = ({ data }: Props) => {
+export const Header = memo(({ data }: Props) => {
   const navigate = useNavigate()
   //перенаправляем на страницу создания аккаунта
-  const signInHandler = () => {
+  const signInHandler = useCallback(() => {
     navigate('/signIn')
-  }
+  }, [])
 
   return (
     <div className={s.header}>
@@ -34,4 +34,4 @@ export const Header = ({ data }: Props) => {
       </div>
     </div>
   )
-}
+})

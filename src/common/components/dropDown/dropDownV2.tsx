@@ -7,12 +7,11 @@ import clsx from 'clsx'
 
 import s from './dropDownV2.module.scss'
 
-export const DropDown: FC<React.ComponentPropsWithoutRef<typeof DropdownMenu.Root>> = ({
-  children,
-  ...rest
-}) => {
-  return <DropdownMenu.Root {...rest}>{children}</DropdownMenu.Root>
-}
+export const DropDown: FC<React.ComponentPropsWithoutRef<typeof DropdownMenu.Root>> = memo(
+  ({ children, ...rest }) => {
+    return <DropdownMenu.Root {...rest}>{children}</DropdownMenu.Root>
+  }
+)
 
 //компонент портал и контент
 type DropDownContentProps = {
@@ -48,8 +47,8 @@ type DropDownTriggerWithRef = (
   props: OwnerDropDownTriggerProps,
   ref: ForwardedRef<any>
 ) => ReactNode
-export const DropDownTrigger: DropDownTriggerWithRef = forwardRef(
-  (props: OwnerDropDownTriggerProps, ref: ForwardedRef<any>) => {
+export const DropDownTrigger: DropDownTriggerWithRef = memo(
+  forwardRef((props: OwnerDropDownTriggerProps, ref: ForwardedRef<any>) => {
     const { children } = props
 
     return (
@@ -57,7 +56,7 @@ export const DropDownTrigger: DropDownTriggerWithRef = forwardRef(
         {children}
       </DropdownMenu.Trigger>
     )
-  }
+  })
 )
 
 //компонент label
@@ -70,8 +69,8 @@ type OwnerDropDownLabelProps = DropDownLabelProps &
   Omit<ComponentPropsWithoutRef<any>, keyof DropDownLabelProps>
 
 type DropDownLabelWithRef = (props: OwnerDropDownLabelProps, ref: ForwardedRef<any>) => ReactNode
-export const DropDownLabel: DropDownLabelWithRef = forwardRef(
-  (props: OwnerDropDownLabelProps, ref: ForwardedRef<any>) => {
+export const DropDownLabel: DropDownLabelWithRef = memo(
+  forwardRef((props: OwnerDropDownLabelProps, ref: ForwardedRef<any>) => {
     const { children } = props
 
     return (
@@ -79,7 +78,7 @@ export const DropDownLabel: DropDownLabelWithRef = forwardRef(
         {children}
       </DropdownMenu.Label>
     )
-  }
+  })
 )
 
 //компонент Group
@@ -92,8 +91,8 @@ type OwnerDropDownGroupProps = DropDownGroupProps &
   Omit<ComponentPropsWithoutRef<any>, keyof DropDownGroupProps>
 
 type DropDownGroupWithRef = (props: OwnerDropDownGroupProps, ref: ForwardedRef<any>) => ReactNode
-export const DropDownGroup: DropDownGroupWithRef = forwardRef(
-  (props: OwnerDropDownGroupProps, ref: ForwardedRef<any>) => {
+export const DropDownGroup: DropDownGroupWithRef = memo(
+  forwardRef((props: OwnerDropDownGroupProps, ref: ForwardedRef<any>) => {
     const { children } = props
 
     return (
@@ -101,7 +100,7 @@ export const DropDownGroup: DropDownGroupWithRef = forwardRef(
         {children}
       </DropdownMenu.Group>
     )
-  }
+  })
 )
 
 //компонент Item
@@ -115,8 +114,8 @@ type OwnerDropDownItemProps = DropDownItemProps &
   Omit<ComponentPropsWithoutRef<any>, keyof DropDownItemProps>
 
 type DropDownItemWithRef = (props: OwnerDropDownItemProps, ref: ForwardedRef<any>) => ReactNode
-export const DropDownItem: DropDownItemWithRef = forwardRef(
-  (props: OwnerDropDownItemProps, ref: ForwardedRef<any>) => {
+export const DropDownItem: DropDownItemWithRef = memo(
+  forwardRef((props: OwnerDropDownItemProps, ref: ForwardedRef<any>) => {
     const { children, onclick } = props
 
     return (
@@ -131,5 +130,5 @@ export const DropDownItem: DropDownItemWithRef = forwardRef(
         {children}
       </DropdownMenu.Item>
     )
-  }
+  })
 )
