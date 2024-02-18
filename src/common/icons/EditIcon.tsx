@@ -1,4 +1,6 @@
-export const EditIcon = () => {
+import { memo } from 'react'
+
+export const EditIcon = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -28,4 +30,4 @@ export const EditIcon = () => {
       </defs>
     </svg>
   )
-}
+})

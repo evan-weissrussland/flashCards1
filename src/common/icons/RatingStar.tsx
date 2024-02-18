@@ -1,4 +1,6 @@
-export const RatingStarFillIcon = () => {
+import { memo } from 'react'
+
+export const RatingStarFillIcon = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -22,9 +24,9 @@ export const RatingStarFillIcon = () => {
       </defs>
     </svg>
   )
-}
+})
 
-export const RatingStarNoFillIcon = () => {
+export const RatingStarNoFillIcon = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -48,4 +50,4 @@ export const RatingStarNoFillIcon = () => {
       </defs>
     </svg>
   )
-}
+})

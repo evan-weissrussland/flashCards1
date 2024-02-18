@@ -1,4 +1,6 @@
-export const MyProfileIcon = () => {
+import { memo } from 'react'
+
+export const MyProfileIcon = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -28,4 +30,4 @@ export const MyProfileIcon = () => {
       </defs>
     </svg>
   )
-}
+})

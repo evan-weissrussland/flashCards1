@@ -1,4 +1,6 @@
-export const DeleteIcon = () => {
+import { memo } from 'react'
+
+export const DeleteIcon = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -15,4 +17,4 @@ export const DeleteIcon = () => {
       />
     </svg>
   )
-}
+})

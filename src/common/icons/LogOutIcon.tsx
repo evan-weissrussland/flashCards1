@@ -1,4 +1,6 @@
-export const LogOutIcon = ({ disabled }: { disabled?: boolean }) => {
+import { memo } from 'react'
+
+export const LogOutIcon = memo(({ disabled }: { disabled?: boolean }) => {
   return (
     <svg
       fill={'none'}
@@ -27,4 +29,4 @@ export const LogOutIcon = ({ disabled }: { disabled?: boolean }) => {
       </g>
     </svg>
   )
-}
+})

@@ -1,4 +1,6 @@
-export const PaginationIconPrev = ({ disabled }: { disabled: boolean }) => {
+import { memo } from 'react'
+
+export const PaginationIconPrev = memo(({ disabled }: { disabled: boolean }) => {
   return (
     <svg
       fill={'none'}
@@ -20,4 +22,4 @@ export const PaginationIconPrev = ({ disabled }: { disabled: boolean }) => {
       </defs>
     </svg>
   )
-}
+})

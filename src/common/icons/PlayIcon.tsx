@@ -1,4 +1,6 @@
-export const PlayIcon = () => {
+import { memo } from 'react'
+
+export const PlayIcon = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -21,4 +23,4 @@ export const PlayIcon = () => {
       />
     </svg>
   )
-}
+})

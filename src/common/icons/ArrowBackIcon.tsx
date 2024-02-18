@@ -1,4 +1,6 @@
-export const ArrowBackIcon = () => {
+import { memo } from 'react'
+
+export const ArrowBackIcon = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -22,4 +24,4 @@ export const ArrowBackIcon = () => {
       </defs>
     </svg>
   )
-}
+})

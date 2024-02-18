@@ -1,4 +1,6 @@
-export const CloseModal = () => {
+import { memo } from 'react'
+
+export const CloseModal = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -22,4 +24,4 @@ export const CloseModal = () => {
       </defs>
     </svg>
   )
-}
+})

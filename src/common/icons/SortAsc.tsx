@@ -1,4 +1,6 @@
-export const SortDescIcon = () => {
+import { memo } from 'react'
+
+export const SortDescIcon = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -22,9 +24,9 @@ export const SortDescIcon = () => {
       </defs>
     </svg>
   )
-}
+})
 
-export const SortAscIcon = () => {
+export const SortAscIcon = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -48,4 +50,4 @@ export const SortAscIcon = () => {
       </defs>
     </svg>
   )
-}
+})

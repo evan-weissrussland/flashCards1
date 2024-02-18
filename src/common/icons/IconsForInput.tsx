@@ -1,4 +1,6 @@
-export const IconsForInput = ({ disabled }: { disabled?: boolean }) => {
+import { memo } from 'react'
+
+export const IconsForInput = memo(({ disabled }: { disabled?: boolean }) => {
   return (
     <svg
       fill={'none'}
@@ -21,4 +23,4 @@ export const IconsForInput = ({ disabled }: { disabled?: boolean }) => {
       />
     </svg>
   )
-}
+})

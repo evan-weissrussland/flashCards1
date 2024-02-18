@@ -1,4 +1,6 @@
-export const UploadImageIcon = () => {
+import { memo } from 'react'
+
+export const UploadImageIcon = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -28,4 +30,4 @@ export const UploadImageIcon = () => {
       </defs>
     </svg>
   )
-}
+})

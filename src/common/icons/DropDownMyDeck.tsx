@@ -1,4 +1,6 @@
-export const DropDownMyDeckIcon = () => {
+import { memo } from 'react'
+
+export const DropDownMyDeckIcon = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -35,4 +37,4 @@ export const DropDownMyDeckIcon = () => {
       </defs>
     </svg>
   )
-}
+})

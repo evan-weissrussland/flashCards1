@@ -1,4 +1,6 @@
-export const CheckEmailIcon = () => {
+import { memo } from 'react'
+
+export const CheckEmailIcon = memo(() => {
   return (
     <svg
       fill={'none'}
@@ -180,4 +182,4 @@ export const CheckEmailIcon = () => {
       />
     </svg>
   )
-}
+})
