@@ -16,38 +16,35 @@
     border-radius: 50%;
 
     &[data-state='checked'] {
-      background: url('../../../../public/image/checkbox/Ckeckbox-Default Selected.svg') no-repeat
-        center;
+      background: url('../../images/checkbox/Ckeckbox-Default Selected.svg') no-repeat center;
     }
 
     &[data-state='checked']:focus-visible {
-      background: url('../../../../public/image/checkbox/Ckeckbox-Default Selected.svg') no-repeat
-        center var(--color-dark-100);
+      background: url('../../images/checkbox/Ckeckbox-Default Selected.svg') no-repeat center
+        var(--color-dark-100);
     }
 
     &[data-state='checked']:active {
-      background: url('../../../../public/image/checkbox/Ckeckbox-Default Selected.svg') no-repeat
-        center var(--color-dark-100);
+      background: url('../../images/checkbox/Ckeckbox-Default Selected.svg') no-repeat center
+        var(--color-dark-100);
     }
 
     &[data-state='unchecked'] {
-      background: url('../../../../public/image/checkbox/Ckeckbox-Default Unselected.svg') no-repeat
-        center;
+      background: url('../../images/checkbox/Ckeckbox-Default Unselected.svg') no-repeat center;
     }
 
     &[data-state='unchecked']:focus-visible {
-      background: url('../../../../public/image/checkbox/Ckeckbox-Default Unselected.svg') no-repeat
-        center var(--color-dark-100);
+      background: url('../../images/checkbox/Ckeckbox-Default Unselected.svg') no-repeat center
+        var(--color-dark-100);
     }
 
     &[data-state='unchecked']:active {
-      background: url('../../../../public/image/checkbox/Ckeckbox-Default Unselected.svg') no-repeat
-        center var(--color-dark-100);
+      background: url('../../images/checkbox/Ckeckbox-Default Unselected.svg') no-repeat center
+        var(--color-dark-100);
     }
 
     &[data-state='unchecked']:disabled {
-      background: url('../../../../public/image/checkbox/checkbox-Disabled Unselected.svg')
-        no-repeat center;
+      background: url('../../images/checkbox/checkbox-Disabled Unselected.svg') no-repeat center;
 
       &:active {
         background-color: transparent;
@@ -55,8 +52,7 @@
     }
 
     &[data-state='checked']:disabled {
-      background: url('../../../../public/image/checkbox/checkbox-Disabled Selected.svg') no-repeat
-        center;
+      background: url('../../images/checkbox/checkbox-Disabled Selected.svg') no-repeat center;
 
       &:active {
         background-color: transparent;

@@ -1,11 +1,11 @@
 import { ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import defaultAva from '@/../public/Ellipse 1.png'
 import { Button } from '@/common/components/button'
 import { Card } from '@/common/components/card'
 import { Typography } from '@/common/components/typography'
 import { EditIcon } from '@/common/icons/EditIcon'
+import defaultAva from '@/common/images/Ellipse 1.png'
 import {
   useAuthMeQuery,
   useLogOutMutation,

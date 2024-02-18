@@ -12,9 +12,8 @@ import {
 import { Typography } from '@/common/components/typography'
 import { LogOutIcon } from '@/common/icons/LogOutIcon'
 import { MyProfileIcon } from '@/common/icons/MyProfileIcon'
+import defaultAva from '@/common/images/Ellipse 1.png'
 import { useLogOutMutation } from '@/features/Auth/api/authMe-api'
-
-import defaultAva from '../../../public/Ellipse 1.png'
 
 type Props = {
   avatar: string

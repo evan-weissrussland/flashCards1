@@ -5,12 +5,11 @@ import { Button } from '@/common/components/button'
 import { Card } from '@/common/components/card'
 import { Input } from '@/common/components/input'
 import { Typography } from '@/common/components/typography'
+import defaultAva from '@/common/images/Ellipse 1.png'
 import { useAuthMeQuery, useUpdateUserDataMutation } from '@/features/Auth/api/authMe-api'
 import { modalSchema } from '@/features/Auth/ui/EditProfileSaveChange/ui/modal-schema'
 import { FormValues } from '@/features/Auth/ui/EditProfileSaveChange/ui/types'
 import { zodResolver } from '@hookform/resolvers/zod'
-
-import defaultAva from '../../../../../../public/Ellipse 1.png'
 
 export const EditProfileSaveChange = () => {
   const { data, isFetching } = useAuthMeQuery()

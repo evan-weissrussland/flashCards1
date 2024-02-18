@@ -6,6 +6,8 @@ import { DropDownHeader } from '@/features/DropDownHeader'
 
 import s from './header.module.scss'
 
+import logo from '../../../../common/images/LogoITIncub.svg'
+
 type Props = {
   data: Responce
 }
@@ -19,7 +21,7 @@ export const Header = ({ data }: Props) => {
   return (
     <div className={s.header}>
       <div>
-        <img alt={'logo'} src={'../../../../public/LogoITIncub.svg'} />
+        <img alt={'logo'} src={logo} />
       </div>
       <div>
         {!data ? (
