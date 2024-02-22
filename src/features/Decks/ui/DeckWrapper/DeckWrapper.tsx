@@ -5,13 +5,12 @@ import { Spinner } from '@/app/ui/Spinner/Spinner'
 import { Typography } from '@/common/components/typography'
 import { ArrowBackIcon } from '@/common/icons/ArrowBackIcon'
 import { useGetDeckQuery } from '@/features/Decks/api/getDecks'
-import { FriendsDeck } from '@/features/Decks/ui/Deck/FriendsDeck/FriendsDeck'
-import { MyDeck } from '@/features/Decks/ui/Deck/MyDeck/MyDeck'
+import { MyDeckOrFriendsDeck } from '@/features/Decks/ui/DeckWrapper/MyDeckOrFriendsDeck/MyDeckOrFriendsDeck'
 import { useAuthContext } from '@/hooks/hooks'
 
 import s from './deck.module.scss'
 
-export const Deck = () => {
+export const DeckWrapper = () => {
   //мой id юзера из контекста (Арр)
   const { myId } = useAuthContext()
   //вытягиваем id выбраннйо колоды из строки URL
@@ -46,22 +45,14 @@ export const Deck = () => {
           <Spinner />
         ) : (
           <div>
-            {myId === data?.userId ? (
-              <MyDeck
-                cardsCount={data.cardsCount}
-                cover={data.cover}
-                deckId={data.id}
-                isPrivate={data.isPrivate}
-                name={data.name}
-              />
-            ) : (
-              <FriendsDeck
-                cardsCount={data?.cardsCount as number}
-                cover={data?.cover as string}
-                deckId={data?.id as string}
-                name={data?.name as string}
-              />
-            )}
+            <MyDeckOrFriendsDeck
+              cardsCount={data.cardsCount}
+              cover={data.cover}
+              deckId={data.id}
+              isMyDeck={myId === data?.userId}
+              isPrivate={data.isPrivate}
+              name={data.name}
+            />
           </div>
         )}
       </div>

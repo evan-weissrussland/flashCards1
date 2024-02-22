@@ -12,7 +12,7 @@ import { EditProfileSaveChange } from '@/features/Auth/ui/EditProfileSaveChange/
 import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
 import { SignIn } from '@/features/Auth/ui/SignIn/ui'
 import { SignUp } from '@/features/Auth/ui/SignUp/ui'
-import { Deck } from '@/features/Decks/ui/Deck/Deck'
+import { DeckWrapper } from '@/features/Decks/ui/DeckWrapper/DeckWrapper'
 import { Decks } from '@/features/Decks/ui/Decks'
 
 type Props = {
@@ -63,7 +63,7 @@ export const router = createBrowserRouter([
         path: 'decks',
       },
       {
-        element: <Deck />,
+        element: <DeckWrapper />,
         path: 'decks/:id',
       },
       {

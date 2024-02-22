@@ -9,12 +9,14 @@ import { ModalDeleteCard } from '@/features/Decks/ui/ModalDeleteCard'
 import { ModalEditCard } from '@/features/Decks/ui/ModalEditCard'
 import { useDebounce } from '@uidotdev/usehooks'
 
-type Props = {
+type TableProps = {
   cover: string
   deckId: string
+  isMyDeck?: boolean
 }
-export const MyDeckMain: FC<Props> = memo(props => {
-  const { cover, deckId } = props
+
+export const TableDeck: FC<TableProps> = memo(props => {
+  const { cover, deckId, isMyDeck = false } = props
   //изменение текущей страниццы пагинации. Передаёт значение в хук запроса на сервер
   const [currentPage, setCurrentPage] = useState<number | undefined>(undefined)
   //изменение числа колод на странице. Передаёт значение в хук запроса на сервер
@@ -78,22 +80,24 @@ export const MyDeckMain: FC<Props> = memo(props => {
             <td>
               <Grade rating={it.grade} />
             </td>
-            <td>
-              <div style={{ alignItems: 'center', display: 'flex', gap: '2px' }}>
-                <ModalEditCard
-                  answer={it.answer}
-                  answerImg={it.answerImg}
-                  idCard={it.id}
-                  question={it.question}
-                  questionImg={it.questionImg}
-                />
-                <ModalDeleteCard idDeck={it.id} />
-              </div>
-            </td>
+            {isMyDeck && (
+              <td>
+                <div style={{ alignItems: 'center', display: 'flex', gap: '2px' }}>
+                  <ModalEditCard
+                    answer={it.answer}
+                    answerImg={it.answerImg}
+                    idCard={it.id}
+                    question={it.question}
+                    questionImg={it.questionImg}
+                  />
+                  <ModalDeleteCard idDeck={it.id} />
+                </div>
+              </td>
+            )}
           </tr>
         )
       }),
-    [data?.items]
+    [data?.items, isMyDeck]
   )
   //изменение текста инпута поиска
   const onChangeText = useCallback(
@@ -118,7 +122,7 @@ export const MyDeckMain: FC<Props> = memo(props => {
               <th style={{ color: 'red', textAlign: 'start' }}>Answer</th>
               <th style={{ color: 'red', textAlign: 'start' }}>Last Updated</th>
               <th style={{ color: 'red', textAlign: 'start' }}>Grade</th>
-              <th style={{ color: 'red', textAlign: 'start' }}></th>
+              {isMyDeck && <th style={{ color: 'red', textAlign: 'start' }}></th>}
             </tr>
           </thead>
           <tbody>{table}</tbody>

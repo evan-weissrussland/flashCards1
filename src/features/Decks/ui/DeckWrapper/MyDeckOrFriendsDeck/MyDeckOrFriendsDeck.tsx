@@ -1,8 +1,9 @@
 import { FC, memo, useState } from 'react'
 
+import { Button } from '@/common/components/button'
 import { Card } from '@/common/components/card'
 import { Typography } from '@/common/components/typography'
-import { MyDeckMain } from '@/features/Decks/ui/Deck/MyDeck/MyDeckMain/MyDeckMain'
+import { TableDeck } from '@/features/Decks/ui/DeckWrapper/TableDeck/TableDeck'
 import { ModalAddNewCard } from '@/features/Decks/ui/ModalAddNewCard'
 import { ModalLearnToDeck } from '@/features/Decks/ui/ModalLearnToDeck'
 import { DropDownMyDeck } from '@/features/DropDownMyDeck'
@@ -11,11 +12,13 @@ type Props = {
   cardsCount: number
   cover: string
   deckId: string
+  isMyDeck: boolean
   isPrivate: boolean
   name: string
 }
-export const MyDeck: FC<Props> = memo(props => {
-  const { cardsCount, cover, deckId, isPrivate, name } = props
+
+export const MyDeckOrFriendsDeck: FC<Props> = memo(props => {
+  const { cardsCount, cover, deckId, isMyDeck, isPrivate, name } = props
   //стэйт отображения или сокрытия модалки LearnDeck
   const [isLearn, setIsLearn] = useState(false)
 
@@ -26,7 +29,7 @@ export const MyDeck: FC<Props> = memo(props => {
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', gap: '6px' }}>
               <Typography variant={'H1'}>{name}</Typography>
-              {cardsCount ? (
+              {cardsCount && isMyDeck ? (
                 <DropDownMyDeck
                   deckCover={cover}
                   deckId={deckId}
@@ -38,11 +41,20 @@ export const MyDeck: FC<Props> = memo(props => {
                 <></>
               )}
             </div>
-            {cardsCount ? <ModalAddNewCard deckId={deckId} /> : <></>}
+            {!isMyDeck && (
+              <Button
+                onClick={() => {
+                  setIsLearn(true)
+                }}
+              >
+                Learn to deck
+              </Button>
+            )}
+            {cardsCount && isMyDeck ? <ModalAddNewCard deckId={deckId} /> : <></>}
           </div>
-          {cardsCount ? (
-            <MyDeckMain cover={cover} deckId={deckId} />
-          ) : (
+          <TableDeck cover={cover} deckId={deckId} isMyDeck={isMyDeck} />
+
+          {!cardsCount && isMyDeck && (
             <div style={{ paddingTop: '60px' }}>
               <Card className={'EmptyDeck'}>
                 <Typography variant={'Body 1'}>
