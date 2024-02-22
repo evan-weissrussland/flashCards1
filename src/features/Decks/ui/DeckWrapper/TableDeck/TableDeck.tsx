@@ -4,6 +4,7 @@ import { Spinner } from '@/app/ui/Spinner/Spinner'
 import { Grade } from '@/common/components/grade'
 import { Input } from '@/common/components/input'
 import { PageSizeType, Paginator } from '@/common/components/paginator/paginator'
+import defaultImage from '@/common/images/default-584452319_small.png'
 import { useGetCardsDeckQuery } from '@/features/Decks/api/getDecks'
 import { ModalDeleteCard } from '@/features/Decks/ui/ModalDeleteCard'
 import { ModalEditCard } from '@/features/Decks/ui/ModalEditCard'
@@ -48,7 +49,7 @@ export const TableDeck: FC<TableProps> = memo(props => {
               <div style={{ alignItems: 'center', display: 'flex', gap: '5px' }}>
                 <img
                   alt={' '}
-                  src={it.questionImg}
+                  src={it.questionImg ? it.questionImg : defaultImage}
                   style={{
                     borderRadius: '2px',
                     flexGrow: '0',
@@ -64,7 +65,7 @@ export const TableDeck: FC<TableProps> = memo(props => {
               <div style={{ alignItems: 'center', display: 'flex', gap: '5px' }}>
                 <img
                   alt={' '}
-                  src={it.answerImg}
+                  src={it.answerImg ? it.answerImg : defaultImage}
                   style={{
                     borderRadius: '2px',
                     flexGrow: '0',
@@ -111,7 +112,11 @@ export const TableDeck: FC<TableProps> = memo(props => {
     <>
       {isFetching && <Spinner />}
       <div>
-        <img alt={''} src={cover} />
+        <img
+          alt={''}
+          src={cover ? cover : defaultImage}
+          style={{ height: '120px', objectFit: 'fill', width: '300px' }}
+        />
       </div>
       <Input callback={onChangeText} type={'search'} />
       <div>

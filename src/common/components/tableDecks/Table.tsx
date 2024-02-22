@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/common/components/button'
 import { SortAscIcon, SortDescIcon } from '@/common/icons/SortAsc'
+import defaultImage from '@/common/images/default-584452319_small.png'
 import { Deck } from '@/features/Decks/api/getDecks'
 import { ModalDeleteDeck } from '@/features/Decks/ui/ModalDeleteDeck'
 import { ModalEditDeck } from '@/features/Decks/ui/ModalEditDeck'
 import { useAuthContext } from '@/hooks/hooks'
-
 type Props = {
   directionSort: 'asc' | 'desc' | null
   items: Deck[] | undefined
@@ -67,7 +67,7 @@ export const TableDeck: FC<Props> = props => {
                 onClick={() => {
                   navigateToDeckHandler(it.id)
                 }}
-                src={it.cover}
+                src={it.cover ? it.cover : defaultImage}
                 style={{ borderRadius: '2px', cursor: 'pointer', height: '48px', width: '118px' }}
               />
               <div
