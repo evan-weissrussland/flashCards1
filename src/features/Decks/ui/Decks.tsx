@@ -57,7 +57,7 @@ export const Decks = () => {
   >('cardsCount')
 
   //направление сортировки
-  const [directionSort, setDirectionSort] = useState<'asc' | 'desc'>('asc')
+  const [directionSort, setDirectionSort] = useState<'asc' | 'desc' | null>(null)
 
   //хук RTK Query. Передаёт параметры в baseApi для запрсоа на сервер и получает назад Response от сервера
   const { data, error, isFetching } = useGetDecksQuery({
@@ -71,7 +71,7 @@ export const Decks = () => {
       ? valuesArrayFromDebounceSlider[0]
       : undefined,
     name: textFromDebounceInput,
-    orderBy: sortBy !== null ? `${sortBy}-${directionSort}` : null,
+    orderBy: sortBy !== null && directionSort !== null ? `${sortBy}-${directionSort}` : null,
   })
   //хук RTK Query. Запрос на сервер за количеством min и max колод (Decks)
   const result = useGetMinMaxAmoundCardsQuery()
@@ -203,15 +203,24 @@ export const Decks = () => {
   const sortByHandler = useCallback(
     (v: 'author.name' | 'cardsCount' | 'created' | 'name' | 'updated') => {
       if (v === sortBy) {
-        setDirectionSort(directionSort === 'asc' ? 'desc' : 'asc')
+        setDirectionSort(dir => {
+          if (dir === 'asc') {
+            return 'desc'
+          }
+          if (dir === null) {
+            return 'asc'
+          }
+
+          return null
+        })
       }
 
       if (v !== sortBy) {
         setSortBy(v)
-        setDirectionSort('desc')
+        setDirectionSort('asc')
       }
     },
-    [directionSort, sortBy]
+    [sortBy]
   )
 
   return (
