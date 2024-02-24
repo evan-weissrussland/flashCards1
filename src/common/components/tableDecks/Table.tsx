@@ -1,5 +1,4 @@
 import { FC, useCallback, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import { Button } from '@/common/components/button'
 import { SortAscIcon, SortDescIcon } from '@/common/icons/SortAsc'
@@ -8,6 +7,7 @@ import { Deck } from '@/features/Decks/api/getDecks'
 import { ModalDeleteDeck } from '@/features/Decks/ui/ModalDeleteDeck'
 import { ModalEditDeck } from '@/features/Decks/ui/ModalEditDeck'
 import { useAuthContext } from '@/hooks/hooks'
+
 type Props = {
   directionSort: 'asc' | 'desc' | null
   items: Deck[] | undefined
@@ -25,9 +25,12 @@ export const TableDeck: FC<Props> = props => {
   const { myId } = useAuthContext()
 
   //переход на страницу выбранной колоды
-  const navigateToDeckHandler = useCallback((id: string) => {
-    props.navigateToDeckHandler(id)
-  }, [])
+  const navigateToDeckHandler = useCallback(
+    (id: string) => {
+      props.navigateToDeckHandler(id)
+    },
+    [props.navigateToDeckHandler]
+  )
 
   //обработчик изменения сортировки. Если по полю ранее кликали, то меняется направление сортировки, если по полю клюкнули впервые, то задаётся напрвление сортировки
   const sortByHandler = useCallback(
