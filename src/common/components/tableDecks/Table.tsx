@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo } from 'react'
+import { FC, memo, useCallback, useMemo } from 'react'
 
 import { Button } from '@/common/components/button'
 import { SortAscIcon, SortDescIcon } from '@/common/icons/SortAsc'
@@ -12,13 +12,11 @@ type Props = {
   directionSort: 'asc' | 'desc' | null
   items: Deck[] | undefined
   navigateToDeckHandler: (id: string) => void
-  setDirectionSort: (
-    v: ('asc' | 'desc' | null) | ((dir: 'asc' | 'desc' | null) => 'asc' | 'desc' | null)
-  ) => void
-  setSortBy: (v: 'author.name' | 'cardsCount' | 'created' | 'name' | 'updated' | null) => void
+  setDirectionSort: (v: 'asc' | 'desc' | null) => void
+  setSortBy: (v: 'cardsCount' | 'created' | 'name' | 'updated' | null) => void
   sortBy: 'author.name' | 'cardsCount' | 'created' | 'name' | 'updated' | null
 }
-export const TableDeck: FC<Props> = props => {
+export const TableDeck: FC<Props> = memo(props => {
   const { directionSort, items, setDirectionSort, setSortBy, sortBy } = props
 
   //получаем мой ID юзера из контекста (Арр)
@@ -34,18 +32,17 @@ export const TableDeck: FC<Props> = props => {
 
   //обработчик изменения сортировки. Если по полю ранее кликали, то меняется направление сортировки, если по полю клюкнули впервые, то задаётся напрвление сортировки
   const sortByHandler = useCallback(
-    (v: 'author.name' | 'cardsCount' | 'created' | 'name' | 'updated') => {
+    (v: 'cardsCount' | 'created' | 'name' | 'updated') => {
       if (v === sortBy) {
-        setDirectionSort((dir: 'asc' | 'desc' | null) => {
-          if (dir === 'asc') {
-            return 'desc'
-          }
-          if (dir === null) {
-            return 'asc'
-          }
-
-          return null
-        })
+        if (directionSort === 'asc') {
+          setDirectionSort('desc')
+        }
+        if (directionSort === 'desc') {
+          setDirectionSort(null)
+        }
+        if (directionSort === null) {
+          setDirectionSort('asc')
+        }
       }
 
       if (v !== sortBy) {
@@ -53,7 +50,7 @@ export const TableDeck: FC<Props> = props => {
         setDirectionSort('asc')
       }
     },
-    [setDirectionSort, setSortBy, sortBy]
+    [directionSort, setDirectionSort, setSortBy, sortBy]
   )
 
   //отрисовываем таблицу из карт с сервера
@@ -155,4 +152,4 @@ export const TableDeck: FC<Props> = props => {
       </table>
     </div>
   )
-}
+})

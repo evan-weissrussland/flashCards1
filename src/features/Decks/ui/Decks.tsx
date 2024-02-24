@@ -17,78 +17,60 @@ export const Decks = () => {
   //получаем мой ID юзера из контекста (Арр)
   const { myId: authMeId } = useAuthContext()
 
-  //получить из локального строрэйджа данные для всех useState'ов
-  const localStorageParams = localStorage.getItem('queryParamsToGetRequest')
+  //получить из локального строрэйджа данные для всех useState filterData. Локал сторэдж нужен, чтобы после возврата из выбранной колоды не сбрасывался фильтр
+  const localStorageParams = sessionStorage.getItem('queryParamsToGetRequest')
 
   //функция для изменения URL
   const navigate = useNavigate()
 
-  //для изменения value инпута. Если есть сохранённое значение в локалСтрорэдж, то берём его, если нет, то берём пустую строку
-  const [search, setSearch] = useState(
-    localStorageParams ? JSON.parse(localStorageParams).textFromDebounceInput : ''
-  )
-
-  //окончательное value из инпута для запрса на сервер. Берётся с задержкой. Если есть сохранённое значение в локалСтрорэдж, то берём его, если нет, то берём пустую строку
-  const [textFromDebounceInput, setTextFromDebounceInput] = useState(
-    localStorageParams ? JSON.parse(localStorageParams).textFromDebounceInput : ''
-  )
-
-  //окончательное value[] из slider для запрса на сервер. Берётся с задержкой. Если есть сохранённое значение в локалСтрорэдж, то берём его, если нет, то берём другое значение
-  const [valuesArrayFromDebounceSlider, setValuesArrayFromDebounceSlider] = useState<
-    number | number[]
-  >(localStorageParams ? JSON.parse(localStorageParams).valuesArrayFromDebounceSlider : [0, 11])
-
-  //изменить размер порции страницы и сделать новый запрос на сервер.Если есть сохранённое значение в локалСтрорэдж, то берём его, если нет, то берём null
-  const [itemsPerPage, setItemsPerPage] = useState<PageSizeType | null>(
-    localStorageParams ? JSON.parse(localStorageParams).itemsPerPage : null
-  )
-
-  //изменить текущую страницу и сделать новый запрос на сервер. Если есть сохранённое значение в локалСтрорэдж, то берём его, если нет, то берём null
-  const [currentPage, setCurrentPage] = useState<null | number>(
-    localStorageParams ? JSON.parse(localStorageParams).currentPage : null
-  )
-
-  //изменить сортировку по максимальному и минимальному количеству карт в колоде и сделать новый запрос на сервер. Если есть сохранённое значение в локалСтрорэдж, то берём его, если нет, то берём другое значение
-  const [cardsCountFromSlider, setCardsCountFromSlider] = useState<number | number[]>(
-    localStorageParams ? JSON.parse(localStorageParams).valuesArrayFromDebounceSlider : [0, 11]
-  )
-
-  //изменить сортировку по моим колодам или по всем колодам и сделать новый запрос на сервер. Если есть сохранённое значение в локалСтрорэдж, то берём его, если нет, то берём undefined
-  const [myId, setMyId] = useState<string | undefined>(
-    localStorageParams ? JSON.parse(localStorageParams).myId : undefined
-  )
-
-  //изменить сортировку по моим колодам или по всем колодам и сделать новый запрос на сервер. Если есть сохранённое значение в локалСтрорэдж, то берём его, если нет, то берём 'All-cards'
-  const [authorDecks, setAuthorDecks] = useState<string>(
-    localStorageParams ? JSON.parse(localStorageParams).authorDecks : 'All-cards'
+  //данные для формирования запроса на сервер, а также для фильтрации колод. Если они есть в локалСторэдже, то берём их из локалСторэджа, если нет, то берём по-умолчанию.
+  const [filterData, setFilterData] = useState<{
+    authorDecks: string
+    cardsCountFromSlider: number | number[]
+    currentPage: null | number
+    directionSort: 'asc' | 'desc' | null
+    itemsPerPage: PageSizeType | null
+    myId: string | undefined
+    search: string
+    sortBy: 'author.name' | 'cardsCount' | 'created' | 'name' | 'updated' | null
+    textFromDebounceInput: string
+    valuesArrayFromDebounceSlider: number | number[]
+  }>(
+    localStorageParams
+      ? JSON.parse(localStorageParams)
+      : {
+          authorDecks: 'All-cards',
+          cardsCountFromSlider: [0, 11],
+          currentPage: null,
+          directionSort: null,
+          itemsPerPage: null,
+          myId: undefined,
+          search: '',
+          sortBy: null,
+          textFromDebounceInput: '',
+          valuesArrayFromDebounceSlider: [0, 11],
+        }
   )
 
   //номер таймера из функции задержки посыла текста из инпута на сервер
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
 
-  //поле сортировки. Если есть сохранённое значение в локалСтрорэдж, то берём его, если нет, то берём null
-  const [sortBy, setSortBy] = useState<
-    'author.name' | 'cardsCount' | 'created' | 'name' | 'updated' | null
-  >(localStorageParams ? JSON.parse(localStorageParams).sortBy : null)
-
-  //направление сортировки. Если есть сохранённое значение в локалСтрорэдж, то берём его, если нет, то берём null
-  const [directionSort, setDirectionSort] = useState<'asc' | 'desc' | null>(
-    localStorageParams ? JSON.parse(localStorageParams).directionSort : null
-  )
-
   //хук RTK Query. Передаёт параметры в baseApi для запрсоа на сервер и получает назад Response от сервера
   const { data, error, isFetching } = useGetDecksQuery({
-    authorId: myId,
-    currentPage: currentPage ? currentPage : undefined,
-    itemsPerPage: itemsPerPage ? itemsPerPage : undefined,
-    maxCardsCount: Array.isArray(valuesArrayFromDebounceSlider)
-      ? valuesArrayFromDebounceSlider[1]
+    authorId: filterData.myId,
+    currentPage: filterData.currentPage ? filterData.currentPage : undefined,
+    itemsPerPage: filterData.itemsPerPage ? filterData.itemsPerPage : undefined,
+    maxCardsCount: Array.isArray(filterData.valuesArrayFromDebounceSlider)
+      ? filterData.valuesArrayFromDebounceSlider[1]
       : undefined,
-    minCardsCount: Array.isArray(valuesArrayFromDebounceSlider)
-      ? valuesArrayFromDebounceSlider[0]
+    minCardsCount: Array.isArray(filterData.valuesArrayFromDebounceSlider)
+      ? filterData.valuesArrayFromDebounceSlider[0]
       : undefined,
-    name: textFromDebounceInput,
-    orderBy: sortBy !== null && directionSort !== null ? `${sortBy}-${directionSort}` : null,
+    name: filterData.textFromDebounceInput,
+    orderBy:
+      filterData.sortBy !== null && filterData.directionSort !== null
+        ? `${filterData.sortBy}-${filterData.directionSort}`
+        : null,
   })
   //хук RTK Query. Запрос на сервер за количеством min и max колод (Decks)
   const result = useGetMinMaxAmoundCardsQuery()
@@ -96,45 +78,32 @@ export const Decks = () => {
   //сохраняем в локалСторэдже переменные, нужные для фильтра, после этого переходим на страницу выбранной колоды. Сохранять нужно для того, чтобы после возврата со страницы колоды на страницу списка колод применились значения фильтра (сохранённые в локалСторэдлж), иначе фильтр сбрасывается на инициализационные значения useState
   const navigateToDeckHandler = useCallback(
     (id: string) => {
-      localStorage.setItem(
+      sessionStorage.setItem(
         'queryParamsToGetRequest',
         JSON.stringify({
-          authorDecks,
-          currentPage,
-          directionSort,
-          itemsPerPage,
-          myId,
-          sortBy,
-          textFromDebounceInput,
-          valuesArrayFromDebounceSlider,
+          ...filterData,
         })
       )
       navigate(`/decks/${id}`)
     },
-    [
-      authorDecks,
-      currentPage,
-      directionSort,
-      itemsPerPage,
-      myId,
-      navigate,
-      sortBy,
-      textFromDebounceInput,
-      valuesArrayFromDebounceSlider,
-    ]
+    [filterData]
   )
 
   //зачистка фильтра, а также удаляем локалСторэдж
   const clearFilterHandler = useCallback(() => {
-    setSearch('')
-    setTextFromDebounceInput('')
-    setItemsPerPage(null)
-    setCurrentPage(null)
-    setCardsCountFromSlider([0, 11])
-    setValuesArrayFromDebounceSlider([0, 11])
-    setAuthorDecks('All-cards')
-    setMyId(undefined)
-    localStorage.removeItem('queryParamsToGetRequest')
+    setFilterData({
+      authorDecks: 'All-cards',
+      cardsCountFromSlider: [0, 11],
+      currentPage: null,
+      directionSort: null,
+      itemsPerPage: null,
+      myId: undefined,
+      search: '',
+      sortBy: null,
+      textFromDebounceInput: '',
+      valuesArrayFromDebounceSlider: [0, 11],
+    })
+    sessionStorage.removeItem('queryParamsToGetRequest')
   }, [])
 
   /**
@@ -143,15 +112,15 @@ export const Decks = () => {
    */
   const onChangeTextCallbackWithDebounce = useCallback(
     (inputData: string) => {
-      setSearch(inputData)
+      setFilterData(prev => ({ ...prev, search: inputData }))
       clearTimeout(timerId)
       const idTimer = setTimeout(() => {
-        setTextFromDebounceInput(inputData)
+        setFilterData(prev => ({ ...prev, textFromDebounceInput: inputData }))
       }, 1500)
 
       setTimerId(+idTimer)
     },
-    [timerId, setSearch, setTimerId, setTextFromDebounceInput]
+    [timerId]
   )
 
   //если мы зарегистрированы (есть resultAuthMe), и нажимаем на MyCards, то делаем запрос на сервер за моими колодами, если нажимаем на "All  Cards" - то делаем запрос за всеми колодами. Если мы не зарегистрированы, то делаем запрос за всеми колодами
@@ -160,21 +129,19 @@ export const Decks = () => {
       if (authMeId) {
         switch (v) {
           case 'My-cards':
-            setMyId(authMeId)
-            setAuthorDecks('My-cards')
+            setFilterData(prev => ({ ...prev, authorDecks: 'My-cards', myId: authMeId }))
             break
           case 'All-cards':
-            setMyId(undefined)
-            setAuthorDecks('All-cards')
+            setFilterData(prev => ({ ...prev, authorDecks: 'All-cards', myId: undefined }))
             break
           default:
             break
         }
       } else {
-        setMyId(undefined)
+        setFilterData(prev => ({ ...prev, myId: undefined }))
       }
     },
-    [authMeId, setMyId, setAuthorDecks]
+    [authMeId]
   )
 
   //переменная, которой будет присвоена ошибка из хука RTKQ. Выводим её юзеру
@@ -194,6 +161,36 @@ export const Decks = () => {
       narrowingError = error.message
     }
   }
+
+  //изменяем значения слайдера. Эти данные нужны только для вохврата назад в слайдер для отображения изменения
+  const setCardsCountFromSlider = useCallback((value: number | number[]) => {
+    setFilterData(prev => ({ ...prev, cardsCountFromSlider: value }))
+  }, [])
+
+  //изменяем значения слайдера. Эти данные пойдут для запроса на сервер
+  const setValuesArrayFromDebounceSlider = useCallback((value: number | number[]) => {
+    setFilterData(prev => ({ ...prev, valuesArrayFromDebounceSlider: value }))
+  }, [])
+
+  //изменяем направление сортировки колод
+  const setDirectionSort = useCallback((value: 'asc' | 'desc' | null) => {
+    setFilterData(prev => ({ ...prev, directionSort: value }))
+  }, [])
+
+  //выбираем столбец сортировки колод
+  const setSortBy = useCallback((value: 'cardsCount' | 'created' | 'name' | 'updated' | null) => {
+    setFilterData(prev => ({ ...prev, sortBy: value }))
+  }, [])
+
+  //изменяем текущую страницу (пагинация)
+  const setCurrentPage = useCallback((pageNumber: number) => {
+    setFilterData(prev => ({ ...prev, currentPage: pageNumber }))
+  }, [])
+
+  //изменяем количество отображаемых колод на странице (пагинация)
+  const setItemsPerPage = useCallback((pageSizeNumber: PageSizeType) => {
+    setFilterData(prev => ({ ...prev, itemsPerPage: pageSizeNumber }))
+  }, [])
 
   return (
     <>
@@ -219,10 +216,10 @@ export const Decks = () => {
               label={' '}
               placeholder={'Input search'}
               type={'search'}
-              value={search}
+              value={filterData.search}
             />
           </div>
-          <Tabs onValueChange={changeTabMyCardsOrAllCards} value={authorDecks}>
+          <Tabs onValueChange={changeTabMyCardsOrAllCards} value={filterData.authorDecks}>
             <TabsList>
               <TabsTrigger value={'My-cards'}>My Cards</TabsTrigger>
               <TabsTrigger value={'All-cards'}>All Cards</TabsTrigger>
@@ -234,19 +231,19 @@ export const Decks = () => {
             onChangeRange={setCardsCountFromSlider}
             onChangeRangeCommit={setValuesArrayFromDebounceSlider}
             step={1}
-            values={cardsCountFromSlider as number[]}
+            values={filterData.cardsCountFromSlider as number[]}
           />
           <Button icon={'delete'} onClick={clearFilterHandler} variant={'secondary'}>
             Clear filter
           </Button>
         </div>
         <TableDeck
-          directionSort={directionSort}
+          directionSort={filterData.directionSort}
           items={data?.items}
           navigateToDeckHandler={navigateToDeckHandler}
           setDirectionSort={setDirectionSort}
           setSortBy={setSortBy}
-          sortBy={sortBy}
+          sortBy={filterData.sortBy}
         />
         <div>
           <Paginator
