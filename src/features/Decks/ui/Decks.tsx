@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { Spinner } from '@/app/ui/Spinner/Spinner'
 import { Button } from '@/common/components/button'
@@ -17,31 +18,50 @@ export const Decks = () => {
   // const { data: meData } = useAuthMeQuery()
   const { myId: authMeId } = useAuthContext()
 
+  const localStorageParams = localStorage.getItem('queryParamsToGetRequest')
+
+  //функция для изменения URL
+  const navigate = useNavigate()
+
   //для изменения value инпута
-  const [search, setSearch] = useState('')
+  const [search, setSearch] = useState(
+    localStorageParams ? JSON.parse(localStorageParams).textFromDebounceInput : ''
+  )
 
   //окончательное value из инпута для запрса на сервер. Берётся с задержкой
-  const [textFromDebounceInput, setTextFromDebounceInput] = useState('')
+  const [textFromDebounceInput, setTextFromDebounceInput] = useState(
+    localStorageParams ? JSON.parse(localStorageParams).textFromDebounceInput : ''
+  )
 
   //окончательное value[] из slider для запрса на сервер. Берётся с задержкой
   const [valuesArrayFromDebounceSlider, setValuesArrayFromDebounceSlider] = useState<
     number | number[]
-  >([0, 11])
+  >(localStorageParams ? JSON.parse(localStorageParams).valuesArrayFromDebounceSlider : [0, 11])
 
   //изменить размер порции страницы и сделать новый запрос на сервер
-  const [itemsPerPage, setItemsPerPage] = useState<PageSizeType | null>(null)
+  const [itemsPerPage, setItemsPerPage] = useState<PageSizeType | null>(
+    localStorageParams ? JSON.parse(localStorageParams).itemsPerPage : null
+  )
 
   //изменить текущую страницу и сделать новый запрос на сервер
-  const [currentPage, setCurrentPage] = useState<null | number>(null)
+  const [currentPage, setCurrentPage] = useState<null | number>(
+    localStorageParams ? JSON.parse(localStorageParams).currentPage : null
+  )
 
   //изменить сортировку по максимальному и минимальному количеству карт в колоде и сделать новый запрос на сервер
-  const [cardsCountFromSlider, setCardsCountFromSlider] = useState<number | number[]>([0, 11])
+  const [cardsCountFromSlider, setCardsCountFromSlider] = useState<number | number[]>(
+    localStorageParams ? JSON.parse(localStorageParams).valuesArrayFromDebounceSlider : [0, 11]
+  )
 
   //изменить сортировку по моим колодам или по всем колодам и сделать новый запрос на сервер
-  const [myId, setMyId] = useState<string | undefined>(undefined)
+  const [myId, setMyId] = useState<string | undefined>(
+    localStorageParams ? JSON.parse(localStorageParams).myId : undefined
+  )
 
   //изменить сортировку по моим колодам или по всем колодам и сделать новый запрос на сервер
-  const [authorDecks, setAuthorDecks] = useState<string>('All-cards')
+  const [authorDecks, setAuthorDecks] = useState<string>(
+    localStorageParams ? JSON.parse(localStorageParams).authorDecks : 'All-cards'
+  )
 
   //номер таймера из функции задержки посыла текста из инпута на сервер
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
@@ -49,10 +69,12 @@ export const Decks = () => {
   //поле сортировки
   const [sortBy, setSortBy] = useState<
     'author.name' | 'cardsCount' | 'created' | 'name' | 'updated' | null
-  >('cardsCount')
+  >(localStorageParams ? JSON.parse(localStorageParams).sortBy : 'cardsCount')
 
   //направление сортировки
-  const [directionSort, setDirectionSort] = useState<'asc' | 'desc' | null>(null)
+  const [directionSort, setDirectionSort] = useState<'asc' | 'desc' | null>(
+    localStorageParams ? JSON.parse(localStorageParams).directionSort : null
+  )
 
   //хук RTK Query. Передаёт параметры в baseApi для запрсоа на сервер и получает назад Response от сервера
   const { data, error, isFetching } = useGetDecksQuery({
@@ -71,6 +93,40 @@ export const Decks = () => {
   //хук RTK Query. Запрос на сервер за количеством min и max колод (Decks)
   const result = useGetMinMaxAmoundCardsQuery()
 
+  //переход на страницу выбранной колоды
+  const navigateToDeckHandler = (id: string) => {
+    // localStorage.setItem(
+    //   'queryParamsToGetRequest',
+    //   JSON.stringify({
+    //     authorDecks,
+    //         currentPage,
+    //         directionSort,
+    //         itemsPerPage,
+    //         myId,
+    //         sortBy,
+    //         textFromDebounceInput,
+    //         valuesArrayFromDebounceSlider,
+    //   })
+    // )
+    navigate(`/decks/${id}`)
+  }
+
+  const saveToLocalStorage = () => {
+    localStorage.setItem(
+      'queryParamsToGetRequest',
+      JSON.stringify({
+        authorDecks,
+        currentPage,
+        directionSort,
+        itemsPerPage,
+        myId,
+        sortBy,
+        textFromDebounceInput,
+        valuesArrayFromDebounceSlider,
+      })
+    )
+  }
+
   //зачистка фильтра
   const clearFilterHandler = useCallback(() => {
     setSearch('')
@@ -81,6 +137,7 @@ export const Decks = () => {
     setValuesArrayFromDebounceSlider([0, 11])
     setAuthorDecks('All-cards')
     setMyId(undefined)
+    localStorage.removeItem('queryParamsToGetRequest')
   }, [])
 
   /**
@@ -143,6 +200,13 @@ export const Decks = () => {
 
   return (
     <>
+      <button
+        onClick={() => {
+          saveToLocalStorage()
+        }}
+      >
+        Сохранить локалСторэдж
+      </button>
       {result.isFetching || isFetching ? <Spinner /> : <></>}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', padding: '0 136px' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -189,6 +253,7 @@ export const Decks = () => {
         <TableDeck
           directionSort={directionSort}
           items={data?.items}
+          navigateToDeckHandler={navigateToDeckHandler}
           setDirectionSort={setDirectionSort}
           setSortBy={setSortBy}
           sortBy={sortBy}

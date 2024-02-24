@@ -11,6 +11,7 @@ import { useAuthContext } from '@/hooks/hooks'
 type Props = {
   directionSort: 'asc' | 'desc' | null
   items: Deck[] | undefined
+  navigateToDeckHandler: (id: string) => void
   setDirectionSort: (
     v: ('asc' | 'desc' | null) | ((dir: 'asc' | 'desc' | null) => 'asc' | 'desc' | null)
   ) => void
@@ -23,12 +24,9 @@ export const TableDeck: FC<Props> = props => {
   //получаем мой ID юзера из контекста (Арр)
   const { myId } = useAuthContext()
 
-  //функция для изменения URL
-  const navigate = useNavigate()
-
   //переход на страницу выбранной колоды
   const navigateToDeckHandler = useCallback((id: string) => {
-    navigate(`/decks/${id}`)
+    props.navigateToDeckHandler(id)
   }, [])
 
   //обработчик изменения сортировки. Если по полю ранее кликали, то меняется направление сортировки, если по полю клюкнули впервые, то задаётся напрвление сортировки
