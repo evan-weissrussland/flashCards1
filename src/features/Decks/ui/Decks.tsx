@@ -149,23 +149,31 @@ export const Decks = () => {
           <Typography variant={'Large'}>Decks list</Typography>
           <ModalAddNewDeck />
         </div>
-        <div style={{ alignItems: 'center', display: 'flex', gap: '24px' }}>
-          <Input
-            callback={onChangeTextCallbackWithDebounce}
-            className={'justifyContent-center'}
-            label={' '}
-            placeholder={'Input search'}
-            type={'search'}
-            value={search}
-          />
-          <div style={{ flexShrink: '0' }}>
-            <Tabs onValueChange={changeTabMyCardsOrAllCards} value={authorCards}>
-              <TabsList>
-                <TabsTrigger value={'My-cards'}>My Cards</TabsTrigger>
-                <TabsTrigger value={'All-cards'}>All Cards</TabsTrigger>
-              </TabsList>
-            </Tabs>
+        <div
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '24px',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div style={{ flex: '1 1 auto' }}>
+            <Input
+              callback={onChangeTextCallbackWithDebounce}
+              className={'justifyContent-center'}
+              label={' '}
+              placeholder={'Input search'}
+              type={'search'}
+              value={search}
+            />
           </div>
+          <Tabs onValueChange={changeTabMyCardsOrAllCards} value={authorCards}>
+            <TabsList>
+              <TabsTrigger value={'My-cards'}>My Cards</TabsTrigger>
+              <TabsTrigger value={'All-cards'}>All Cards</TabsTrigger>
+            </TabsList>
+          </Tabs>
           <RangeSlider
             max={result.data?.max}
             min={result.data?.min}

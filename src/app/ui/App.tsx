@@ -12,7 +12,7 @@ export function App() {
   const { data, isLoading } = useAuthMeQuery()
 
   return (
-    <div>
+    <div style={{ margin: '0 auto', maxWidth: '1280px' }}>
       {isLoading && <Spinner />}
       <Header data={data as Responce} />
       <Outlet context={{ myId: data?.id as string } satisfies MyIdType} />
