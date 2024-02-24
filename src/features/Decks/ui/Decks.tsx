@@ -41,7 +41,7 @@ export const Decks = () => {
   const [myId, setMyId] = useState<string | undefined>(undefined)
 
   //изменить сортировку по моим колодам или по всем колодам и сделать новый запрос на сервер
-  const [authorCards, setAuthorCards] = useState<string>('All-cards')
+  const [authorDecks, setAuthorDecks] = useState<string>('All-cards')
 
   //номер таймера из функции задержки посыла текста из инпута на сервер
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
@@ -79,7 +79,7 @@ export const Decks = () => {
     setCurrentPage(null)
     setCardsCountFromSlider([0, 11])
     setValuesArrayFromDebounceSlider([0, 11])
-    setAuthorCards('All-cards')
+    setAuthorDecks('All-cards')
     setMyId(undefined)
   }, [])
 
@@ -107,11 +107,11 @@ export const Decks = () => {
         switch (v) {
           case 'My-cards':
             setMyId(authMeId)
-            setAuthorCards('My-cards')
+            setAuthorDecks('My-cards')
             break
           case 'All-cards':
             setMyId(undefined)
-            setAuthorCards('All-cards')
+            setAuthorDecks('All-cards')
             break
           default:
             break
@@ -120,7 +120,7 @@ export const Decks = () => {
         setMyId(undefined)
       }
     },
-    [authMeId, setMyId, setAuthorCards]
+    [authMeId, setMyId, setAuthorDecks]
   )
 
   //переменная, которой будет присвоена ошибка из хука RTKQ. Выводим её юзеру
@@ -168,7 +168,7 @@ export const Decks = () => {
               value={search}
             />
           </div>
-          <Tabs onValueChange={changeTabMyCardsOrAllCards} value={authorCards}>
+          <Tabs onValueChange={changeTabMyCardsOrAllCards} value={authorDecks}>
             <TabsList>
               <TabsTrigger value={'My-cards'}>My Cards</TabsTrigger>
               <TabsTrigger value={'All-cards'}>All Cards</TabsTrigger>
