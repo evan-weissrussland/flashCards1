@@ -1,4 +1,6 @@
 .inputWrapper {
+  position: relative;
+
   display: inline-flex;
   flex-direction: column;
 
@@ -62,7 +64,6 @@
 
     &.password {
       padding-right: 42px;
-      background: url('../../images/input/eye-outline.svg') no-repeat right 11px center / 20px;
       border: 1px solid var(--color-dark-300);
 
       &::placeholder {
@@ -91,9 +92,6 @@
       }
 
       &:disabled {
-        background: url('../../images/input/eye-outline-disabled.svg') no-repeat right 11px center /
-          20px;
-
         &::placeholder {
           color: var(--color-dark-300);
         }
