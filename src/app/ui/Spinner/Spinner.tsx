@@ -1,4 +1,7 @@
-export const Spinner = () => {
+type Props = {
+  color?: string
+}
+export const Spinner = ({ color = 'green' }: Props) => {
   return (
     <div
       style={{
@@ -14,7 +17,7 @@ export const Spinner = () => {
         zIndex: '100',
       }}
     >
-      <span style={{ color: 'green', fontSize: '100px', fontWeight: 'bold' }}> ...Loading </span>
+      <span style={{ color: color, fontSize: '100px', fontWeight: 'bold' }}> ...Loading </span>
     </div>
   )
 }

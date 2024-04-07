@@ -1,12 +1,15 @@
+import { memo } from 'react'
+import Skeleton from 'react-loading-skeleton'
 import { NavLink, useParams } from 'react-router-dom'
 
 import { ErrorData } from '@/app/model/types'
-import { Spinner } from '@/app/ui/Spinner/Spinner'
 import { Typography } from '@/common/components/typography'
 import { ArrowBackIcon } from '@/common/icons/ArrowBackIcon'
 import { useGetDeckQuery } from '@/features/Decks/api/getDecks'
 import { MyDeckOrFriendsDeck } from '@/features/Decks/ui/DeckWrapper/MyDeckOrFriendsDeck/MyDeckOrFriendsDeck'
 import { useAuthContext } from '@/hooks/hooks'
+
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import s from './deck.module.scss'
 
@@ -42,7 +45,7 @@ const DeckWrapper = () => {
           </NavLink>
         </div>
         {!data || isFetching ? (
-          <Spinner />
+          <SkeletDeckOrFriendsDeck />
         ) : (
           <div>
             <MyDeckOrFriendsDeck
@@ -63,3 +66,18 @@ const DeckWrapper = () => {
 
 //из-за использования ленивой(lazy) загрузки необходимо экспортировать компонент по дефолту!!!!
 export default DeckWrapper
+
+const SkeletDeckOrFriendsDeck = memo(() => {
+  return (
+    <>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', gap: '6px' }}>
+          <Skeleton height={'36px'} width={'110px'} />
+          <Skeleton height={'24px'} width={'24px'} />
+        </div>
+        <Skeleton height={'36px'} width={'142px'} />
+      </div>
+      <Skeleton height={'400px'} width={'100%'} />
+    </>
+  )
+})
