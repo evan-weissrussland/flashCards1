@@ -52,7 +52,8 @@ export const MyDeckOrFriendsDeck: FC<Props> = memo(props => {
             )}
             {cardsCount && isMyDeck ? <ModalAddNewCard deckId={deckId} /> : <></>}
           </div>
-          <TableDeck cover={cover} deckId={deckId} isMyDeck={isMyDeck} />
+
+          {cardsCount ? <TableDeck cover={cover} deckId={deckId} isMyDeck={isMyDeck} /> : <></>}
 
           {!cardsCount && isMyDeck && (
             <div style={{ paddingTop: '60px' }}>
