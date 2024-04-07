@@ -13,7 +13,7 @@ import { useGetDecksQuery, useGetMinMaxAmoundCardsQuery } from '@/features/Decks
 import { ModalAddNewDeck } from '@/features/Decks/ui/ModalAddNewDeck'
 import { useAuthContext } from '@/hooks/hooks'
 
-export const Decks = () => {
+const Decks = () => {
   //получаем мой ID юзера из контекста (Арр)
   const { myId: authMeId } = useAuthContext()
 
@@ -259,3 +259,6 @@ export const Decks = () => {
     </>
   )
 }
+
+//из-за использования ленивой(lazy) загрузки необходимо экспортировать компонент по дефолту!!!!
+export default Decks

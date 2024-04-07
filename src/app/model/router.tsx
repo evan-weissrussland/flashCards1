@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { Suspense, lazy, memo } from 'react'
 import { Navigate, createBrowserRouter, useLocation } from 'react-router-dom'
 
 import { App } from '@/app/ui/App'
@@ -12,8 +12,10 @@ import { EditProfileSaveChange } from '@/features/Auth/ui/EditProfileSaveChange/
 import { ForgotPass } from '@/features/Auth/ui/ForgotPass/ui'
 import { SignIn } from '@/features/Auth/ui/SignIn/ui'
 import { SignUp } from '@/features/Auth/ui/SignUp/ui'
-import { DeckWrapper } from '@/features/Decks/ui/DeckWrapper/DeckWrapper'
-import { Decks } from '@/features/Decks/ui/Decks'
+
+//ленивая загрузка
+const Decks = lazy(() => import('@/features/Decks/ui/Decks'))
+const DeckWrapper = lazy(() => import('@/features/Decks/ui/DeckWrapper/DeckWrapper'))
 
 type Props = {
   data: Responce
@@ -59,11 +61,19 @@ export const router = createBrowserRouter([
         path: 'forgotPass',
       },
       {
-        element: <Decks />,
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <Decks />
+          </Suspense>
+        ),
         path: 'decks',
       },
       {
-        element: <DeckWrapper />,
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <DeckWrapper />
+          </Suspense>
+        ),
         path: 'decks/:id',
       },
       {

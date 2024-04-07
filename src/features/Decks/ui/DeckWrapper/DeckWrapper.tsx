@@ -10,7 +10,7 @@ import { useAuthContext } from '@/hooks/hooks'
 
 import s from './deck.module.scss'
 
-export const DeckWrapper = () => {
+const DeckWrapper = () => {
   //мой id юзера из контекста (Арр)
   const { myId } = useAuthContext()
   //вытягиваем id выбраннйо колоды из строки URL
@@ -60,3 +60,6 @@ export const DeckWrapper = () => {
     </>
   )
 }
+
+//из-за использования ленивой(lazy) загрузки необходимо экспортировать компонент по дефолту!!!!
+export default DeckWrapper
