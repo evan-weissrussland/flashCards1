@@ -6,7 +6,7 @@ const meta = {
   argTypes: {},
   component: ModalLearnToDeck,
   tags: ['autodocs'],
-  title: 'Components/ModalAddNewCard',
+  title: 'Components/ModalLearnToDeck',
 } satisfies Meta<typeof ModalLearnToDeck>
 
 export default meta
