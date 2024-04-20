@@ -192,6 +192,7 @@ export const {
   useGetDecksQuery,
   useGetLearnCardQuery,
   useGetMinMaxAmoundCardsQuery,
+  usePrefetch,
   useSaveGradeCardMutation,
   useUpdateCardMutation,
   useUpdateDeckMutation,

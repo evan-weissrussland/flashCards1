@@ -9,13 +9,19 @@ import { RangeSlider } from '@/common/components/slider'
 import { Tabs, TabsList, TabsTrigger } from '@/common/components/tabSwitcher'
 import { TableDeck } from '@/common/components/tableDecks/Table'
 import { Typography } from '@/common/components/typography'
-import { useGetDecksQuery, useGetMinMaxAmoundCardsQuery } from '@/features/Decks/api/getDecks'
+import {
+  useGetDecksQuery,
+  useGetMinMaxAmoundCardsQuery,
+  usePrefetch,
+} from '@/features/Decks/api/getDecks'
 import { ModalAddNewDeck } from '@/features/Decks/ui/ModalAddNewDeck'
 import { useAuthContext } from '@/hooks/hooks'
 
 const Decks = () => {
   //получаем мой ID юзера из контекста (Арр)
   const { myId: authMeId } = useAuthContext()
+
+  const prefetch = usePrefetch('getDecks')
 
   //получить из локального строрэйджа данные для всех useState filterData. Локал сторэдж нужен, чтобы после возврата из выбранной колоды не сбрасывался фильтр
   const localStorageParams = sessionStorage.getItem('queryParamsToGetRequest')
@@ -221,7 +227,29 @@ const Decks = () => {
           </div>
           <Tabs onValueChange={changeTabMyCardsOrAllCards} value={filterData.authorDecks}>
             <TabsList>
-              <TabsTrigger value={'My-cards'}>My Cards</TabsTrigger>
+              <TabsTrigger
+                onMouseMove={() =>
+                  prefetch({
+                    authorId: authMeId,
+                    currentPage: filterData.currentPage ? filterData.currentPage : undefined,
+                    itemsPerPage: filterData.itemsPerPage ? filterData.itemsPerPage : undefined,
+                    maxCardsCount: Array.isArray(filterData.valuesArrayFromDebounceSlider)
+                      ? filterData.valuesArrayFromDebounceSlider[1]
+                      : undefined,
+                    minCardsCount: Array.isArray(filterData.valuesArrayFromDebounceSlider)
+                      ? filterData.valuesArrayFromDebounceSlider[0]
+                      : undefined,
+                    name: filterData.textFromDebounceInput,
+                    orderBy:
+                      filterData.sortBy !== null && filterData.directionSort !== null
+                        ? `${filterData.sortBy}-${filterData.directionSort}`
+                        : null,
+                  })
+                }
+                value={'My-cards'}
+              >
+                My Cards
+              </TabsTrigger>
               <TabsTrigger value={'All-cards'}>All Cards</TabsTrigger>
             </TabsList>
           </Tabs>
