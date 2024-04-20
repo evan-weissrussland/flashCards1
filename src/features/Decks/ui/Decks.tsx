@@ -21,6 +21,9 @@ const Decks = () => {
   //получаем мой ID юзера из контекста (Арр)
   const { myId: authMeId } = useAuthContext()
 
+  /**
+   * Отправляет запрос на тот же endpoint, что и useGetDecksQuery - getDecks. Но useGetDecksQuery это делает при загрузке компонента, а prefetch при наведении на табу MyCards.
+   */
   const prefetch = usePrefetch('getDecks')
 
   //получить из локального строрэйджа данные для всех useState filterData. Локал сторэдж нужен, чтобы после возврата из выбранной колоды не сбрасывался фильтр
