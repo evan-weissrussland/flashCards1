@@ -64,7 +64,7 @@ const Decks = () => {
   //номер таймера из функции задержки посыла текста из инпута на сервер
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
 
-  //хук RTK Query. Передаёт параметры в baseApi для запрсоа на сервер и получает назад Response от сервера
+  //хук RTK Query. Передаёт параметры в baseApi для запрсоа на сервер и получает назад Response от сервера. В качестве дополнительной настройки используется pollingInterval. Это автозапрос за данными с интервалом 30сек
   const { data, error, isFetching } = useGetDecksQuery(
     {
       authorId: filterData.myId,
