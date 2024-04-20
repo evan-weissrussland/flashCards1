@@ -50,6 +50,7 @@ export const authMeApi = baseApi.injectEndpoints({
       }),
       logOut: builder.mutation<void, void>({
         invalidatesTags: ['authMe'],
+        //onQueryStarted - это Optimistic Updates. Меняем стейт для эндпоинта authMe при вылогинивании.
         async onQueryStarted(_, { dispatch, queryFulfilled }) {
           const patchResult = dispatch(
             baseApi.util.updateQueryData('authMe' as never, undefined as never, () => {
