@@ -65,22 +65,25 @@ const Decks = () => {
   const [timerId, setTimerId] = useState<number | undefined>(undefined)
 
   //хук RTK Query. Передаёт параметры в baseApi для запрсоа на сервер и получает назад Response от сервера
-  const { data, error, isFetching } = useGetDecksQuery({
-    authorId: filterData.myId,
-    currentPage: filterData.currentPage ? filterData.currentPage : undefined,
-    itemsPerPage: filterData.itemsPerPage ? filterData.itemsPerPage : undefined,
-    maxCardsCount: Array.isArray(filterData.valuesArrayFromDebounceSlider)
-      ? filterData.valuesArrayFromDebounceSlider[1]
-      : undefined,
-    minCardsCount: Array.isArray(filterData.valuesArrayFromDebounceSlider)
-      ? filterData.valuesArrayFromDebounceSlider[0]
-      : undefined,
-    name: filterData.textFromDebounceInput,
-    orderBy:
-      filterData.sortBy !== null && filterData.directionSort !== null
-        ? `${filterData.sortBy}-${filterData.directionSort}`
-        : null,
-  })
+  const { data, error, isFetching } = useGetDecksQuery(
+    {
+      authorId: filterData.myId,
+      currentPage: filterData.currentPage ? filterData.currentPage : undefined,
+      itemsPerPage: filterData.itemsPerPage ? filterData.itemsPerPage : undefined,
+      maxCardsCount: Array.isArray(filterData.valuesArrayFromDebounceSlider)
+        ? filterData.valuesArrayFromDebounceSlider[1]
+        : undefined,
+      minCardsCount: Array.isArray(filterData.valuesArrayFromDebounceSlider)
+        ? filterData.valuesArrayFromDebounceSlider[0]
+        : undefined,
+      name: filterData.textFromDebounceInput,
+      orderBy:
+        filterData.sortBy !== null && filterData.directionSort !== null
+          ? `${filterData.sortBy}-${filterData.directionSort}`
+          : null,
+    },
+    { pollingInterval: 30000 }
+  )
   //хук RTK Query. Запрос на сервер за количеством min и max колод (Decks)
   const result = useGetMinMaxAmoundCardsQuery()
 
