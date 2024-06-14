@@ -35,7 +35,7 @@ export const TableDeck: FC<TableProps> = memo(props => {
       answer: '',
       currentPage: currentPage as number,
       itemsPerPage: itemsPerPage as PageSizeType,
-      orderBy: '',
+      orderBy: null,
       question: debouncedSearchTerm,
     },
     id: deckId,

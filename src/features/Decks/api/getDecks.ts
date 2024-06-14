@@ -40,7 +40,7 @@ type GetCardsDecksRequestType = {
   answer?: string
   currentPage?: number
   itemsPerPage?: PageSizeType
-  orderBy?: string
+  orderBy?: null | string
   question?: string
 }
 
