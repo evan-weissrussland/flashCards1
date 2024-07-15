@@ -12,6 +12,7 @@ import {
 } from '@/common/components/modal'
 import { Typography } from '@/common/components/typography'
 import { CloseModal } from '@/common/icons/CloseModal'
+import { UploadImageIcon } from '@/common/icons/UploadImageIcon'
 import { useUpdateDeckMutation } from '@/features/Decks/api/getDecks'
 import { modalSchema } from '@/features/Decks/ui/ModalAddNewDeck/modal-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -136,7 +137,7 @@ export const ModalEditDeck: FC<Props> = memo(
                     style={{ display: 'none' }}
                     type={'file'}
                   />
-                  <Button as={'span'} fullWidth icon={'uploadImage'} variant={'secondary'}>
+                  <Button as={'span'} fullWidth icon={<UploadImageIcon />} variant={'secondary'}>
                     Upload image
                   </Button>
                 </label>

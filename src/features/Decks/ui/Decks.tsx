@@ -9,6 +9,7 @@ import { RangeSlider } from '@/common/components/slider'
 import { Tabs, TabsList, TabsTrigger } from '@/common/components/tabSwitcher'
 import { TableDeck } from '@/common/components/tableDecks/Table'
 import { Typography } from '@/common/components/typography'
+import { DeleteIcon } from '@/common/icons/DeleteIcon'
 import {
   useGetDecksQuery,
   useGetMinMaxAmoundCardsQuery,
@@ -267,7 +268,7 @@ const Decks = () => {
             step={1}
             values={filterData.cardsCountFromSlider as number[]}
           />
-          <Button icon={'delete'} onClick={clearFilterHandler} variant={'secondary'}>
+          <Button icon={<DeleteIcon />} onClick={clearFilterHandler} variant={'secondary'}>
             Clear filter
           </Button>
         </div>

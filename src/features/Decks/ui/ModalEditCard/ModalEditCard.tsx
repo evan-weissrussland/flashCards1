@@ -11,6 +11,8 @@ import {
 } from '@/common/components/modal'
 import { Typography } from '@/common/components/typography'
 import { CloseModal } from '@/common/icons/CloseModal'
+import { EditIcon } from '@/common/icons/EditIcon'
+import { UploadImageIcon } from '@/common/icons/UploadImageIcon'
 import { useUpdateCardMutation } from '@/features/Decks/api/getDecks'
 import { modalSchema } from '@/features/Decks/ui/ModalEditCard/modal-schema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -103,7 +105,7 @@ export const ModalEditCard: FC<Props> = memo(
     return (
       <Modalka onOpenChange={setOpen} open={open}>
         <ModalkaTrigger asChild>
-          <Button className={'padding4px'} icon={'edit'} variant={'secondary'} />
+          <Button className={'padding4px'} icon={<EditIcon />} variant={'secondary'} />
         </ModalkaTrigger>
         <ModalkaContent>
           <div className={s.description}>
@@ -141,7 +143,7 @@ export const ModalEditCard: FC<Props> = memo(
                     type={'file'}
                   />
                   <span style={{ color: 'red' }}>{errors.imageQuestion?.message as string}</span>
-                  <Button as={'span'} fullWidth icon={'uploadImage'} variant={'secondary'}>
+                  <Button as={'span'} fullWidth icon={<UploadImageIcon />} variant={'secondary'}>
                     Change image
                   </Button>
                 </label>
@@ -170,7 +172,7 @@ export const ModalEditCard: FC<Props> = memo(
                     style={{ display: 'none' }}
                     type={'file'}
                   />
-                  <Button as={'span'} fullWidth icon={'uploadImage'} variant={'secondary'}>
+                  <Button as={'span'} fullWidth icon={<UploadImageIcon />} variant={'secondary'}>
                     Change image
                   </Button>
                 </label>

@@ -2,15 +2,11 @@ import {
   ComponentPropsWithoutRef,
   ElementType,
   ForwardedRef,
+  ReactElement,
   ReactNode,
   forwardRef,
   memo,
 } from 'react'
-
-import { DeleteIcon } from '@/common/icons/DeleteIcon'
-import { EditIcon } from '@/common/icons/EditIcon'
-import { LogOutIcon } from '@/common/icons/LogOutIcon'
-import { UploadImageIcon } from '@/common/icons/UploadImageIcon'
 
 import s from './button.module.scss'
 
@@ -21,7 +17,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   as?: T
   className?: string
   fullWidth?: boolean
-  icon?: 'delete' | 'edit' | 'logout' | 'uploadImage'
+  icon?: ReactElement
   onClick?: () => void
   variant?: 'link' | 'primary' | 'secondary' | 'tertiary'
 }
@@ -61,10 +57,7 @@ export const Button: ButtonWithRef = memo(
         ref={ref}
         {...rest}
       >
-        {icon === 'logout' && <LogOutIcon disabled={rest.disabled} />}
-        {icon === 'delete' && <DeleteIcon />}
-        {icon === 'uploadImage' && <UploadImageIcon />}
-        {icon === 'edit' && <EditIcon />}
+        {icon}
         {children}
       </Component>
     )

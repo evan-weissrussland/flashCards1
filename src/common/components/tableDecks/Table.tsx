@@ -1,6 +1,8 @@
 import { FC, memo, useCallback, useMemo } from 'react'
 
 import { Button } from '@/common/components/button'
+import { DeleteIcon } from '@/common/icons/DeleteIcon'
+import { EditIcon } from '@/common/icons/EditIcon'
 import { SortAscIcon, SortDescIcon } from '@/common/icons/SortAsc'
 import defaultImage from '@/common/images/default-584452319_small.png'
 import { Deck } from '@/features/Decks/api/getDecks'
@@ -88,10 +90,10 @@ export const TableDeck: FC<Props> = memo(props => {
                   deckIsPrivate={it.isPrivate}
                   deckName={it.name}
                 >
-                  <Button className={'padding4px'} icon={'edit'} variant={'secondary'} />
+                  <Button className={'padding4px'} icon={<EditIcon />} variant={'secondary'} />
                 </ModalEditDeck>
                 <ModalDeleteDeck deckName={it.name} idDeck={it.id}>
-                  <Button className={'padding4px'} icon={'delete'} variant={'secondary'} />
+                  <Button className={'padding4px'} icon={<DeleteIcon />} variant={'secondary'} />
                 </ModalDeleteDeck>
               </td>
             )}

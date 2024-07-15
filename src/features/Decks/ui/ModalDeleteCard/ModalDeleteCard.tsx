@@ -9,6 +9,7 @@ import {
 } from '@/common/components/modal'
 import { Typography } from '@/common/components/typography'
 import { CloseModal } from '@/common/icons/CloseModal'
+import { DeleteIcon } from '@/common/icons/DeleteIcon'
 import { useDeleteCardMutation } from '@/features/Decks/api/getDecks'
 
 import s from './modalDeleteCard.module.scss'
@@ -34,7 +35,7 @@ export const ModalDeleteCard: FC<DeckProps> = memo(({ idDeck }) => {
   return (
     <Modalka onOpenChange={setOpen} open={open}>
       <ModalkaTrigger asChild>
-        <Button className={'padding4px'} icon={'delete'} variant={'secondary'} />
+        <Button className={'padding4px'} icon={<DeleteIcon />} variant={'secondary'} />
       </ModalkaTrigger>
       <ModalkaContent>
         <div className={s.description}>
