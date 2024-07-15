@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
+import { DeleteIcon } from '@/common/icons/DeleteIcon'
+
 import { Button } from './'
 
 const meta = {
@@ -25,7 +27,7 @@ export const Primary: Story = {
     children: 'Button Primary',
     disabled: false,
     fullWidth: false,
-    icon: 'delete',
+    icon: <DeleteIcon />,
     variant: 'primary',
   },
 }
